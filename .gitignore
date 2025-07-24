@@ -1,0 +1,25 @@
+
+# Dependências
+node_modules/
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+
+# Build e saída
+dist/
+
+# Prisma
+prisma/generated/
+generated/
+
+# Logs
+npm-debug.log*
+
+# IDEs e editores
+.vscode/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

@@ -1,0 +1,17 @@
+# Orquestra múltiplos containers (serviços) como um sistema completo.
+#Facilita rodar toda a aplicação com um único comando (docker-compose up).
+
+services: 
+  db-postgres-sfico:
+    image: postgres:alpine
+    ports:
+      - '5432:5432' # Mapeamento da porta padrão do postgres 5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+    volumes:
+      - api_data:/var/lib/postgresql/data
+
+# Volumes serve para persistência de dados, caso o container seja removido
+volumes:
+  api_data:
