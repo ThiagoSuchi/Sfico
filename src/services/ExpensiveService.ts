@@ -10,10 +10,6 @@ class ExpensiveService {
     }
 
     async criar({ valor, categoria, descricao, data }: ExpensiveDTO): Promise<Expense> {
-        if (!valor || !categoria || !data) {
-            throw new Error('Campos obrigatórios não informados: valor, categoria e data.');
-        }
-         
         const expense = await this.repository.criar({
             valor,
             categoria,
