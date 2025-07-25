@@ -1,5 +1,8 @@
-import ExpensiveService from "@services/ExpensiveService";
 import { Request, Response } from "express";
+import * as yup from "yup";
+
+import ExpensiveService from "@services/ExpensiveService";
+import { ExpenseSchema } from "@utils/validations/ExpenseSchema";
 
 class ExpensiveController {
     private service: ExpensiveService
@@ -9,19 +12,30 @@ class ExpensiveController {
     }
 
     async criar(req: Request, res: Response) {
-        const { valor, categoria, descricao } = req.body
-       
-        const expesive = await this.service.criar({
-            valor,
-            categoria,
-            descricao,
-            data: new Date()
-        });
+        try {
+            await ExpenseSchema.validate(req.body);
 
-        res.status(201).json({ 
-            message: 'Expensives created successfully.', 
-            data: expesive
-        })
+            const { valor, categoria, descricao, data } = req.body
+            
+            const expense = await this.service.criar({
+                valor,
+                categoria,
+                descricao,
+                data
+            });
+    
+            res.status(201).json({ 
+                message: 'Expensives created successfully.', 
+                data: expense
+            })
+        } catch (err) {
+            res.status(400).send({
+                message: err instanceof yup.ValidationError 
+                ? 'Erro de validação nos campos'
+                : 'Erro ao criar despesa',
+                error: err
+            })
+        }
     }
 }
 
