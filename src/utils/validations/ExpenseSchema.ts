@@ -11,8 +11,8 @@ export const ExpenseSchema = yup.object({
     descricao: yup
         .string()
         .notRequired(),
-    data: yup
+    dateFormated: yup
         .date()
-        .typeError('O campo data deve ser uma data válida.')
+        .typeError('O campo data deve ser uma data válida exemplo: dd/mm/yyyy.')
         .required('O campo data é obrigatório.')
 })

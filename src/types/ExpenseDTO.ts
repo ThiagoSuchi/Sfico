@@ -1,8 +1,8 @@
-type ExpensiveDTO = {
+type ExpenseDTO = {
     valor: number,
     categoria: string,
     descricao: string | null,
     data: Date
 }
 
-export default ExpensiveDTO
+export default ExpenseDTO
