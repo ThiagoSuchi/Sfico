@@ -67,7 +67,7 @@ model Expense {
 - Prisma ORM
 - PostgreSQL (via Docker)
 - JWT para autenticação
-- Zod para validação de dados
+- Yup para validação de dados
 - bcryptjs para hash de senha
 - Docker e docker-compose
 
