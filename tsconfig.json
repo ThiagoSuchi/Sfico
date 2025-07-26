@@ -32,13 +32,11 @@
     "paths": {
       "@config/*": ["src/config/*"],
       "@controllers/*": ["src/controllers/*"],
-      "@database/*": ["src/database/*"],
+      "@interfaces/*": ["src/interfaces/*"],
       "@middlewares/*": ["src/middlewares/*"],
-      "@models/*": ["src/models/*"],
       "@repositories/*": ["src/repositories/*"],
       "@routes/*": ["src/routes/*"],
       "@services/*": ["src/services/*"],
-      "@useCases/*": ["src/useCases/*"],
       "@utils/*": ["src/utils/*"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */

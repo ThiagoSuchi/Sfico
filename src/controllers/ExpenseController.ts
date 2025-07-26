@@ -15,26 +15,22 @@ class ExpenseController {
 
     async criar(req: Request, res: Response) {
         try {
-            const { valor, categoria, descricao, data } = req.body;
-            const dateFormated = formatDate(data)
+            const dataJSON = req.body;
+            const dateFormated = formatDate(dataJSON.data)
 
             await ExpenseSchema.validate({
-                valor, 
-                categoria, 
-                descricao, 
+               ...dataJSON,
                 dateFormated
             });
             
             const expense = await this.service.criar({
-                valor,
-                categoria,
-                descricao,
+                ...dataJSON,
                 data: dateFormated
             });
     
             res.status(201).json({ 
                 message: 'Expensives created successfully.', 
-                data: expense
+                content: expense
             })
 
         } catch (err) {
@@ -50,7 +46,7 @@ class ExpenseController {
 
     async listar(req: Request, res: Response) {
         try {
-            const expenses = await this.service.listar();
+            const expenses = await this.service.listar(req);
             
             res.status(200).send(expenses)
         } catch (err) {

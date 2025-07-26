@@ -1,9 +1,8 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 
 import ExpenseController from "@controllers/ExpenseController";
 
 const expenseController = new ExpenseController();
-
 const router = Router();
 
 router
