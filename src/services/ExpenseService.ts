@@ -1,6 +1,8 @@
+import { Request } from "express";
+
 import { Expense } from "@prisma/client";
 import ExpenseRepository from "@repositories/ExpenseRepository";
-import { Request } from "express";
+import { formatDateISO, formatedDateDMY } from "@utils/helpers/formatDate";
 
 class ExpenseService {
     private repository: ExpenseRepository;
@@ -19,7 +21,7 @@ class ExpenseService {
         updatedAt
     }: Expense): Promise<Expense> {
         console.log('POST/criar - ExpenseService.ts');
-
+    
         const expense = await this.repository.criar({
             id,
             valor,
@@ -33,31 +35,23 @@ class ExpenseService {
         return expense;
     }
 
-    async listar(req: Request): Promise<Object> {
+    async listar(req: Request): Promise<object> {
         console.log('GET/listar - ExpenseService.ts');
 
         // Recebendo paginação por parâmetros
         const skip = Number(req?.query?.skip) || 0;
         const per_page = Number(req?.query?.per_page) || 10;
 
-        const { total, pages, expense } = await this.repository.listar({ skip, per_page });
+        const { total, pages, expenses } = await this.repository.listar({ skip, per_page });
 
-        if (expense.length === 0) {
+        if (expenses.length === 0) {
             throw new Error("Nenhuma despesa foi encontrada.");
         }
 
-        const expenses = expense.map((item) => {
-            // Transformando o Date em string
-            const dateString = item.data.toISOString();
-
-            // Capturando o ano, mês e dia do campo data
-            // separando o dateString em um array de strings com 2 itens 
-            // os que estão antes do T e os que estão depois do T
-            const [ano, mes, dia] = dateString.split('T')[0].split('-');
-
+        const expensesResult = expenses.map((item) => {
             return {
                 ...item,
-                data: `${dia}/${mes}/${ano}`
+                data: formatedDateDMY(item.data)
             };
         })
 
@@ -66,7 +60,21 @@ class ExpenseService {
             pages, 
             skip,
             per_page, 
-            expenses
+            expenses: expensesResult
+        };
+    }
+
+    async listarPorId(expenseId: string): Promise<object> {
+        console.log('GET/listarPorId - ExpenseService.ts');
+
+        if (!expenseId) {
+            throw new Error('Dispesa não encontrada ou ID incorreto.');
+        }
+
+        const expense = await this.repository.listarPorId(expenseId);
+        return {
+            ...expense,
+            data: formatedDateDMY(expense.data)
         };
     }
 }

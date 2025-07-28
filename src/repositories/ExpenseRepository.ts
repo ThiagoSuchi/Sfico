@@ -12,7 +12,7 @@ class ExpenseRepository {
     }
 
     async listar({skip, per_page}: paginateDTO): Promise<ListExpensesDTO> {
-        const [expense, total] = await prisma.$transaction([
+        const [expenses, total] = await prisma.$transaction([
             prisma.expense.findMany({ skip, take: per_page }), // Busca uma lista de despesas paginada
             prisma.expense.count() // Conta o número total de despesas no banco
         ])
@@ -20,8 +20,17 @@ class ExpenseRepository {
         // Irá calcular o número total de páginas, divididos em páginas de tamanho fixo.
         const pages = Math.ceil(total / per_page)
 
-        return { total, pages, expense };
+        return { total, pages, expenses };
     }
+
+    async listarPorId(id: string): Promise<Expense> {
+        const expense = await prisma.expense.findUnique({ where: { id } })
+        return expense!
+    }
+    
+    // async atualizarPorId(): Promise<Expense> {}
+
+    // async deletarPorId(): Promise<Expense> {}
 }
 
 export default ExpenseRepository;

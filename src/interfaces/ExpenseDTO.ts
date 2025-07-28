@@ -1,17 +1,9 @@
-type ExpenseDTO = {
-    id: string,
-    valor: number
-    categoria: string,
-    descricao: string | null,
-    data: Date,
-    createdAt: Date,
-    updatedAt: Date
-}
+import { Expense } from "@prisma/client"
 
 interface ListExpensesDTO {
     total: number,
     pages: number,
-    expense: ExpenseDTO[]
+    expenses: Expense[]
 }
 
 export default ListExpensesDTO
