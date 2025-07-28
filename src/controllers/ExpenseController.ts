@@ -65,6 +65,23 @@ class ExpenseController {
         }
 
     }
+
+    async atualizar(req: Request, res: Response) {
+        try {
+            const dataJSON = req.body;
+            const id = req.params.id;
+            const dateFormated = formatDateISO(dataJSON.data);
+
+            await ExpenseSchema.validate({ ...dataJSON, dateFormated });
+
+            const expense = await this.service.atualizar(id, { ...dataJSON, data: dateFormated });
+
+            res.status(200).json({ message: 'Despesa atualizada com sucesso.', expense });
+        } catch (err) {
+            console.log(err);
+            res.status(400).json({ message:'Erro ao atualizar a despesa, falha ao análisar o ID/BODY.', err });
+        }
+    }
 }
 
 export default ExpenseController;

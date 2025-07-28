@@ -3,6 +3,7 @@ import { Request } from "express";
 import { Expense } from "@prisma/client";
 import ExpenseRepository from "@repositories/ExpenseRepository";
 import { formatDateISO, formatedDateDMY } from "@utils/helpers/formatDate";
+import { ExpenseSchema } from "@utils/validations/ExpenseSchema";
 
 class ExpenseService {
     private repository: ExpenseRepository;
@@ -76,6 +77,13 @@ class ExpenseService {
             ...expense,
             data: formatedDateDMY(expense.data)
         };
+    }
+
+    async atualizar(id: string, data: Expense): Promise<Expense> {
+        console.log('PUT/atualizar - ExpenseService.ts');
+
+        const expense = await this.repository.atualizar(id, data)
+        return expense
     }
 }
 

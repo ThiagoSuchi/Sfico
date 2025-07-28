@@ -28,7 +28,14 @@ class ExpenseRepository {
         return expense!
     }
     
-    // async atualizarPorId(): Promise<Expense> {}
+    async atualizar(id: string, data: object): Promise<Expense> {
+        const expense = await prisma.expense.update({
+            where: { id },
+            data
+        })
+
+        return expense
+    }
 
     // async deletarPorId(): Promise<Expense> {}
 }
