@@ -6,4 +6,14 @@ interface ListExpensesDTO {
     expenses: Expense[]
 }
 
-export default ListExpensesDTO
+interface PaginateDTO {
+    skip: number,
+    per_page: number
+}
+
+interface FilterDTO {
+    category?: string,
+    date?: string
+}
+
+export { ListExpensesDTO, PaginateDTO, FilterDTO }

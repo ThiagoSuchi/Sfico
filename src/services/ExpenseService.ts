@@ -2,8 +2,8 @@ import { Request } from "express";
 
 import { Expense } from "@prisma/client";
 import ExpenseRepository from "@repositories/ExpenseRepository";
-import { formatDateISO, formatedDateDMY } from "@utils/helpers/formatDate";
-import { ExpenseSchema } from "@utils/validations/ExpenseSchema";
+import { formatedDateDMY } from "@utils/helpers/formatDate";
+import { FilterDTO } from "@interfaces/ExpenseDTO";
 
 class ExpenseService {
     private repository: ExpenseRepository;
@@ -76,6 +76,31 @@ class ExpenseService {
             ...expense,
             data: formatedDateDMY(expense.data)
         };
+    }
+
+    async listarPorFiltro({ category, date }: FilterDTO): Promise<Expense[] | null> {
+        console.log('GET/expenses/filtro - ExpenseService.ts');
+        
+        let firstDayMonth: Date | undefined;
+        let lastDayMonth: Date | undefined;
+
+        if (date && typeof date === 'string') {
+            const [mes, ano] = date.split('/');
+            firstDayMonth = new Date(+ano, +mes -1, 1); // Primeiro dia do mês
+            lastDayMonth = new Date(+ano, +mes, 0, 23, 59, 59); // Último dia do mês
+        }
+
+        const expensesFilter = await this.repository.listarPorFiltro({
+            category,
+            firstDate: firstDayMonth,
+            lastDate: lastDayMonth
+        });
+
+        if (expensesFilter.length === 0) {
+            return null
+        }
+
+        return expensesFilter
     }
 
     async atualizar(id: string, data: Expense): Promise<Expense> {

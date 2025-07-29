@@ -84,6 +84,29 @@ class ExpenseController {
         }
     }
 
+    async listarPorFiltro(req: Request, res: Response) {
+        try {
+            const { categoria, data } = req.query;
+
+            // Criando um objeto filter com campos válidos
+            const filter: any = {};
+            if (categoria && categoria !== 'undefined') filter.category = String(categoria);
+            if (data && data !== 'undefined') filter.date = String(data);
+
+            const expenses = await this.service.listarPorFiltro(filter);
+
+            if (!expenses || expenses.length === 0) {
+                return res.status(404).json({ message: 'Despesas não encontradas.' });
+            }
+
+            res.status(200).json({ message: 'Despesas encontradas: ', expenses });
+
+        } catch (err) {
+            console.log(err);
+            res.status(400).json({ message: 'Data inválida ou não informada.', error: err });
+        }
+    }
+
     async atualizar(req: Request, res: Response) {
         try {
             const dataJSON = req.body;
