@@ -1,5 +1,9 @@
 import * as yup from "yup";
 
+export const ExpenseSchemaID = yup.object({
+    id: yup.string().uuid('O ID fornecido é inválido.')
+})
+
 export const ExpenseSchema = yup.object({
     valor: yup
         .number()

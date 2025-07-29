@@ -10,7 +10,8 @@ router
     .get('/expenses', expenseController.listar.bind(expenseController))
     .get('/expenses/:id', expenseController.listarPorId.bind(expenseController))
     .put('/expenses/:id', expenseController.atualizar.bind(expenseController))
-    // .delete('/expenses/:id', expenseController.deletarPorId.bind(expenseController))
+    .delete('/expenses/:id', expenseController.deletarPorID.bind(expenseController))
+    .delete('/expenses', expenseController.deletar.bind(expenseController))
 
 
 export default router;

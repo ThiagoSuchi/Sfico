@@ -37,7 +37,13 @@ class ExpenseRepository {
         return expense
     }
 
-    // async deletarPorId(): Promise<Expense> {}
+    async deletarPorID(id: string): Promise<void> {
+        await prisma.expense.delete({ where: { id } })
+    }
+
+    async deletar(): Promise<void> {
+        await prisma.expense.deleteMany({})
+    }
 }
 
 export default ExpenseRepository;

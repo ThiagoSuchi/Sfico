@@ -36,7 +36,7 @@ class ExpenseService {
         return expense;
     }
 
-    async listar(req: Request): Promise<object> {
+    async listar(req: Request): Promise<object | null> {
         console.log('GET/listar - ExpenseService.ts');
 
         // Recebendo paginação por parâmetros
@@ -46,7 +46,7 @@ class ExpenseService {
         const { total, pages, expenses } = await this.repository.listar({ skip, per_page });
 
         if (expenses.length === 0) {
-            throw new Error("Nenhuma despesa foi encontrada.");
+            return null;
         }
 
         const expensesResult = expenses.map((item) => {
@@ -65,14 +65,13 @@ class ExpenseService {
         };
     }
 
-    async listarPorId(expenseId: string): Promise<object> {
+    async listarPorId(expenseId: string): Promise<object | null> {
         console.log('GET/listarPorId - ExpenseService.ts');
 
-        if (!expenseId) {
-            throw new Error('Dispesa não encontrada ou ID incorreto.');
-        }
-
         const expense = await this.repository.listarPorId(expenseId);
+
+        if (!expense) return null 
+
         return {
             ...expense,
             data: formatedDateDMY(expense.data)
@@ -84,6 +83,18 @@ class ExpenseService {
 
         const expense = await this.repository.atualizar(id, data)
         return expense
+    }
+
+    async deletarPorID(id: string): Promise<void> {
+        console.log('DELETE/deletarPorId - ExpenseService.ts');
+
+        await this.repository.deletarPorID(id)
+    }
+
+    async deletar(): Promise<void> {
+        console.log('DELETE/deletar - ExpenseService.ts');
+        
+        await this.repository.deletar();
     }
 }
 
