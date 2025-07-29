@@ -1,13 +1,12 @@
 
 # Sfico – Sua Finança Controlada
 
-Sfico é uma API REST desenvolvida em Node.js com TypeScript, Express, Prisma ORM e PostgreSQL, voltada para o controle financeiro pessoal. A aplicação permite que o usuário registre seus gastos, visualize resumos mensais, filtre por categoria/data e gerencie seu cadastro de forma segura.
+Sfico é uma API REST desenvolvida em Node.js com TypeScript, Express, Prisma ORM e PostgreSQL, voltada para o controle financeiro pessoal. A aplicação permite que o usuário registre seus gastos, visualize resumos mensais, filtre por categoria/data.
 
 ---
 
 ## Funcionalidades
 
-- Registro de usuário e autenticação com JWT
 - Criação de gastos financeiros
 - Listagem e filtro de gastos por data e categoria
 - Atualização e exclusão de gastos
@@ -19,8 +18,6 @@ Sfico é uma API REST desenvolvida em Node.js com TypeScript, Express, Prisma OR
 
 Embora este repositório contenha apenas a **API (backend)**, a lógica cobre as seguintes telas em uma possível aplicação frontend:
 
-- Tela de **Login**
-- Tela de **Cadastro**
 - Tela de **Gastos**
 - Tela de **Resumo**
 
@@ -48,15 +45,13 @@ model Expense {
 
 | Método | Rota                                 | Ação                        | Tela associada      |
 |--------|--------------------------------------|-----------------------------|---------------------|
-| POST   | /auth/register                       | Registrar novo usuário      | Tela de Cadastro    |
-| POST   | /auth/login                          | Login do usuário (JWT)      | Tela de Login       |
 | POST   | /expenses                            | Criar novo gasto            | Tela de Gastos      |
 | GET    | /expenses                            | Listar todos os gastos      | Tela de Gastos      |
 | GET    | /expenses/:id                        | Buscar gasto por ID         | Tela de Gastos      |
 | PUT    | /expenses/:id                        | Atualizar um gasto          | Tela de Gastos      |
 | DELETE | /expenses/:id                        | Deletar um gasto            | Tela de Gastos      |
-| GET    | /summary/monthly                     | Ver total mensal            | Tela de Resumo      |
 | GET    | /expenses?categoria=x&data=yyyy-mm   | Filtrar por categoria e mês | Tela de Gastos      |
+| GET    | /summary/monthly                     | Ver total mensal            | Tela de Resumo      |
 
 ---
 
@@ -66,9 +61,7 @@ model Expense {
 - TypeScript
 - Prisma ORM
 - PostgreSQL (via Docker)
-- JWT para autenticação
 - Yup para validação de dados
-- bcryptjs para hash de senha
 - Docker e docker-compose
 
 ---
@@ -76,7 +69,7 @@ model Expense {
 ## Como executar o projeto
 
 ### Pré-requisitos
-- Node.js 18+
+- Node.js
 - Docker e Docker Compose
 
 1. **Clone o repositório**
@@ -136,20 +129,15 @@ model Expense {
 src/
 ├── config/            # Configurações (Prisma, env)
 ├── controllers/       # Camada de Controllers
+├── interfaces/             # DTOs
 ├── middleware/        # Middlewares (auth, async handler)
 ├── repositories/      # Acesso ao banco via Prisma
 ├── routes/            # Arquivos de rotas
 ├── services/          # Regras de negócio
-├── types/             # DTOs
 ├── utils/             # Helpers e validadores
 ├── app.ts             # Configuração da aplicação
 └── server.ts          # Arquivo principal
 ```
-
----
-
-## Autenticação
-A autenticação é feita via JWT. Após o login, o token deve ser enviado no header das requisições protegidas:
 
 
 ---

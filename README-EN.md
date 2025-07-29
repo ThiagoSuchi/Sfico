@@ -1,34 +1,25 @@
+
 # Sfico – Your Finances Under Control
 
-Sfico is a REST API developed with Node.js, TypeScript, Express, Prisma ORM, and PostgreSQL, focused on personal financial management. The application allows users to register expenses, view monthly summaries, filter by category/date, and securely manage their account.
-
----
+Sfico is a REST API built with Node.js, TypeScript, Express, Prisma ORM, and PostgreSQL. It's designed for personal finance management, allowing users to record their expenses, view monthly summaries, and filter data by category or date.
 
 ## Features
 
-- User registration and authentication with JWT
-- Creation of financial expenses
-- Listing and filtering expenses by date and category
-- Updating and deleting expenses
-- Monthly expense summary
-
----
+- Create financial expenses
+- List and filter expenses by date and category
+- Update and delete expenses
+- Monthly total expense summary
 
 ## Associated Screens (Frontend)
 
-Although this repository contains only the **API (backend)**, the logic covers the following screens in a possible frontend application:
+Although this repository contains only the API (backend), the logic supports the following screens in a possible frontend application:
 
-- **Login** screen
-- **Register** screen
-- **Expenses** screen
-- **Summary** screen
-
----
+- Expenses Screen
+- Summary Screen
 
 ## Data Model
 
-### Entity: Expense
-
+**Entity: Expense**
 ```prisma
 model Expense {
   id         String   @id @default(uuid())
@@ -41,23 +32,17 @@ model Expense {
 }
 ```
 
----
+## API Routes
 
-## Application Routes
-
-| Method | Route                                 | Action                        | Associated Screen   |
-|--------|---------------------------------------|-------------------------------|---------------------|
-| POST   | /auth/register                        | Register new user             | Register screen     |
-| POST   | /auth/login                           | User login (JWT)              | Login screen        |
-| POST   | /expenses                             | Create new expense            | Expenses screen     |
-| GET    | /expenses                             | List all expenses             | Expenses screen     |
-| GET    | /expenses/:id                         | Get expense by ID             | Expenses screen     |
-| PUT    | /expenses/:id                         | Update an expense             | Expenses screen     |
-| DELETE | /expenses/:id                         | Delete an expense             | Expenses screen     |
-| GET    | /summary/monthly                      | View monthly summary          | Summary screen      |
-| GET    | /expenses?categoria=x&data=yyyy-mm    | Filter by category and month  | Expenses screen     |
-
----
+| Method | Route                             | Action                         | Associated Screen |
+|--------|-----------------------------------|--------------------------------|-------------------|
+| POST   | /expenses                         | Create a new expense           | Expenses Screen   |
+| GET    | /expenses                         | List all expenses              | Expenses Screen   |
+| GET    | /expenses/:id                     | Get expense by ID              | Expenses Screen   |
+| PUT    | /expenses/:id                     | Update an expense              | Expenses Screen   |
+| DELETE | /expenses/:id                     | Delete an expense              | Expenses Screen   |
+| GET    | /expenses?categoria=x&data=yyyy-mm| Filter by category and month   | Expenses Screen   |
+| GET    | /summary/monthly                  | Get monthly total summary      | Summary Screen    |
 
 ## Technologies Used
 
@@ -65,59 +50,65 @@ model Expense {
 - TypeScript
 - Prisma ORM
 - PostgreSQL (via Docker)
-- JWT for authentication
-- Zod for data validation
-- bcryptjs for password hashing
-- Docker and docker-compose
-
----
+- Yup for data validation
+- Docker and Docker Compose
 
 ## How to Run the Project
 
 ### Prerequisites
-- Node.js 18+
+
+- Node.js
 - Docker and Docker Compose
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/sfico-api.git
-   cd sfico-api
-   ```
-2. **Start the database with Docker Compose**
-   ```bash
-   docker-compose up -d
-   ```
-   This will create a PostgreSQL container on port 5432.
+### Clone the repository
 
-3. **Configure the environment**
-   Create a `.env` file in the root with the following variables:
-   ```env
-   DATABASE_URL=postgresql://docker:docker@localhost:5432/postgres
-   JWT_SECRET=your_secret_key
-   ```
+```bash
+git clone https://github.com/your-username/sfico-api.git
+cd sfico-api
+```
 
-4. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### Start the database using Docker Compose
 
-5. **Generate Prisma client**
-   ```bash
-   npm run build:prisma
-   ```
+```bash
+docker-compose up -d
+```
 
-6. **Run migrations (if not done yet)**
-   ```bash
-   npx prisma migrate dev --name init
-   ```
+This will create a PostgreSQL container on port 5432.
 
-7. **Start the server in dev mode**
-   ```bash
-   npm run dev
-   ```
-   Server running at http://localhost:3000
+### Set up the environment
 
----
+Create a `.env` file in the root directory with the following content:
+
+```env
+DATABASE_URL=postgresql://docker:docker@localhost:5432/postgres
+JWT_SECRET=your_secret_key
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Generate Prisma client
+
+```bash
+npm run build:prisma
+```
+
+### Run migrations (if not already done)
+
+```bash
+npx prisma migrate dev --name init
+```
+
+### Start the server in development mode
+
+```bash
+npm run dev
+```
+
+The server will run at http://localhost:3080
 
 ## Available Scripts
 
@@ -127,30 +118,22 @@ model Expense {
 | npm run build       | Compiles the TypeScript project    |
 | npm run build:prisma| Generates Prisma clients           |
 
----
-
-## Folder Structure
+## Project Structure
 
 ```bash
 src/
 ├── config/            # Configurations (Prisma, env)
 ├── controllers/       # Controllers layer
-├── middleware/        # Middlewares (auth, async handler)
+├── interfaces/        # DTOs
+├── middleware/        # Middleware (auth, async handler)
 ├── repositories/      # Database access via Prisma
-├── routes/            # Route files
+├── routes/            # Routing files
 ├── services/          # Business logic
-├── types/             # DTOs
 ├── utils/             # Helpers and validators
-├── app.ts             # Application setup
-└── server.ts          # Main file
+├── app.ts             # App configuration
+└── server.ts          # Entry point
 ```
 
----
-
-## Authentication
-Authentication is done via JWT. After login, the token must be sent in the header of protected requests:
-
----
-
 ## License
-Project free for study and learning purposes.
+
+This project is free to use for educational and learning purposes.
