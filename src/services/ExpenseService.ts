@@ -12,25 +12,19 @@ class ExpenseService {
         this.repository = new ExpenseRepository();
     }
 
-    async criar({
-        id,
-        valor,
-        categoria,
-        descricao,
-        data,
-        createdAt,
-        updatedAt
-    }: Expense): Promise<Expense> {
+    async criar(content: { 
+        valor: number; 
+        categoria: string; 
+        descricao?: string | null; 
+        data: Date 
+    }): Promise<Expense> {
         console.log('POST/criar - ExpenseService.ts');
     
         const expense = await this.repository.criar({
-            id,
-            valor,
-            categoria,
-            descricao,
-            data,
-            createdAt,
-            updatedAt
+            valor: content.valor,
+            categoria: content.categoria,
+            descricao: content.descricao,
+            data: content.data
         });
 
         return expense;
@@ -78,7 +72,7 @@ class ExpenseService {
         };
     }
 
-    async listarPorFiltro({ category, date }: FilterDTO): Promise<Expense[] | null> {
+    async listarPorFiltro({ category, date }: FilterDTO): Promise<any[] | null> {
         console.log('GET/expenses/filtro - ExpenseService.ts');
         
         let firstDayMonth: Date | undefined;
@@ -100,7 +94,10 @@ class ExpenseService {
             return null
         }
 
-        return expensesFilter
+        return expensesFilter.map(item => ({
+            ...item,
+            data: formatedDateDMY(item.data)
+        }))
     }
 
     async atualizar(id: string, data: Expense): Promise<Expense> {

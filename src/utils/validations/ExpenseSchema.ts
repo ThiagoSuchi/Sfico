@@ -11,6 +11,8 @@ export const ExpenseSchema = yup.object({
         .required('O campo valor é obrigatório.'),
     categoria: yup
         .string()
+        .strict(true)
+        .typeError('O valor de categoria deve ser um texto')
         .required('O campo categoria é obrigatório.'),
     descricao: yup
         .string()

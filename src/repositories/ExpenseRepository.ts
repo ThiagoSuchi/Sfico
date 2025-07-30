@@ -3,9 +3,15 @@ import prisma from "@config/prisma"// Importando intância ja criada
 
 import { Expense } from "@prisma/client"
 import { ListExpensesDTO, PaginateDTO } from "@interfaces/ExpenseDTO";
+import AppError from "@utils/errors/AppErrors";
 
 class ExpenseRepository {
-    async criar(data: Expense): Promise<Expense> {
+    async criar(data: { 
+        valor: number; 
+        categoria: string; 
+        descricao?: string | null; 
+        data: Date 
+    }): Promise<Expense> {
         const expense = await prisma.expense.create({ data });
         return expense
     }
@@ -47,20 +53,39 @@ class ExpenseRepository {
     }
     
     async atualizar(id: string, data: object): Promise<Expense> {
-        const expense = await prisma.expense.update({
-            where: { id },
-            data
-        })
+        try {
+            const expense = await prisma.expense.update({
+                where: { id },
+                data
+            })
+            
+            return expense
 
-        return expense
+        } catch (err: any) {
+            if (err.code === 'P2025') {
+                throw new AppError("Erro ao atualizar despesa, ID não encontrado", 404);
+            }
+            throw err
+        }
     }
 
     async deletarPorID(id: string): Promise<void> {
-        await prisma.expense.delete({ where: { id } })
+        try {
+            await prisma.expense.delete({ where: { id } })
+        } catch (err: any) {
+            if (err.code === 'P2025') {
+                throw new AppError("Despesa não encontrada, por favor insira um ID válido.", 404);
+            }
+            throw err
+        }
     }
 
     async deletar(): Promise<void> {
-        await prisma.expense.deleteMany({})
+        const expense = await prisma.expense.deleteMany({})
+
+        if (!expense.count) {
+            throw new AppError("Erro ao apagar despesas, não foi encontrado nenhuma despesa.", 404)
+        }
     }
 }
 
