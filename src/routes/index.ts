@@ -1,11 +1,13 @@
 //src/routes/index.ts
 import { Application } from "express";
 
-import expensive from "@routes/ExpenseRoutes"
+import expense from "@routes/ExpenseRoutes"
+import income from "@routes/IncomesRoutes"
 
 const routes = (app: Application) => {
     app.use(
-        expensive,
+        expense,
+        income
     )
 }
 
