@@ -80,8 +80,8 @@ class IncomeService {
 
         if (date && typeof date === 'string') {
             const [mes, ano] = date.split('/');
-            firstDayMonth = new Date(+ano, +mes -1, 1); // Primeiro dia do mês
-            lastDayMonth = new Date(+ano, +mes, 0, 23, 59, 59); // Último dia do mês
+            firstDayMonth = new Date(Date.UTC(+ano, +mes - 1, 1, 0, 0, 0)); // Primeiro dia do mês
+            lastDayMonth = new Date(Date.UTC(+ano, +mes, 0, 23, 59, 59)); // Último dia do mês
         }
 
         const incomesFilter = await this.repository.listarPorFiltro({

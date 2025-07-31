@@ -25,7 +25,7 @@ class IncomeController {
         });
 
         res.status(201).json({
-            message: 'Dispesa criada com sucesso.',
+            message: 'Receita criada com sucesso.',
             ...income,
             data: formatedDateDMY(dateFormated)
         })
@@ -35,7 +35,7 @@ class IncomeController {
         const incomes = await this.service.listar(req);
 
         if (!incomes) {
-            throw new AppError("Nenhuma despesa foi criada.", 404)
+            throw new AppError("Nenhuma receita foi criada.", 404)
         }
 
         res.status(200).send(incomes)
@@ -49,7 +49,7 @@ class IncomeController {
         const income = await this.service.listarPorId(id);
 
         if (!income) {
-            throw new AppError("Despesa não encontrada.", 404)
+            throw new AppError("Receita não encontrada.", 404)
         }
 
         res.status(200).json(income);
@@ -66,10 +66,10 @@ class IncomeController {
         const incomes = await this.service.listarPorFiltro(filter);
 
         if (!incomes || incomes.length === 0) {
-            throw new AppError("Despesas não encontradas.", 404)
+            throw new AppError("Receitas não encontradas.", 404)
         }
 
-        res.status(200).json({ message: 'Despesas encontradas: ', incomes });
+        res.status(200).json({ message: 'Receitas encontradas: ', incomes });
     }
 
     async atualizar(req: Request, res: Response) {
@@ -83,7 +83,7 @@ class IncomeController {
         const income = await this.service.atualizar(id, { ...dataJSON, data: dateFormated });
         
         res.status(200).json({ 
-            message: 'Despesa atualizada com sucesso.', 
+            message: 'Receita atualizada com sucesso.', 
             ...income,
             data: formatedDateDMY(dateFormated)
         });
@@ -93,12 +93,12 @@ class IncomeController {
         const incomeId = req.params.id;
 
         await this.service.deletarPorID(incomeId);
-        res.status(200).json({ message: 'Despesa deletada com sucesso' });
+        res.status(200).json({ message: 'Receita deletada com sucesso' });
     }
 
     async deletar(req: Request, res: Response) {
         await this.service.deletar();
-        res.status(200).json({ message: 'Despesas apagadas com sucesso.' })
+        res.status(200).json({ message: 'Receitas apagadas com sucesso.' })
     }
 }
 
