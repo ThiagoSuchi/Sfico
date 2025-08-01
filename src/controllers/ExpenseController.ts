@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import * as yup from "yup";
 
 import ExpensiveService from "@services/ExpenseService";
-import { ExpenseSchema, ExpenseSchemaID } from "@utils/validations/ExpenseSchema";
+import { BodySchema, BodySchemaID } from "@utils/validations/BodySchema";
 import { formatDateISO, formatedDateDMY } from "@utils/helpers/formatDate";
 import AppError from "@utils/errors/AppErrors";
 
@@ -18,7 +18,7 @@ class ExpenseController {
         const dataJSON = req.body;
         const dateFormated = formatDateISO(dataJSON.data)
 
-        const validated = await ExpenseSchema.validate({ ...dataJSON, dateFormated });
+        const validated = await BodySchema.validate({ ...dataJSON, dateFormated });
 
         const expense = await this.service.criar({
             ...validated,
@@ -45,7 +45,7 @@ class ExpenseController {
     async listarPorId(req: Request, res: Response) {
         const { id } = req.params || {};
 
-        await ExpenseSchemaID.validate({ id })
+        await BodySchemaID.validate({ id })
 
         const expense = await this.service.listarPorId(id);
 
@@ -79,7 +79,7 @@ class ExpenseController {
 
         const dateFormated = formatDateISO(dataJSON.data);
 
-        await ExpenseSchema.validate({ ...dataJSON, dateFormated });
+        await BodySchema.validate({ ...dataJSON, dateFormated });
 
         const expense = await this.service.atualizar(id, { ...dataJSON, data: dateFormated });
         

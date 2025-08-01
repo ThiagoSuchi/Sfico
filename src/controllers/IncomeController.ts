@@ -2,7 +2,7 @@
 import { Request, Response } from "express";
 
 import IncomeService from "@services/IncomeService";
-import { IncomeSchema, IncomeSchemaID } from "@utils/validations/IncomeSchema";
+import { BodySchema, BodySchemaID } from "@utils/validations/BodySchema";
 import { formatDateISO, formatedDateDMY } from "@utils/helpers/formatDate";
 import AppError from "@utils/errors/AppErrors";
 
@@ -17,7 +17,7 @@ class IncomeController {
         const dataJSON = req.body;
         const dateFormated = formatDateISO(dataJSON.data)
 
-        const validated = await IncomeSchema.validate({ ...dataJSON, dateFormated });
+        const validated = await BodySchema.validate({ ...dataJSON, dateFormated });
 
         const income = await this.service.criar({
             ...validated,
@@ -44,7 +44,7 @@ class IncomeController {
     async listarPorId(req: Request, res: Response) {
         const { id } = req.params || {};
 
-        await IncomeSchemaID.validate({ id })
+        await BodySchemaID.validate({ id })
 
         const income = await this.service.listarPorId(id);
 
@@ -78,7 +78,7 @@ class IncomeController {
 
         const dateFormated = formatDateISO(dataJSON.data);
 
-        await IncomeSchema.validate({ ...dataJSON, dateFormated });
+        await BodySchema.validate({ ...dataJSON, dateFormated });
 
         const income = await this.service.atualizar(id, { ...dataJSON, data: dateFormated });
         

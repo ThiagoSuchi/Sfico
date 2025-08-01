@@ -1,9 +1,8 @@
 //src/repositories/IncomeRepository.ts
 import prisma from "@config/prisma"// Importando intância ja criada
 
-
 import { Incomes } from "@prisma/client";
-import { ListIncomesDTO, PaginateDTO } from "@interfaces/IncomeDTO";
+import { ListDTO, PaginateDTO } from "@interfaces/ListIncomesExpenseSummaryDTO";
 import AppError from "@utils/errors/AppErrors";
 
 class IncomeRepository {
@@ -19,14 +18,14 @@ class IncomeRepository {
     }
 
 
-    async listar({skip, per_page}: PaginateDTO): Promise<ListIncomesDTO> {
+    async listar({skip, per_page}: PaginateDTO): Promise<ListDTO> {
         const [incomes, total] = await prisma.$transaction([
             prisma.incomes.findMany({ skip, take: per_page }), // Busca uma lista de receitas paginada.
             prisma.incomes.count() // Conta o número total de receitas no banco.
         ])
 
         // Irá calcular o número total de páginas, divididos em páginas de tamanho fixo.
-        const pages = Math.ceil(total / per_page)
+        const pages = Math.ceil(total / per_page);
 
         return { total, pages, incomes };
     }

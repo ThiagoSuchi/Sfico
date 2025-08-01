@@ -1,3 +1,5 @@
+//src/routes/IncomesRoutes.ts
+
 import { Router } from "express";
 
 import IncomeController from "@controllers/IncomeController";

@@ -2,7 +2,7 @@
 import prisma from "@config/prisma"// Importando intância ja criada
 
 import { Expense } from "@prisma/client"
-import { ListExpensesDTO, PaginateDTO } from "@interfaces/ExpenseDTO";
+import { ListDTO, PaginateDTO } from "@interfaces/ListIncomesExpenseSummaryDTO";
 import AppError from "@utils/errors/AppErrors";
 
 class ExpenseRepository {
@@ -16,7 +16,7 @@ class ExpenseRepository {
         return expense
     }
 
-    async listar({skip, per_page}: PaginateDTO): Promise<ListExpensesDTO> {
+    async listar({skip, per_page}: PaginateDTO): Promise<ListDTO> {
         const [expenses, total] = await prisma.$transaction([
             prisma.expense.findMany({ skip, take: per_page }), // Busca uma lista de despesas paginada.
             prisma.expense.count() // Conta o número total de despesas no banco.

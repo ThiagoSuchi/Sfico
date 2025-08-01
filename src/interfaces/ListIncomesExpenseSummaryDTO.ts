@@ -1,9 +1,10 @@
-import { Incomes } from "@prisma/client"
+import { Expense, Incomes } from "@prisma/client"
 
-interface ListIncomesDTO {
+interface ListDTO {
     total: number,
     pages: number,
-    incomes: Incomes[]
+    incomes?: Incomes[],
+    expenses?: Expense[],
 }
 
 interface PaginateDTO {
@@ -16,4 +17,4 @@ interface FilterDTO {
     date?: string
 }
 
-export { ListIncomesDTO, PaginateDTO, FilterDTO }
+export { ListDTO, PaginateDTO, FilterDTO }

@@ -1,10 +1,10 @@
 import * as yup from "yup";
 
-export const ExpenseSchemaID = yup.object({
+export const BodySchemaID = yup.object({
     id: yup.string().uuid('O ID fornecido é inválido.')
 })
 
-export const ExpenseSchema = yup.object({
+export const BodySchema = yup.object({
     valor: yup
         .number()
         .typeError('O valor deve ser um número')

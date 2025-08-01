@@ -1,9 +1,9 @@
 import { Request } from "express";
 
-import { Incomes } from "@prisma/client";
 import IncomeRepository from "@repositories/IncomesRepository";
+import { Incomes } from "@prisma/client";
 import { formatedDateDMY } from "@utils/helpers/formatDate";
-import { FilterDTO } from "@interfaces/IncomeDTO";
+import { FilterDTO } from "@interfaces/ListIncomesExpenseSummaryDTO";
 
 class IncomeService {
     private repository: IncomeRepository;
@@ -39,11 +39,11 @@ class IncomeService {
 
         const { total, pages, incomes } = await this.repository.listar({ skip, per_page });
 
-        if (incomes.length === 0) {
+        if (incomes!.length === 0) {
             return null;
         }
 
-        const incomesResult = incomes.map((item) => {
+        const incomesResult = incomes!.map((item) => {
             return {
                 ...item,
                 data: formatedDateDMY(item.data)
