@@ -2,13 +2,27 @@
 # Facilita rodar toda a aplicação com um único comando (docker-compose up).
 
 services: 
+  api:
+    build: .
+    container_name: sfico-api
+    ports:
+      - "3080:3080"
+    environment:
+      - DATABASE_URL=postgresql://docker:docker@db-postgres-sfico:5432/sficodb?schema=public
+    volumes:
+      - .:/app
+    depends_on:
+      - db-postgres-sfico
+
   db-postgres-sfico:
     image: postgres:alpine
+    container_name: sfico-db
     ports:
-      - '5432:5432' # Mapeamento da porta padrão do postgres 5432
+      - "5432:5432" # Mapeamento da porta padrão do postgres 5432
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=sficodb
     volumes:
       - api_data:/var/lib/postgresql/data
 
