@@ -1,5 +1,5 @@
 # Orquestra múltiplos containers (serviços) como um sistema completo.
-#Facilita rodar toda a aplicação com um único comando (docker-compose up).
+# Facilita rodar toda a aplicação com um único comando (docker-compose up).
 
 services: 
   db-postgres-sfico:

@@ -1,32 +1,37 @@
 
+
 # Sfico – Sua Finança Controlada
 
-Sfico é uma API REST desenvolvida em Node.js com TypeScript, Express, Prisma ORM e PostgreSQL, voltada para o controle financeiro pessoal. A aplicação permite que o usuário registre seus gastos, visualize resumos mensais, filtre por categoria/data.
+Sfico é uma API REST desenvolvida em Node.js com TypeScript, Express, Prisma ORM e PostgreSQL, voltada para o controle financeiro pessoal. A aplicação permite que o usuário registre **gastos** e **receitas**, visualize resumos mensais, filtre por categoria/data e mantenha o controle do seu saldo.
 
 ---
+
 
 ## Funcionalidades
 
-- Criação de gastos financeiros
-- Listagem e filtro de gastos por data e categoria
-- Atualização e exclusão de gastos
-- Resumo total mensal dos gastos
+- Criação de gastos financeiros (despesas)
+- Criação de receitas financeiras
+- Listagem e filtro de gastos e receitas por data e categoria
+- Atualização e exclusão de gastos e receitas
+- Resumo total, e resumo mensal dos gastos e receitas
 
 ---
+
 
 ## Telas associadas (Frontend)
 
 Embora este repositório contenha apenas a **API (backend)**, a lógica cobre as seguintes telas em uma possível aplicação frontend:
 
 - Tela de **Gastos**
+- Tela de **Receitas**
 - Tela de **Resumo**
 
 ---
 
+
 ## Modelo de Dados
 
-### Entidade: Expense (Gasto)
-
+### Entidade: Expense (Despesa)
 ```prisma
 model Expense {
   id         String   @id @default(uuid())
@@ -39,21 +44,52 @@ model Expense {
 }
 ```
 
+### Entidade: Incomes (Receita)
+```prisma
+model Incomes {
+  id         String   @id @default(uuid())
+  valor      Float
+  categoria  String
+  descricao  String?
+  data       DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+```
+
 ---
+
 
 ## Rotas da Aplicação
 
-| Método | Rota                                 | Ação                        | Tela associada      |
-|--------|--------------------------------------|-----------------------------|---------------------|
-| POST   | /expenses                            | Criar novo gasto            | Tela de Gastos      |
-| GET    | /expenses                            | Listar todos os gastos      | Tela de Gastos      |
-| GET    | /expenses/:id                        | Buscar gasto por ID         | Tela de Gastos      |
-| PUT    | /expenses/:id                        | Atualizar um gasto          | Tela de Gastos      |
-| DELETE | /expenses/:id                        | Deletar um gasto            | Tela de Gastos      |
-| GET    | /expenses?categoria=x&data=yyyy-mm   | Filtrar por categoria e mês | Tela de Gastos      |
-| GET    | /summary/monthly                     | Ver total mensal            | Tela de Resumo      |
+### Despesas
+| Método | Rota                                      | Ação                        | Tela associada      |
+|--------|-------------------------------------------|-----------------------------|---------------------|
+| POST   | /expenses                                 | Criar novo gasto            | Tela de Gastos      |
+| GET    | /expenses                                 | Listar todos os gastos      | Tela de Gastos      |
+| GET    | /expenses/:id                             | Buscar gasto por ID         | Tela de Gastos      |
+| PUT    | /expenses/:id                             | Atualizar um gasto          | Tela de Gastos      |
+| DELETE | /expenses/:id                             | Deletar um gasto            | Tela de Gastos      |
+| GET    | /expenses/filter?categoria=x&data=mm/yyyy | Filtrar por categoria e mês | Tela de Gastos      |
+
+### Receitas
+| Método | Rota                                     | Ação                            | Tela associada      |
+|--------|------------------------------------------|---------------------------------|---------------------|
+| POST   | /incomes                                 | Criar nova receita              | Tela de Receitas    |
+| GET    | /incomes                                 | Listar todas as receitas        | Tela de Receitas    |
+| GET    | /incomes/:id                             | Buscar receita por ID           | Tela de Receitas    |
+| PUT    | /incomes/:id                             | Atualizar uma receita           | Tela de Receitas    |
+| DELETE | /incomes/:id                             | Deletar uma receita             | Tela de Receitas    |
+| GET    | /incomes/filter?categoria=x&data=mm/yyyy | Filtrar por categoria e mês     | Tela de Receitas    |
+
+### Resumo
+| Método | Rota                                 | Ação                             | Tela associada      |
+|--------|--------------------------------------|----------------------------------|---------------------|
+| GET    | /summary                             | Ver total de despesas mensal     | Tela de Resumo      |
+| GET    | /summary/all                         | Total de receitas e despesas     | Tela de Resumo      |
 
 ---
+
 
 ## Tecnologias Utilizadas
 
@@ -65,6 +101,7 @@ model Expense {
 - Docker e docker-compose
 
 ---
+
 
 ## Como executar o projeto
 
@@ -86,8 +123,8 @@ model Expense {
 3. **Configure o ambiente**
    Crie um arquivo `.env` na raiz com as variáveis:
    ```env
-   DATABASE_URL=postgresql://docker:docker@localhost:5432/postgres
-   JWT_SECRET=sua_chave_secreta
+   PORT=3080
+   DATABASE_URL="postgresql://USUARIO:SENHA@HOST:PORTA/NOME_DO_BANCO?schema=public"
    ```
 
 4. **Instale as dependências**
@@ -97,12 +134,12 @@ model Expense {
 
 5. **Gere o client do Prisma**
    ```bash
-   npm run build:prisma
+   npm run prisma:generate
    ```
 
 6. **Rode as migrações (se ainda não fez)**
    ```bash
-   npx prisma migrate dev --name init
+   npm run prisma:migrate
    ```
 
 7. **Inicie o servidor em modo dev**
@@ -113,15 +150,18 @@ model Expense {
 
 ---
 
+
 ## Scripts disponíveis
 
-| Comando            | Descrição                        |
-|--------------------|----------------------------------|
-| npm run dev        | Inicia o servidor com ts-node-dev|
-| npm run build      | Compila o projeto TypeScript     |
-| npm run build:prisma| Gera os clients do Prisma        |
+| Comando                 | Descrição                        |
+|-------------------------|----------------------------------|
+| npm run dev             | Inicia o servidor com ts-node-dev|
+| npm run build           | Compila o projeto TypeScript     |
+| npm run prisma:generate | Gera os clients do Prisma        |
+| npm run prisma:migrate  | Executa as migrações do Prisma   |
 
 ---
+
 
 ## Estrutura de Pastas
 
@@ -129,7 +169,7 @@ model Expense {
 src/
 ├── config/            # Configurações (Prisma, env)
 ├── controllers/       # Camada de Controllers
-├── interfaces/             # DTOs
+├── interfaces/        # DTOs
 ├── middleware/        # Middlewares (auth, async handler)
 ├── repositories/      # Acesso ao banco via Prisma
 ├── routes/            # Arquivos de rotas
