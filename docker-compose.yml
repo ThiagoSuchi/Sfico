@@ -15,6 +15,18 @@ services:
     depends_on:
       - db-postgres-sfico
 
+  frontend: 
+    build: ./Frontend
+    image: sfico-frontend:latest
+    container_name: sfico-front
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Frontend:/app
+    command: npm run dev
+    depends_on:
+      - api
+
   db-postgres-sfico:
     image: postgres:alpine
     container_name: sfico-db

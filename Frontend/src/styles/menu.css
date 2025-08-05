@@ -1,0 +1,70 @@
+/*---MENU---*/
+
+:root {
+    --black-default: black;
+    --white-default: white;
+    --red-default: #D4002F;
+    --red-ligth: #F07A95;
+    --color-h1: #4A4A4A;
+    --color-paragraph: #6f747e;
+    --color-button: #259A67;
+    --color-green-light: #EDFEF5;
+    --color-select: #eeeeee;
+    --color-border: #e9e9e9;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 300px;
+    min-height: 100vh;
+    background-color: var(--white-default);
+    box-shadow: 10px 0px 10px rgba(199, 199, 199, 0.349);
+}
+
+.div-logo {
+    border-bottom: 2px solid rgba(184, 184, 184, 0.24);
+}
+
+.logo {
+    width: 150px;
+    margin: 1rem 0;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    margin: 0 1rem;
+    gap: 1rem;
+    color: var(--color-paragraph);
+}
+
+.links h3 {
+    padding: 1rem;
+    cursor: pointer;
+    border-right: 2px solid transparent;
+    transition: .2s ease-in-out;
+}
+
+.links h3:hover {
+    padding: 1rem;
+    color: var(--color-button);
+    border-right: 2px solid var(--color-button);
+    background-color: var(--color-green-light);
+}
+
+.links h3.active {
+    padding: 1rem;
+    color: var(--color-button);
+    border-right: 2px solid var(--color-button);
+    background-color: var(--color-green-light);
+}
