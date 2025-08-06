@@ -20,8 +20,14 @@ export class ApplicationSFICO {
             new ManagerNavigation();
             console.log('Gerenciador de navegação inicializado.');
 
-            const { ManagerChart } = await import('../services/ManagerChart.js')
-            new ManagerChart();
+            const { ManagerMobileMenu } = await import('../services/ManagerMobileMenu.js');
+            new ManagerMobileMenu();
+            console.log('Gerenciador de menu móvel inicializado.');
+
+            const { ManagerChartGlobal } = await import('../services/ManagerChartGlobal.js')
+            new ManagerChartGlobal();
+            const { ManagerChartMonthly } = await import('../services/ManagerChartMonthly.js')
+            new ManagerChartMonthly();
             console.log('Gráficos inicializado.');
 
             const { ManagerSummary } = await import('../services/ManagerSummary.js')

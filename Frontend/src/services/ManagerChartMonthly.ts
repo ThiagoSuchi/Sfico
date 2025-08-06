@@ -1,37 +1,25 @@
 import {
-    Chart,
-    CategoryScale,
-    LinearScale,
-    LineElement,
-    PointElement,
-    Title,
-    Tooltip,
-    Legend,
-    ArcElement,
-    LineController,
-    PieController,
-    BarController,
+    Chart, CategoryScale,
+    LinearScale, LineElement,
+    PointElement, Title,
+    Tooltip, Legend,
+    ArcElement, LineController,
+    PieController, BarController,
     BarElement
 } from 'chart.js';
 
 Chart.register(
-    CategoryScale,
-    LinearScale,
-    LineElement,
-    PointElement,
-    Title,
-    Tooltip,
-    Legend,
-    ArcElement,
-    LineController,
-    PieController,
-    BarController,
-    BarElement
+    CategoryScale, LinearScale,
+    LineElement, PointElement,
+    Title, Tooltip,
+    Legend, ArcElement,
+    LineController, PieController,
+    BarController, BarElement
 )
 
-export class ManagerChart {
-    private ctxLine = document.getElementById('line-chart')! as HTMLCanvasElement;
-    private ctxPie = document.getElementById('pie-chart')! as HTMLCanvasElement;
+export class ManagerChartMonthly {
+    private ctxLine = document.getElementById('monthly-line-chart')! as HTMLCanvasElement;
+    private ctxPie = document.getElementById('monthly-pie-chart')! as HTMLCanvasElement;
 
     constructor() {
         setTimeout(() => {
@@ -46,10 +34,10 @@ export class ManagerChart {
             data: {
                 labels: ['Receitas', 'Despesas'],
                 datasets: [{
-                    data: [1500, 400],
+                    data: [100, 100],
                     borderWidth: 2,
                     borderColor: "transparent",
-                    backgroundColor: ["rgb(37, 154, 103)", "#ad1a3aff"]
+                    backgroundColor: ["rgb(37, 154, 103)", "rgba(216, 60, 60, 1)"]
                 }]
             },
             options: {
@@ -85,10 +73,10 @@ export class ManagerChart {
             data: {
                 labels: ['Receitas', 'Despesas'],
                 datasets: [{
-                    data: [300, 150],
-                    backgroundColor: ['rgb(37, 154, 103)', '#ad1a3aff'],
+                    data: [100, 100],
+                    backgroundColor: ['rgb(37, 154, 103)', 'rgba(216, 60, 60, 1)'],
                     borderWidth: 2,
-                    borderColor: '#fff'
+                    borderColor: '#E5E7EB'
                 }]
             },
             options: {

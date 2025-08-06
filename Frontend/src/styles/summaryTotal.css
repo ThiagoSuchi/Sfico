@@ -14,7 +14,6 @@
     box-sizing: border-box;
 }
 
-/* Mostrar apenas quando ativo */
 #general-summary.active {
     display: flex;
 }
@@ -36,27 +35,27 @@
     border-color: var(--color-button);
 }
 
-/* Hover apenas para botões não ativos */
 #general-summary button:not(.active):hover {
     background-color: var(--color-green-light);
     border-color: var(--color-button);
     color: var(--color-button);
 }
 
-/* Container da seção mensal */
-#general-summary .global-section {
+/*------SUMMARY SECTIONS (GLOBAL & MONTHLY)------*/
+
+/* Container das seções - Aplicado a todas as seções */
+#general-summary .summary-section {
     display: none;
     flex-direction: column;
     gap: 25px;
     width: 100%;
 }
 
-#general-summary .global-section.active {
+#general-summary .summary-section.active {
     display: flex;
 }
 
-/* Grid dos totais - APENAS na seção de resumo */
-#general-summary .global-section .total-containers {
+#general-summary .summary-section .total-containers {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
@@ -65,8 +64,7 @@
     box-sizing: border-box;
 }
 
-/* Cards totais - APENAS na seção de resumo */
-#general-summary .global-section .total {
+#general-summary .summary-section .total {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -81,14 +79,14 @@
     overflow: hidden;
 }
 
-#general-summary .global-section .total img {
+#general-summary .summary-section .total img {
     width: 60px;
     height: 60px;
     flex-shrink: 0;
     object-fit: contain;
 }
 
-#general-summary .global-section .total-content {
+#general-summary .summary-section .total-content {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -96,7 +94,7 @@
     min-width: 0;
 }
 
-#general-summary .global-section .total p {
+#general-summary .summary-section .total p {
     color: var(--color-paragraph);
     font-size: 14px;
     margin: 0;
@@ -105,7 +103,7 @@
     text-overflow: ellipsis;
 }
 
-#general-summary .global-section .total h1 {
+#general-summary .summary-section .total h1 {
     font-size: 18pt;
     font-weight: 800;
     color: var(--color-button);
@@ -115,8 +113,7 @@
     text-overflow: ellipsis;
 }
 
-/* Grid dos gráficos - APENAS na seção de resumo */
-#general-summary .global-section .charts-container {
+#general-summary .summary-section .charts-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
@@ -125,7 +122,7 @@
     box-sizing: border-box;
 }
 
-#general-summary .global-section .chart-wrapper {
+#general-summary .summary-section .chart-wrapper {
     display: flex;
     flex-direction: column;
     text-align: start;
@@ -141,55 +138,91 @@
     box-sizing: border-box;
 }
 
-#general-summary .global-section .chart-wrapper h2 {
+#general-summary .summary-section .chart-wrapper h2 {
     margin: 0 0 20px 0;
     padding: 0;
     color: var(--color-h1);
     align-self: flex-start;
 }
 
-#general-summary .global-section .chart-wrapper canvas {
+#general-summary .summary-section .chart-wrapper canvas {
     align-self: center;
     flex: 1;
+    max-width: 300px;
 }
 
-#pie-chart {
-    width: 300px;
+/*-------Descrição de Resumo Mensal*/
+.desc-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 15px;
+    background-color: var(--white-default);
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 150px;
+    max-height: 150px;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-/* Responsivo - IGUAL às outras telas */
+.desc-summary h1 {
+    color: var(--color-h1);
+    font-size: 16pt;
+    font-weight: 800;
+}
+
+.desc-summary .congrat {
+    color: var(--color-button);
+    font-weight: 700;
+}
+
+.desc-summary p {
+    color: var(--color-h1);
+}
+
+.desc-summary span {
+    color: var(--color-h1);
+    font-weight: 900;
+}
+
+/*------Responsivo------*/
+
 @media (max-width: 480px) {
     #general-summary {
-        padding: 15px;
+        padding: 5rem 1rem 1rem 1rem;
         gap: 20px;
     }
     
-    #general-summary .global-section .total-containers {
+    #general-summary .summary-section .total-containers {
         grid-template-columns: 1fr;
         gap: 15px;
     }
     
-    #general-summary .global-section .charts-container {
+    #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr;
         gap: 15px;
     }
     
-    #general-summary .global-section .total {
+    #general-summary .summary-section .total {
         padding: 15px;
         min-height: 100px;
         max-height: 100px;
     }
     
-    #general-summary .global-section .total img {
+    #general-summary .summary-section .total img {
         width: 50px;
         height: 50px;
     }
     
-    #general-summary .global-section .total h1 {
+    #general-summary .summary-section .total h1 {
         font-size: 16pt;
     }
     
-    #general-summary .global-section .chart-wrapper {
+    #general-summary .summary-section .chart-wrapper {
         padding: 15px;
         min-height: 250px;
     }
@@ -197,36 +230,36 @@
 
 @media (min-width: 481px) and (max-width: 768px) {
     #general-summary {
-        padding: 20px;
+        padding: 5rem 1.25rem 1.25rem 1.25rem;
         gap: 20px;
     }
     
-    #general-summary .global-section .total-containers {
+    #general-summary .summary-section .total-containers {
         grid-template-columns: 1fr;
         gap: 15px;
     }
     
-    #general-summary .global-section .charts-container {
+    #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr;
         gap: 15px;
     }
     
-    #general-summary .global-section .total {
+    #general-summary .summary-section .total {
         padding: 15px;
         min-height: 100px;
         max-height: 100px;
     }
     
-    #general-summary .global-section .total img {
+    #general-summary .summary-section .total img {
         width: 50px;
         height: 50px;
     }
     
-    #general-summary .global-section .total h1 {
+    #general-summary .summary-section .total h1 {
         font-size: 16pt;
     }
     
-    #general-summary .global-section .chart-wrapper {
+    #general-summary .summary-section .chart-wrapper {
         padding: 15px;
         min-height: 250px;
     }
@@ -249,12 +282,12 @@
         display: flex;
     }
     
-    #general-summary .global-section .total-containers {
+    #general-summary .summary-section .total-containers {
         grid-template-columns: repeat(1, 1fr);
         gap: 15px;
     }
     
-    #general-summary .global-section .charts-container {
+    #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr;
         gap: 15px;
     }
@@ -265,12 +298,12 @@
         padding: 50px 100px;
     }
     
-    #general-summary .global-section .total-containers {
+    #general-summary .summary-section .total-containers {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
     
-    #general-summary .global-section .charts-container {
+    #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
@@ -281,12 +314,12 @@
         padding: 50px 200px;
     }
     
-    #general-summary .global-section .total-containers {
+    #general-summary .summary-section .total-containers {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
     
-    #general-summary .global-section .charts-container {
+    #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
