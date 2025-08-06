@@ -36,7 +36,6 @@
       <h3 id="expenses"><i class="bi bi-credit-card"></i> Despesas</h3>
       <h3 id="summary"><i class="bi bi-bar-chart-line"></i> Resumo Financeiro</h3>
     </div><!--links-->
-
   </div><!--menu-->
 
   <section class="general-section" id="general-incomes">
@@ -67,7 +66,6 @@
         <label for="inc-monthYear">Mês/Ano</label>
         <input type="month" id="inc-monthYear" name="monthYear">
       </div><!--monthYear-->
-
     </div><!--filter-->
 
     <div class="items">
@@ -84,9 +82,7 @@
         <button class="btn-edit"><i class="bi bi-pencil-square"></i> Editar</button>
         <button class="btn-delete"><i class="bi bi-trash3"></i> Excluir</button>
       </div><!--edit-->
-
     </div><!--items-->
-
   </section><!--general-incomes-->
 
   <section class="general-section" id="general-expenses">
@@ -102,7 +98,7 @@
       <div class="category">
         <label for="exp-category">Categoria</label>
         <select name="category" id="exp-category">
-          <option value="" selected>Todas as categorias</option>
+
           <option value="alimentacao">Alimentação</option>
           <option value="transporte">Transporte</option>
           <option value="moradia">Moradia</option>
@@ -116,6 +112,7 @@
           <option value="presentes">Presentes e doações</option>
           <option value="viagens">Viagens</option>
         </select>
+
       </div><!--category-->
 
       <div class="monthYear">
@@ -124,6 +121,13 @@
       </div><!--monthYear-->
 
     </div><!--filter-->
+    </div>
+
+    <div class="monthYear">
+      <label for="monthYear">Mês/Ano</label>
+      <input type="month" id="monthYear" name="monthYear">
+    </div>
+    </div>
 
     <div class="items">
       <div class="value">
@@ -132,7 +136,6 @@
           <p><span>Salário</span></p>
           <p>Salário mensal</p>
         </div><!--tags-->
-
       </div><!--value-->
 
       <div class="edit">
@@ -140,9 +143,7 @@
         <button class="btn-edit"><i class="bi bi-pencil-square"></i> Editar</button>
         <button class="btn-delete"><i class="bi bi-trash3"></i> Excluir</button>
       </div><!--edit-->
-
     </div><!--items-->
-
   </section><!--general-expenses-->
 
   <section class="general-section" id="general-summary">
@@ -250,7 +251,6 @@
       </div><!--charts-container-->
     </section><!--monthly-section-->
   </section><!--general-summary-->
-
 
   <script type="module" src="/src/main.ts"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
