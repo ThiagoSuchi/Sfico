@@ -1,0 +1,293 @@
+/*---FINANCE SUMMARY---*/
+
+@import url('./root.css');
+
+/* Layout principal APENAS para a seção de resumo */
+#general-summary {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    width: 100%;
+    gap: 25px;
+    padding: 50px 200px;
+    box-sizing: border-box;
+}
+
+/* Mostrar apenas quando ativo */
+#general-summary.active {
+    display: flex;
+}
+
+#general-summary button {
+    width: 100px;
+    margin: 10px;
+    color: var(--color-h1);
+    background-color: var(--color-select);
+    transition: .1s ease-in;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#general-summary button.active {
+    background-color: var(--color-button);
+    color: var(--white-default);
+    border-color: var(--color-button);
+}
+
+/* Hover apenas para botões não ativos */
+#general-summary button:not(.active):hover {
+    background-color: var(--color-green-light);
+    border-color: var(--color-button);
+    color: var(--color-button);
+}
+
+/* Container da seção mensal */
+#general-summary .global-section {
+    display: none;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+}
+
+#general-summary .global-section.active {
+    display: flex;
+}
+
+/* Grid dos totais - APENAS na seção de resumo */
+#general-summary .global-section .total-containers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Cards totais - APENAS na seção de resumo */
+#general-summary .global-section .total {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--white-default);
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 120px;
+    max-height: 120px;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#general-summary .global-section .total img {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+#general-summary .global-section .total-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+#general-summary .global-section .total p {
+    color: var(--color-paragraph);
+    font-size: 14px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#general-summary .global-section .total h1 {
+    font-size: 18pt;
+    font-weight: 800;
+    color: var(--color-button);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Grid dos gráficos - APENAS na seção de resumo */
+#general-summary .global-section .charts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#general-summary .global-section .chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    align-items: flex-start;
+    justify-content: flex-start;
+    cursor: pointer;
+    background-color: var(--white-default);
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    min-height: 300px;
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#general-summary .global-section .chart-wrapper h2 {
+    margin: 0 0 20px 0;
+    padding: 0;
+    color: var(--color-h1);
+    align-self: flex-start;
+}
+
+#general-summary .global-section .chart-wrapper canvas {
+    align-self: center;
+    flex: 1;
+}
+
+#pie-chart {
+    width: 300px;
+}
+
+/* Responsivo - IGUAL às outras telas */
+@media (max-width: 480px) {
+    #general-summary {
+        padding: 15px;
+        gap: 20px;
+    }
+    
+    #general-summary .global-section .total-containers {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #general-summary .global-section .charts-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #general-summary .global-section .total {
+        padding: 15px;
+        min-height: 100px;
+        max-height: 100px;
+    }
+    
+    #general-summary .global-section .total img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    #general-summary .global-section .total h1 {
+        font-size: 16pt;
+    }
+    
+    #general-summary .global-section .chart-wrapper {
+        padding: 15px;
+        min-height: 250px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    #general-summary {
+        padding: 20px;
+        gap: 20px;
+    }
+    
+    #general-summary .global-section .total-containers {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #general-summary .global-section .charts-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #general-summary .global-section .total {
+        padding: 15px;
+        min-height: 100px;
+        max-height: 100px;
+    }
+    
+    #general-summary .global-section .total img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    #general-summary .global-section .total h1 {
+        font-size: 16pt;
+    }
+    
+    #general-summary .global-section .chart-wrapper {
+        padding: 15px;
+        min-height: 250px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    #general-summary {
+        padding: 50px 50px;
+    }
+
+    #general-summary .title-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    #general-summary .btn-summary {
+        display: flex;
+    }
+    
+    #general-summary .global-section .total-containers {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 15px;
+    }
+    
+    #general-summary .global-section .charts-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+    #general-summary {
+        padding: 50px 100px;
+    }
+    
+    #general-summary .global-section .total-containers {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    #general-summary .global-section .charts-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1201px) {
+    #general-summary {
+        padding: 50px 200px;
+    }
+    
+    #general-summary .global-section .total-containers {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    #general-summary .global-section .charts-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+}

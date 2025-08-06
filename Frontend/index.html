@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--CSS-->
+  <link rel="stylesheet" href="./src/styles/incomesAndExpense.css">
+  <link rel="stylesheet" href="./src/styles/menu.css">
+  <link rel="stylesheet" href="./src/styles/summaryTotalGlobal.css">
+  <!--CSS-->
+
+  <!--Bootstrap-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!--Bootstrap-->
+
+  <!--Google Fontes-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+    rel="stylesheet">
+  <!--Google Fontes-->
+
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <div class="menu">
+    <div class="div-logo">
+      <img class="logo" src="./public/logo/Logo.png" alt="LOGO-SFICO">
+    </div><!--div-logo-->
+
+    <div class="links">
+      <h3 id="incomes"><i class="bi bi-graph-up-arrow"></i> Receitas</h3>
+      <h3 id="expenses"><i class="bi bi-credit-card"></i> Despesas</h3>
+      <h3 id="summary"><i class="bi bi-bar-chart-line"></i> Resumo Financeiro</h3>
+    </div><!--links-->
+
+  </div><!--menu-->
+
+  <section class="general-section" id="general-incomes">
+    <div class="title-section">
+      <div>
+        <h1>Receitas</h1>
+        <p>Gerencie suas receitas e acompanhe seus ganhos</p>
+      </div>
+      <button><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Receitas</button>
+    </div><!--title-section-->
+
+    <div class="filter">
+      <div class="category">
+        <label for="inc-category">Categoria</label>
+        <select name="category" id="inc-category">
+          <option value="todas" selected>Todas as categorias</option>
+          <option value="salario">Salário</option>
+          <option value="renda-extra">Renda extra</option>
+          <option value="investimentos">Investimentos</option>
+          <option value="vendas">Vendas</option>
+          <option value="reembolso">Reembolso</option>
+          <option value="aposentadoria">Aposentadoria</option>
+          <option value="premios-sorteios">Prêmios ou sorteios</option>
+        </select>
+      </div><!--category-->
+
+      <div class="monthYear">
+        <label for="inc-monthYear">Mês/Ano</label>
+        <input type="month" id="inc-monthYear" name="monthYear">
+      </div><!--monthYear-->
+
+    </div><!--filter-->
+
+    <div class="items">
+      <div class="value">
+        <h2>+R$ NaN</h2>
+        <div class="tags">
+          <p><span>Salário</span></p>
+          <p>Salário mensal</p>
+        </div>
+      </div><!--value-->
+
+      <div class="edit">
+        <p class="date">31/09/2024</p>
+        <button class="btn-edit"><i class="bi bi-pencil-square"></i> Editar</button>
+        <button class="btn-delete"><i class="bi bi-trash3"></i> Excluir</button>
+      </div><!--edit-->
+
+    </div><!--items-->
+
+  </section><!--general-incomes-->
+
+  <section class="general-section" id="general-expenses">
+    <div class="title-section">
+      <div>
+        <h1>Despesas</h1>
+        <p>Gerencie suas despesas e controle seus gastos </p>
+      </div>
+      <button><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Despesas</button>
+    </div><!--title-section-->
+
+    <div class="filter">
+      <div class="category">
+        <label for="exp-category">Categoria</label>
+        <select name="category" id="exp-category">
+          <option value="" selected>Todas as categorias</option>
+          <option value="alimentacao">Alimentação</option>
+          <option value="transporte">Transporte</option>
+          <option value="moradia">Moradia</option>
+          <option value="lazer">Lazer</option>
+          <option value="saude">Saúde</option>
+          <option value="educacao">Educação</option>
+          <option value="contas">Contas e serviços (água, luz, internet, etc.)</option>
+          <option value="compras">Compras gerais</option>
+          <option value="assinaturas">Assinaturas (Netflix, Spotify, etc.)</option>
+          <option value="impostos">Impostos e taxas</option>
+          <option value="presentes">Presentes e doações</option>
+          <option value="viagens">Viagens</option>
+        </select>
+      </div><!--category-->
+
+      <div class="monthYear">
+        <label for="exp-monthYear">Mês/Ano</label>
+        <input type="month" id="exp-monthYear" name="monthYear">
+      </div><!--monthYear-->
+
+    </div><!--filter-->
+
+    <div class="items">
+      <div class="value">
+        <h2>+R$ NaN</h2>
+        <div class="tags">
+          <p><span>Salário</span></p>
+          <p>Salário mensal</p>
+        </div><!--tags-->
+
+      </div><!--value-->
+
+      <div class="edit">
+        <p class="date">31/09/2024</p>
+        <button class="btn-edit"><i class="bi bi-pencil-square"></i> Editar</button>
+        <button class="btn-delete"><i class="bi bi-trash3"></i> Excluir</button>
+      </div><!--edit-->
+
+    </div><!--items-->
+
+  </section><!--general-expenses-->
+
+  <section class="general-section" id="general-summary">
+    <div class="title-section">
+      <div>
+        <h1>Resumo Financeiro</h1>
+        <p>Visualize suas finanças e acompanhe sua evolução</p>
+      </div>
+      <div class="btn-summary">
+        <button id="monthly" class="btn-monthly"><i class="bi bi-calendar-check" style="margin-right: 10px;"></i>
+          Mensal</button>
+        <button id="global" class="btn-global"><i class="bi bi-globe" style="margin-right: 10px;"></i> Global</button>
+      </div><!--btn-summary-->
+
+    </div><!--title-section-->
+
+    <section class="global-section">
+      <div class="total-containers">
+        <div class="total total-incomes">
+          <img src="./public/icon/Total-Incomes.png" alt="Icone-Incomes-Summary">
+          <div>
+            <p>Total de Receitas</p>
+            <h1>R$ 3.500,00</h1>
+          </div>
+        </div><!--total-incomes-->
+
+        <div class="total total-expenses">
+          <img src="./public/icon/Total-Expenses.png" alt="Icone-Expenses-Summary">
+          <div>
+            <p>Total de Despesas</p>
+            <h1>R$ 430,00</h1>
+          </div>
+        </div><!--total-expenses-->
+
+        <div class="total total-balance">
+          <img src="./public/icon/Total-Balance.png" alt="Icone-Balance -Summary">
+          <div>
+            <p>Total de Despesas</p>
+            <h1>R$ 430,00</h1>
+          </div>
+        </div><!--total-balance-->
+
+      </div><!--total-containers-->
+
+      <div class="charts-container">
+        <div class="chart-wrapper">
+          <h2>Receitas vs Despesas</h2>
+          <canvas id="line-chart"></canvas>
+        </div><!--chart-wrapper-->
+
+        <div class="chart-wrapper">
+          <h2>Distribuição Financeira</h2>
+          <canvas id="pie-chart"></canvas>
+        </div><!--chart-wrapper-->
+
+      </div><!--charts-container-->
+
+    </section><!--global-section-->
+
+    <section class="monthly-section">
+      <div class="filter">
+        <div class="monthYear">
+          <label for="summ-monthYear">Selecione o mês e ano</label>
+          <input type="month" id="summ-monthYear" name="monthYear">
+        </div><!--monthYear-->
+      </div><!--monthly-section-->
+
+      <div class="total-containers">
+        <div class="total total-incomes">
+          <img src="./public/icon/Total-Incomes.png" alt="Icone-Incomes-Summary">
+          <div>
+            <p>Total de Receitas</p>
+            <h1>R$ 0,00</h1>
+          </div>
+        </div><!--total-incomes-->
+
+        <div class="total total-expenses">
+          <img src="./public/icon/Total-Expenses.png" alt="Icone-Expenses-Summary">
+          <div>
+            <p>Total de Despesas</p>
+            <h1>R$ 0,00</h1>
+          </div>
+        </div><!--total-expenses-->
+
+        <div class="total total-balance">
+          <img src="./public/icon/Total-Balance.png" alt="Icone-Balance -Summary">
+          <div>
+            <p>Total de Despesas</p>
+            <h1>R$ 0,00</h1>
+          </div>
+        </div><!--total-balance-->
+      </div><!--total-containers-->
+
+      <div class="charts-container">
+        <div class="chart-wrapper">
+          <h2>Receitas vs Despesas</h2>
+          <canvas id="line-chart"></canvas>
+        </div><!--chart-wrapper-->
+
+        <div class="chart-wrapper">
+          <h2>Distribuição Financeira</h2>
+          <canvas id="pie-chart"></canvas>
+        </div><!--chart-wrapper-->
+
+      </div><!--charts-container-->
+    </section><!--monthly-section-->
+  </section><!--general-summary-->
+
+
+  <script type="module" src="/src/main.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>

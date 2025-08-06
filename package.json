@@ -1,0 +1,24 @@
+{
+  "name": "sfico",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "docker:start": "docker start 5e162aff009e 12f2d5eff1e0 5de1080f7727",
+    "docker:stop": "docker stop 5e162aff009e 12f2d5eff1e0 5de1080f7727"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThiagoSuchi/Sfico-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThiagoSuchi/Sfico-Backend/issues"
+  },
+  "homepage": "https://github.com/ThiagoSuchi/Sfico-Backend#readme",
+  "description": "",
+  "dependencies": {
+   
+  }
+}

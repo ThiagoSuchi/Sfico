@@ -1,0 +1,338 @@
+/*---RECEITAS E DESPESAS---*/
+
+@import url('./root.css');
+
+body {
+    display: flex;
+    background-color: var(--color-background);
+}
+
+/* Controle de visibilidade das seções */
+.general-section {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    width: 100%;
+    gap: 25px;
+    padding: 50px 200px;
+}
+
+.general-section.active {
+    display: flex;
+}
+
+/* IDs específicos ocultos por padrão */
+#general-incomes,
+#general-expenses {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    width: 100%;
+    gap: 25px;
+    padding: 50px 200px;
+}
+
+/* Quando ativo, mostra com flex */
+#general-incomes.active,
+#general-expenses.active {
+    display: flex;
+}
+
+.title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.title-section h1 {
+    color: var(--color-h1);
+}
+
+.title-section p {
+    color: var(--color-paragraph);
+}
+
+.title-section button {
+    width: 200px;
+    height: 40px;
+    font-size: 11pt;
+    color: var(--white-default);
+    border: none;
+    background-color: var(--color-button);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .1s ease-in;
+}
+
+.title-section button:hover {
+    border: 1px solid var(--color-button);
+    background-color: transparent;
+    color: var(--color-button);
+}
+
+.filter {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    background-color: var(--white-default);
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+label {
+    color: var(--color-h1);
+    font-weight: 600;
+}
+
+.category {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+}
+
+.category select {
+    cursor: pointer;
+    padding: 8px 15px;
+    outline: none;
+    background-color: var(--color-select);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-h1);
+    font-weight: 500;
+    transition: border-color 0.2s ease;
+}
+
+.category select:focus {
+    border-color: var(--color-button);
+    outline: none;
+}
+
+.monthYear {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+}
+
+.monthYear input {
+    cursor: pointer;
+    padding: 8px 15px;
+    outline: none;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-h1);
+    font-weight: 500;
+    transition: border-color 0.2s ease;
+}
+
+.monthYear input:focus {
+    border-color: var(--color-button);
+    outline: none;
+}
+
+.items {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--white-default);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.value h2 {
+    color: var(--color-button);
+    margin-bottom: 2rem;
+}
+
+.tags {
+    display: flex;
+    gap: 20px;
+    color: var(--color-paragraph);
+    font-size: 11pt;
+}
+
+.tags span {
+    padding: 5px 10px;
+    border-radius: 100px;
+    color: var(--color-h1);
+    background-color: var(--color-select);
+}
+
+.edit {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.edit button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+    height: auto;
+    border: none;
+    font-size: 12pt;
+    font-weight: 600;
+    padding: 10px;
+    background-color: transparent;
+    cursor: pointer;
+    color: var( --color-h1);
+    transition: .1s ease-in;
+}
+
+.edit .btn-edit:hover {
+    color: var(--color-paragraph);
+}
+
+.edit .btn-delete {
+    color: var(--red-default);
+}
+
+.edit .btn-delete:hover {
+    color: var(--red-ligth);
+}
+
+.edit .date {
+    color: var(--color-paragraph);
+    margin-bottom: 4rem;
+    font-size: 10pt;
+    margin-right: 1rem;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+/* Mobile Small (até 480px) */
+@media (max-width: 480px) {
+    body {
+        flex-direction: column;
+    }
+    
+    #general-incomes,
+    #general-expenses,
+    .general-section {
+        padding: 15px;
+    }
+    
+    .title-section {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .title-section button {
+        width: 100%;
+    }
+    
+    .filter {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .category,
+    .monthYear {
+        width: 100%;
+    }
+    
+    .items {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .edit {
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    .edit .date {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+}
+
+/* Mobile (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    
+    #general-incomes,
+    #general-expenses,
+    .general-section {
+        padding: 20px;
+    }
+    
+    .title-section {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .title-section button {
+        width: 100%;
+        max-width: 300px;
+        align-self: center;
+    }
+    
+    .items {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .edit .date {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #general-incomes,
+    #general-expenses,
+    .general-section {
+        padding: 50px 50px;
+    }
+    
+    .title-section button {
+        width: 180px;
+    }
+}
+
+/* Desktop Small (1025px - 1200px) */
+@media (min-width: 1025px) and (max-width: 1200px) {
+    #general-incomes,
+    #general-expenses,
+    .general-section {
+        padding: 50px 100px;
+    }
+}
+
+/* Desktop Large (acima de 1200px) */
+@media (min-width: 1201px) {
+    #general-incomes,
+    #general-expenses,
+    .general-section {
+        padding: 50px 200px;
+    }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 320px) {
+    .edit {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .edit button {
+        font-size: 11pt;
+        padding: 8px;
+    }
+}

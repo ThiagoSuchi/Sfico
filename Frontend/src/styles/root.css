@@ -1,0 +1,32 @@
+/*---------VARIÁVEIS GLOBAIS---------*/
+
+:root {
+    /* Cores principais */
+    --black-default: black;
+    --white-default: white;
+    --color-background: #F9FAFB;
+    
+    /* Cores de status */
+    --red-default: #D4002F;
+    --red-ligth: #F07A95;
+    
+    /* Cores de texto */
+    --color-h1: #4A4A4A;
+    --color-paragraph: #6f747e;
+    
+    /* Cores de botão e ação */
+    --color-button: #259A67;
+    --color-green-light: #EDFEF5;
+    
+    /* Cores de interface */
+    --color-select: #eeeeee;
+    --color-border: #e9e9e9;
+}
+
+/* Reset global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
+}
