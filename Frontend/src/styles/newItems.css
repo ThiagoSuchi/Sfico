@@ -32,6 +32,26 @@
     width: 500px;
 }
 
+.new h1 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20pt;
+    color: var(--color-h1);
+}
+
+.new h1 i {
+    cursor: pointer;
+    padding: 0.10rem 0.30rem 0;
+    color: var(--color-paragraph);
+    transition: .2s ease-out;
+}
+
+.new h1 i:hover {
+    padding: 0.10rem 0.30rem 0;
+    border-radius: 100px;
+    background: var(--color-border);
+}
+
 .new input,
 .new select,
 .new button {
