@@ -137,6 +137,10 @@ label {
     outline: none;
 }
 
+.items-container {
+    width: 100%;
+}
+
 .items {
     width: 100%;
     display: flex;
@@ -145,8 +149,18 @@ label {
     border: 2px solid var(--color-border);
     border-radius: 8px;
     padding: 20px;
+    margin-bottom: 1rem;
     flex-wrap: wrap;
     gap: 15px;
+}
+
+/*--- Mensagem de receita/despesa não criado ---*/
+.not-item {
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+    color: var(--color-border);
+    font-size: 20pt;
 }
 
 .value h2 {
