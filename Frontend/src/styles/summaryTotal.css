@@ -11,6 +11,9 @@
     width: 100%;
     gap: 25px;
     padding: 50px 200px;
+    padding-left: calc(200px + 20rem); /* Soma padding normal + espaço do menu (versão large por padrão) */
+    height: 100vh; /* Altura fixa */
+    overflow: hidden; /* Remove scroll da seção principal */
     box-sizing: border-box;
 }
 
@@ -47,8 +50,33 @@
 #general-summary .summary-section {
     display: none;
     flex-direction: column;
-    gap: 25px;
+    flex: 1;
     width: 100%;
+    overflow-y: auto; /* Adiciona scroll vertical apenas ao conteúdo */
+    overflow-x: hidden;
+    padding-right: 10px; /* Espaço para a scrollbar */
+    gap: 25px;
+    box-sizing: border-box;
+    min-height: 0; /* Permite que o flex-item encolha */
+}
+
+/* Estilização da scrollbar - igual aos items */
+#general-summary .summary-section::-webkit-scrollbar {
+    width: 8px;
+}
+
+#general-summary .summary-section::-webkit-scrollbar-track {
+    background: var(--color-background);
+    border-radius: 4px;
+}
+
+#general-summary .summary-section::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+}
+
+#general-summary .summary-section::-webkit-scrollbar-thumb:hover {
+    background: var(--color-paragraph);
 }
 
 #general-summary .summary-section.active {
@@ -163,10 +191,10 @@
     border-radius: 10px;
     padding: 20px;
     min-height: 150px;
-    max-height: 150px;
+    /* Removido max-height para evitar corte do conteúdo */
     min-width: 0;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible; /* Permite que o conteúdo seja visível */
 }
 
 .desc-summary h1 {
@@ -269,6 +297,7 @@
 
     #general-summary {
         padding: 50px 50px;
+        padding-left: calc(50px + 16.75rem); /* Soma padding normal + espaço do menu */
     }
 
     #general-summary .title-section {
@@ -296,6 +325,7 @@
 @media (min-width: 1025px) and (max-width: 1200px) {
     #general-summary {
         padding: 50px 100px;
+        padding-left: calc(100px + 16.75rem); /* Soma padding normal + espaço do menu */
     }
     
     #general-summary .summary-section .total-containers {
@@ -312,6 +342,7 @@
 @media (min-width: 1201px) {
     #general-summary {
         padding: 50px 200px;
+        padding-left: calc(200px + 20rem); /* Soma padding normal + espaço do menu (versão large) */
     }
     
     #general-summary .summary-section .total-containers {

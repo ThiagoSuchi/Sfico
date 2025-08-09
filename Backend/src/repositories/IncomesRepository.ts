@@ -17,14 +17,13 @@ class IncomeRepository {
         return income;
     }
 
-
     async listar({skip, per_page}: PaginateDTO): Promise<ListDTO> {
         const [incomes, total] = await prisma.$transaction([
             prisma.incomes.findMany({ skip, take: per_page }), // Busca uma lista de receitas paginada.
             prisma.incomes.count() // Conta o número total de receitas no banco.
         ])
 
-        // Irá calcular o número total de páginas, divididos em páginas de tamanho fixo.
+        // Irá calcular o número total de items, divididos em páginas de tamanho fixo.
         const pages = Math.ceil(total / per_page);
 
         return { total, pages, incomes };

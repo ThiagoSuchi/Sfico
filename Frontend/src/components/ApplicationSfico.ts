@@ -38,9 +38,9 @@ export class ApplicationSFICO {
             new ManagerIncomes();
             console.log('Gerenciador de receitas inicializado.');
             
-            const { ManagerExpenses } = await import('../services/ManagerExpenses.js');
-            new ManagerExpenses();
-            console.log('Gerenciador de despesas inicializado.');
+            // const { ManagerExpenses } = await import('../services/ManagerExpenses.js');
+            // new ManagerExpenses();
+            // console.log('Gerenciador de despesas inicializado.');
 
         } catch (err) {
             console.log('Erro ao inicializar aplicação, ', err);

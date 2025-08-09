@@ -1,6 +1,6 @@
-import type { Expense } from "../../model/IncomeExpenseModel";
+import type { IncomeExpense } from "../../model/IncomeExpenseModel";
 
-export function listItem(data: Expense[], divItems: HTMLDivElement) {
+export function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
     divItems.innerHTML = '';
 
     data.forEach((item) => {

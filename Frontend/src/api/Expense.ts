@@ -10,4 +10,4 @@ class Expenses {
     }
 }
 
-export default new Expenses();
+// export default new Expenses();

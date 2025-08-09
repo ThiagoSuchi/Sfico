@@ -56,12 +56,16 @@
     gap: 3rem;
     width: 16.75rem;
     min-width: 16.75rem;
-    max-width: 18.75rem;
-    min-height: 100vh;
+    max-width: 16.75rem;
+    height: 100vh;
+    max-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998;
     background-color: var(--white-default);
     box-shadow: 0.625rem 0 0.625rem rgba(199, 199, 199, 0.349);
     flex-shrink: 0;
-    position: relative;
     transition: transform 0.3s ease;
 }
 

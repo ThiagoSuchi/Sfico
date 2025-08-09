@@ -1,12 +1,4 @@
-export interface Income {
-    id: string
-    valor: string,
-    categoria: string,
-    descricao: string,
-    data: Date
-}
-
-export interface Expense {
+export interface IncomeExpense {
     id: string
     valor: string,
     categoria: string,
