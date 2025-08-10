@@ -1,7 +1,7 @@
 //src/services/ManagerIncomes.ts
 
 import Incomes from "../api/Incomes";
-import { listItem } from "../utils/render/listItemFunc";
+import { listItem, createItem } from "../utils/render/managerItemsFunc";
 import { notItem } from "../utils/render/notItemDOM";
 import { paginateItems } from "../utils/render/paginationDOM";
 
@@ -16,6 +16,7 @@ export class ManagerIncomes {
     constructor() {
         this.setupPAginationListener();// Escuta eventos de mudança da página
         this.getAllIncomes()
+        this.createIncome()
     }
 
     private setupPAginationListener() {
@@ -28,6 +29,13 @@ export class ManagerIncomes {
             // Recarrega os dados da nova página
             this.getAllIncomes();
         })
+    }
+
+    async createIncome() {
+        const btnNewIncome = document.getElementById('btn-newReceita') as HTMLButtonElement;
+        const divNewIncome = document.querySelector('.new-income') as HTMLDivElement;
+
+        createItem(btnNewIncome, divNewIncome);
     }
 
     async getAllIncomes() {
@@ -45,4 +53,6 @@ export class ManagerIncomes {
 
         return data;
     }
+
+
 }

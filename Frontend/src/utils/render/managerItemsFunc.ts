@@ -1,6 +1,6 @@
 import type { IncomeExpense } from "../../model/IncomeExpenseModel";
 
-export function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
+function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
     divItems.innerHTML = '';
 
     data.forEach((item) => {
@@ -23,3 +23,23 @@ export function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
         `
     });
 }
+
+function createItem(btnNewItem: HTMLElement, divNewItem: HTMLElement) {
+    const overlay = document.getElementById('new-item-overlay') as HTMLDivElement;
+    const inputError = document.querySelector('.input-container') as HTMLInputElement;
+
+    btnNewItem.addEventListener('click', () => {
+        
+        divNewItem.style.display = 'flex'
+        overlay.style.display = 'flex'
+    })
+
+    const cancel = divNewItem.querySelector('.cancel')!;
+
+    cancel.addEventListener('click', () => {
+        divNewItem.style.display = 'none'
+        overlay.style.display = 'none'
+    })
+}
+
+export { listItem, createItem };

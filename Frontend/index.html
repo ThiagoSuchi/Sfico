@@ -52,9 +52,9 @@
   </div><!--menu-->
 
   <div class="new new-income">
-    <h1>Nova Receita <i class="bi bi-x"></i></h1>
+    <h1>Nova Receita</h1>
 
-    <div>
+    <div class="input-container">
       <label for="new-inc-value">Valor</label>
       <input type="text" placeholder="0,00">
     </div>
@@ -73,9 +73,9 @@
       </select>
     </div>
 
-    <div>
-      <label for="new-inc-desc">Descrição</label>
-      <input type="text" placeholder="Descrição opcional">
+    <div class="input-container">
+      <label for="new-inc-description">Descrição</label>
+      <input type="text" placeholder="Digite a descrição aqui">
     </div>
 
     <div>
@@ -90,11 +90,12 @@
   </div><!--new-income-->
 
   <div class="new new-expense">
-    <h1>Nova Despesa <i class="bi bi-x"></i></h1>
+    <h1>Nova Despesa</h1>
 
-    <div>
+    <div class="input-container">
       <label for="new-exp-value">Valor</label>
       <input type="text" placeholder="0,00">
+      <i class="bi bi-x-circle input-icon"></i>
     </div>
 
     <div>
@@ -116,9 +117,10 @@
       </select>
     </div>
 
-    <div>
+    <div class="input-container">
       <label for="new-epx-desc">Descrição</label>
       <input type="text" placeholder="Descrição opcional">
+      <i class="bi bi-x-circle input-icon"></i>
     </div>
 
     <div>
@@ -141,7 +143,7 @@
         <h1>Receitas</h1>
         <p>Gerencie suas receitas e acompanhe seus ganhos</p>
       </div>
-      <button><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Receitas</button>
+      <button id="btn-newReceita"><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Receita</button>
     </div><!--title-section-->
 
     <div class="filter">
@@ -185,7 +187,7 @@
         <h1>Despesas</h1>
         <p>Gerencie suas despesas e controle seus gastos </p>
       </div>
-      <button><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Despesas</button>
+      <button><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Despesa</button>
     </div><!--title-section-->
 
     <div class="filter">

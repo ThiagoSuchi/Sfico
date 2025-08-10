@@ -39,19 +39,6 @@
     color: var(--color-h1);
 }
 
-.new h1 i {
-    cursor: pointer;
-    padding: 0.10rem 0.30rem 0;
-    color: var(--color-paragraph);
-    transition: .2s ease-out;
-}
-
-.new h1 i:hover {
-    padding: 0.10rem 0.30rem 0;
-    border-radius: 100px;
-    background: var(--color-border);
-}
-
 .new input,
 .new select,
 .new button {
@@ -65,7 +52,31 @@
 
 .new input:focus,
 .new select:focus {
-    outline: 1px solid black;
+    outline: 1px solid var(--black-default);
+}
+
+/* Validação dos campos */
+.new input.error {
+    border: 1px solid var(--red-default);
+}
+
+.new .input-container {
+    position: relative;
+}
+
+.new .input-container input {
+    padding-right: 35px;
+}
+
+.new .input-icon {
+    position: absolute;
+    right: 10px;
+    top: 68%;
+    transform: translateY(-50%);
+    color: var(--red-default);
+    font-size: 16px;
+    pointer-events: auto;
+    z-index: 1;
 }
 
 .new .btn-new-item {
@@ -83,18 +94,19 @@
 .new .create:hover {
     color: var(--color-button);
     border: 1px solid var(--color-button);
-    background: var(--color-green-ligth);
+    background-color: var(--color-green-ligth);
 }
 
 .new .cancel {
     border: none;
     background: var(--color-select);
+    transition: .2s ease-out;
 }
 
 .new .cancel:hover {
     color: var(--color-button);
     border: 1px solid var(--color-button);
-    background: var(--color-green-ligth);
+    background-color: var(--color-green-ligth);
 }
 
 /*---Se for ativado*/
