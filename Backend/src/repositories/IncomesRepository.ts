@@ -8,7 +8,7 @@ import AppError from "@utils/errors/AppErrors";
 class IncomeRepository {
 
     async criar(data: { 
-        valor: number; 
+        valor: string; 
         categoria: string; 
         descricao?: string | null; 
         data: Date 

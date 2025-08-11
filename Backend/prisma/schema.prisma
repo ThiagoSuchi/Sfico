@@ -16,7 +16,7 @@ datasource db {
 
 model Expense {
   id String @id @default(uuid())
-  valor Float
+  valor String
   categoria String
   descricao String?
   data DateTime
@@ -26,7 +26,7 @@ model Expense {
 
 model Incomes {
   id String @id @default(uuid())
-  valor Float
+  valor String
   categoria String
   descricao String?
   data DateTime

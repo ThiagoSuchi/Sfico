@@ -13,7 +13,7 @@ class IncomeService {
     }
 
     async criar(content: { 
-        valor: number; 
+        valor: string; 
         categoria: string; 
         descricao?: string | null; 
         data: Date 

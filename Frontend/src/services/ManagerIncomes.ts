@@ -14,12 +14,12 @@ export class ManagerIncomes {
     private perPage = 7;
 
     constructor() {
-        this.setupPAginationListener();// Escuta eventos de mudança da página
+        this.setupPaginationListener();// Escuta eventos de mudança da página
         this.getAllIncomes()
         this.createIncome()
     }
 
-    private setupPAginationListener() {
+    private setupPaginationListener() {
         window.addEventListener('pageChanged', (e: Event) => {
             const { page, skip } = (e as CustomEvent).detail;
 
@@ -34,8 +34,15 @@ export class ManagerIncomes {
     async createIncome() {
         const btnNewIncome = document.getElementById('btn-newReceita') as HTMLButtonElement;
         const divNewIncome = document.querySelector('.new-income') as HTMLDivElement;
+        const btnCreate = document.querySelector('.create') as HTMLButtonElement;
 
-        createItem(btnNewIncome, divNewIncome);
+        const income = await createItem(btnCreate, btnNewIncome, divNewIncome);
+
+        console.log(income);
+
+        await this.income.createIncomes(income);
+
+       this.getAllIncomes()
     }
 
     async getAllIncomes() {

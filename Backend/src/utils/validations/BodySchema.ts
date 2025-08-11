@@ -6,9 +6,12 @@ export const BodySchemaID = yup.object({
 
 export const BodySchema = yup.object({
     valor: yup
-        .number()
-        .typeError('O valor deve ser um número')
-        .required('O campo valor é obrigatório.'),
+        .string()
+        .required('O campo valor é obrigatório.')
+        .matches(/^\d+(\.\d{1,3})?$/, 'O valor deve ser um número válido (ex: 2.300)')
+        .test('is-valid-number', 'O valor deve ser um número válido', (value) => {
+            return value ? !isNaN(parseFloat(value)) : false;
+        }),
     categoria: yup
         .string()
         .strict(true)

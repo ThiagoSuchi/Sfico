@@ -7,7 +7,7 @@ import AppError from "@utils/errors/AppErrors";
 
 class ExpenseRepository {
     async criar(data: { 
-        valor: number; 
+        valor: string; 
         categoria: string; 
         descricao?: string | null; 
         data: Date 

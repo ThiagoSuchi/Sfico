@@ -24,12 +24,15 @@ function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
     });
 }
 
-function createItem(btnNewItem: HTMLElement, divNewItem: HTMLElement) {
+function createItem(btnCreateItem: HTMLElement, btnNewItem: HTMLElement, divNewItem: HTMLElement): Promise<IncomeExpense> {
     const overlay = document.getElementById('new-item-overlay') as HTMLDivElement;
     const inputError = document.querySelector('.input-container') as HTMLInputElement;
+    const valueItem = document.getElementById('valor') as HTMLInputElement;
+    const categoryItem = document.querySelector('.select-category') as HTMLSelectElement;
+    const descriptionItem = document.getElementById('desc') as HTMLInputElement;
+    const dateItem = document.querySelector('.new-date') as HTMLInputElement;
 
     btnNewItem.addEventListener('click', () => {
-        
         divNewItem.style.display = 'flex'
         overlay.style.display = 'flex'
     })
@@ -39,6 +42,32 @@ function createItem(btnNewItem: HTMLElement, divNewItem: HTMLElement) {
     cancel.addEventListener('click', () => {
         divNewItem.style.display = 'none'
         overlay.style.display = 'none'
+    })
+
+    // Criando um item
+    
+    return new Promise((resolve, reject) => {
+      btnCreateItem.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const incomeData: IncomeExpense = {
+            valor: valueItem.value,
+            categoria: categoryItem.value,
+            descricao: descriptionItem.value || '',
+            data: dateItem.value
+        }
+
+        // Fecha o modal
+        divNewItem.style.display = 'none';
+        overlay.style.display = 'none';
+
+        valueItem.value = '';
+        categoryItem.value = 'select';
+        descriptionItem.value = '';
+        dateItem.value = '';
+
+        resolve(incomeData)
+      })
     })
 }
 

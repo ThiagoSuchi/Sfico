@@ -1,7 +1,7 @@
 export interface IncomeExpense {
-    id: string
+    id?: string
     valor: string,
     categoria: string,
-    descricao: string,
-    data: Date
+    descricao?: string,
+    data: string
 }
