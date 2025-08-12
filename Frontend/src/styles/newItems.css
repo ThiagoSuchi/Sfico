@@ -56,7 +56,8 @@
 }
 
 /* Validação dos campos */
-.new input.error {
+.new input.error,
+.new select.error {
     border: 1px solid var(--red-default);
 }
 

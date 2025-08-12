@@ -7,12 +7,11 @@ import api from "./config";
 
 class Incomes {
     async createIncomes({ valor, categoria, descricao, data }: IncomeExpense) {
-        return api.post('/incomes', {
-            valor,
-            categoria,
-            descricao,
-            data
-        }).then(res => res).catch(err => console.log('Erro ao criar receita:', err))
+        return api.post('/incomes', { valor, categoria, descricao, data })
+            .then(res => res)
+            .catch(function (err) {
+                console.log('Erro ao criar receita: ', err.response.data)
+            })
     }
     
     async getAllIncomes(skip: number = 0, perPage: number = 7) { 

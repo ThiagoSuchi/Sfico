@@ -18,7 +18,9 @@ class ExpenseController {
         const dataJSON = req.body;
         const dateFormated = formatDateISO(dataJSON.data)
 
-        const validated = await BodySchema.validate({ ...dataJSON, dateFormated });
+        const validated = await BodySchema.validate({ ...dataJSON, dateFormated }, { 
+            abortEarly: false // Captura todos os erros, não apenas o primeiro
+        });
 
         const expense = await this.service.criar({
             ...validated,

@@ -24,13 +24,31 @@ function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
     });
 }
 
-function createItem(btnCreateItem: HTMLElement, btnNewItem: HTMLElement, divNewItem: HTMLElement): Promise<IncomeExpense> {
-    const overlay = document.getElementById('new-item-overlay') as HTMLDivElement;
-    const inputError = document.querySelector('.input-container') as HTMLInputElement;
-    const valueItem = document.getElementById('valor') as HTMLInputElement;
-    const categoryItem = document.querySelector('.select-category') as HTMLSelectElement;
-    const descriptionItem = document.getElementById('desc') as HTMLInputElement;
-    const dateItem = document.querySelector('.new-date') as HTMLInputElement;
+function createItem(
+    btnCreateItem: HTMLElement, 
+    btnNewItem: HTMLElement, 
+    divNewItem: HTMLElement, 
+    overlay: HTMLElement, 
+    onCreate: (data: IncomeExpense) => void 
+) {
+    const isIncome = divNewItem.classList.contains('new-income');
+
+    let valueItem: HTMLInputElement;
+    let categoryItem: HTMLSelectElement;
+    let descriptionItem: HTMLInputElement;
+    let dateItem: HTMLInputElement;
+
+    if (isIncome) {
+        valueItem = document.getElementById('new-inc-value') as HTMLInputElement;
+        categoryItem = document.getElementById('new-inc-category') as HTMLSelectElement;
+        descriptionItem = document.getElementById('new-inc-description') as HTMLInputElement;
+        dateItem = document.getElementById('new-inc-date') as HTMLInputElement;
+    } else {
+        valueItem = document.getElementById('new-exp-value') as HTMLInputElement;
+        categoryItem = document.getElementById('new-exp-category') as HTMLSelectElement;
+        descriptionItem = document.getElementById('new-epx-desc') as HTMLInputElement;
+        dateItem = document.getElementById('new-exp-date') as HTMLInputElement;
+    }
 
     btnNewItem.addEventListener('click', () => {
         divNewItem.style.display = 'flex'
@@ -42,12 +60,11 @@ function createItem(btnCreateItem: HTMLElement, btnNewItem: HTMLElement, divNewI
     cancel.addEventListener('click', () => {
         divNewItem.style.display = 'none'
         overlay.style.display = 'none'
+        location.reload()
     })
 
     // Criando um item
-    
-    return new Promise((resolve, reject) => {
-      btnCreateItem.addEventListener('click', (e) => {
+    btnCreateItem.addEventListener('click', (e) => {
         e.preventDefault();
 
         const incomeData: IncomeExpense = {
@@ -66,8 +83,8 @@ function createItem(btnCreateItem: HTMLElement, btnNewItem: HTMLElement, divNewI
         descriptionItem.value = '';
         dateItem.value = '';
 
-        resolve(incomeData)
-      })
+        // Retorno o data que é o item receita/despesa
+        onCreate(incomeData);
     })
 }
 

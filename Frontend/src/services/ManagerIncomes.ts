@@ -1,6 +1,8 @@
 //src/services/ManagerIncomes.ts
 
+import axios, { AxiosError } from "axios";
 import Incomes from "../api/Incomes";
+import { formErrors } from "../utils/Errors/formErrors";
 import { listItem, createItem } from "../utils/render/managerItemsFunc";
 import { notItem } from "../utils/render/notItemDOM";
 import { paginateItems } from "../utils/render/paginationDOM";
@@ -35,14 +37,23 @@ export class ManagerIncomes {
         const btnNewIncome = document.getElementById('btn-newReceita') as HTMLButtonElement;
         const divNewIncome = document.querySelector('.new-income') as HTMLDivElement;
         const btnCreate = document.querySelector('.create') as HTMLButtonElement;
+        const overlay = document.getElementById('new-item-overlay') as HTMLDivElement;
 
-        const income = await createItem(btnCreate, btnNewIncome, divNewIncome);
+        createItem(btnCreate, btnNewIncome, divNewIncome, overlay, async (income) => {
 
-        console.log(income);
+            console.log(income);
 
-        await this.income.createIncomes(income);
+            const res = await this.income.createIncomes(income);
 
-       this.getAllIncomes()
+            if (!res || axios.isAxiosError(res)) {
+                const error = res as AxiosError;
+                formErrors(error, divNewIncome, overlay);
+                throw new Error('Erro ao criar uma receita, verifique se campos estão corretos')
+            }
+
+            console.log('Receita criada com sucesso.');
+            this.getAllIncomes(); // Após criar, já aparecerá na lista do DOM
+        });
     }
 
     async getAllIncomes() {
