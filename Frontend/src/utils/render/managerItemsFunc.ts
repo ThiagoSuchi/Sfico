@@ -96,17 +96,19 @@ function itemCreated(msgItem: string) {
     if (!modal) {
         modal = document.createElement('div');
         modal.className = 'modal';
-        modal.classList.add('active');
         document.body.appendChild(modal);
     }
     
     modal.innerHTML = `
         <i class="bi bi-check2-circle"></i> ${msgItem}
-    `
+    `;
+    
+    // Adiciona a classe active para mostrar o modal
+    modal.classList.add('active');
 
     setTimeout(() => {
-        modal.classList.remove('active')
-    }, 3500)
+        modal.classList.remove('active');
+    }, 3500);
 }
 
 export { listItem, createItem, itemCreated };

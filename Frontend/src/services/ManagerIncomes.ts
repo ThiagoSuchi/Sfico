@@ -43,7 +43,7 @@ export class ManagerIncomes {
             try {
                 console.log(income);
 
-                await this.income.createIncomes(income);
+                const res = await this.income.createIncomes(income);
 
                 this.getAllIncomes(); // Após criar, já aparecerá na lista do DOM
                 
@@ -55,7 +55,7 @@ export class ManagerIncomes {
                 selects.forEach(select => select.value = 'select');
                 
                 clearFormErrors(divNewIncome);
-                itemCreated('Receita criada com sucesso.');
+                itemCreated(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
 
             } catch (err) {
                 if (err instanceof AxiosError || axios.isAxiosError(err)) {
