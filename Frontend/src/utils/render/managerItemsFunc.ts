@@ -1,4 +1,5 @@
 import type { IncomeExpense } from "../../model/IncomeExpenseModel";
+import { clearFormErrors } from "../Errors/formErrorsDOM";
 
 function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
     divItems.innerHTML = '';
@@ -51,15 +52,22 @@ function createItem(
     }
 
     btnNewItem.addEventListener('click', () => {
-        divNewItem.style.display = 'flex'
-        overlay.style.display = 'flex'
+        divNewItem.style.display = 'flex';
+        overlay.style.display = 'flex';
     })
 
     const cancel = divNewItem.querySelector('.cancel')!;
 
     cancel.addEventListener('click', () => {
-        divNewItem.style.display = 'none'
-        overlay.style.display = 'none'
+        divNewItem.style.display = 'none';
+        overlay.style.display = 'none';
+
+        valueItem.value = '';
+        categoryItem.value = 'select';
+        descriptionItem.value = '';
+        dateItem.value = '';
+
+        clearFormErrors(divNewItem);
     })
 
     // Criando um item
@@ -82,4 +90,23 @@ function createItem(
     })
 }
 
-export { listItem, createItem };
+function itemCreated(msgItem: string) {
+    let modal = document.querySelector('.modal') as HTMLElement;
+
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.classList.add('active');
+        document.body.appendChild(modal);
+    }
+    
+    modal.innerHTML = `
+        <i class="bi bi-check2-circle"></i> ${msgItem}
+    `
+
+    setTimeout(() => {
+        modal.classList.remove('active')
+    }, 3500)
+}
+
+export { listItem, createItem, itemCreated };

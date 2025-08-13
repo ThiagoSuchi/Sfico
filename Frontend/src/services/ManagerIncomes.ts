@@ -3,7 +3,7 @@
 import axios, { AxiosError } from "axios";
 import Incomes from "../api/Incomes";
 import { clearFormErrors, formErrors } from "../utils/Errors/formErrorsDOM";
-import { listItem, createItem } from "../utils/render/managerItemsFunc";
+import { listItem, createItem, itemCreated } from "../utils/render/managerItemsFunc";
 import { notItem } from "../utils/render/notItemDOM";
 import { paginateItems } from "../utils/render/paginationDOM";
 
@@ -45,14 +45,17 @@ export class ManagerIncomes {
 
                 await this.income.createIncomes(income);
 
-                console.log('Receita criada com sucesso.');
                 this.getAllIncomes(); // Após criar, já aparecerá na lista do DOM
-
+                
                 // Limpando os campos após criar item
                 const inputs = divNewIncome.querySelectorAll('input');
                 inputs.forEach(input => input.value = '');
-
+                
+                const selects = divNewIncome.querySelectorAll('select');
+                selects.forEach(select => select.value = 'select');
+                
                 clearFormErrors(divNewIncome);
+                itemCreated('Receita criada com sucesso.');
 
             } catch (err) {
                 if (err instanceof AxiosError || axios.isAxiosError(err)) {
