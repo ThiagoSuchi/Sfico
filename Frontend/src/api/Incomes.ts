@@ -1,6 +1,7 @@
 //src/api/Incomes.ts
 
 // import type { FilterDTO } from "../model/FilterModel";
+import axios from "axios";
 import type { IncomeExpense } from "../model/IncomeExpenseModel";
 import type { PaginatedIncome } from "../model/Paginated";
 import api from "./config";
@@ -11,6 +12,7 @@ class Incomes {
             .then(res => res)
             .catch(function (err) {
                 console.log('Erro ao criar receita: ', err.response.data)
+                throw err
             })
     }
     

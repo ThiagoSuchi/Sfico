@@ -72,12 +72,16 @@
 .new .input-icon {
     position: absolute;
     right: 10px;
-    top: 68%;
+    top: 50%;
     transform: translateY(-50%);
     color: var(--red-default);
     font-size: 16px;
     pointer-events: auto;
     z-index: 1;
+}
+
+.select i {
+    display: none;
 }
 
 .new .btn-new-item {

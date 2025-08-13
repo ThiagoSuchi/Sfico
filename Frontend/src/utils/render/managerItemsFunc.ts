@@ -60,7 +60,6 @@ function createItem(
     cancel.addEventListener('click', () => {
         divNewItem.style.display = 'none'
         overlay.style.display = 'none'
-        location.reload()
     })
 
     // Criando um item
@@ -77,11 +76,6 @@ function createItem(
         // Fecha o modal
         divNewItem.style.display = 'none';
         overlay.style.display = 'none';
-
-        valueItem.value = '';
-        categoryItem.value = 'select';
-        descriptionItem.value = '';
-        dateItem.value = '';
 
         // Retorno o data que é o item receita/despesa
         onCreate(incomeData);

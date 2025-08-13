@@ -9,7 +9,7 @@ export const BodySchema = yup.object({
         .string()
         .required('O campo valor é obrigatório.')
         .matches(/^\d+(\.\d{1,3})?$/, 'O valor deve ser um número válido (ex: 2.300)')
-        .test('is-valid-number', 'O valor deve ser um número válido', (value) => {
+        .test('is-valid-number', (value) => {
             return value ? !isNaN(parseFloat(value)) : false;
         })
         .test('is-positive', 'O valor deve ser maior que zero', (value) => {
@@ -23,11 +23,10 @@ export const BodySchema = yup.object({
         }),
     descricao: yup
         .string()
-        .min(4, 'A descrição deve conter no mínimo 4 caracteres.')
         .max(50, 'A descrição deve conter no máximo 50 caracteres.')
         .notRequired(),
     dateFormated: yup
         .date()
-        .typeError('O campo data deve ser uma data válida exemplo: dd/mm/yyyy.')
-        .required('O campo data é obrigatório.')
+        .typeError('O campo data é obrigatório.')
+        .required()
 })

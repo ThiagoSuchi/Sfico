@@ -2,7 +2,7 @@
 
 import axios, { AxiosError } from "axios";
 import Incomes from "../api/Incomes";
-import { formErrors } from "../utils/Errors/formErrors";
+import { clearFormErrors, formErrors } from "../utils/Errors/formErrorsDOM";
 import { listItem, createItem } from "../utils/render/managerItemsFunc";
 import { notItem } from "../utils/render/notItemDOM";
 import { paginateItems } from "../utils/render/paginationDOM";
@@ -40,19 +40,26 @@ export class ManagerIncomes {
         const overlay = document.getElementById('new-item-overlay') as HTMLDivElement;
 
         createItem(btnCreate, btnNewIncome, divNewIncome, overlay, async (income) => {
+            try {
+                console.log(income);
 
-            console.log(income);
+                await this.income.createIncomes(income);
 
-            const res = await this.income.createIncomes(income);
+                console.log('Receita criada com sucesso.');
+                this.getAllIncomes(); // Após criar, já aparecerá na lista do DOM
 
-            if (!res || axios.isAxiosError(res)) {
-                const error = res as AxiosError;
-                formErrors(error, divNewIncome, overlay);
-                throw new Error('Erro ao criar uma receita, verifique se campos estão corretos')
+                // Limpando os campos após criar item
+                const inputs = divNewIncome.querySelectorAll('input');
+                inputs.forEach(input => input.value = '');
+
+                clearFormErrors(divNewIncome);
+
+            } catch (err) {
+                if (err instanceof AxiosError || axios.isAxiosError(err)) {
+                    const error = err as AxiosError;
+                    formErrors(error, divNewIncome, overlay);
+                }
             }
-
-            console.log('Receita criada com sucesso.');
-            this.getAllIncomes(); // Após criar, já aparecerá na lista do DOM
         });
     }
 
