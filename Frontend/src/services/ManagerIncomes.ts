@@ -12,15 +12,18 @@ export class ManagerIncomes {
     private divItems = document.querySelector('.item-income')! as HTMLDivElement;
     private income = Incomes;
 
+    // Cache de dados atuais
+    private currentData: any = null;
+
     private currentPage = 1;
     private skip = 0;
     private perPage = 7;
 
     constructor() {
-        this.setupPaginationListener();// Escuta eventos de mudança da página
+        // Escuta eventos de mudança da página
+        this.setupPaginationListener();
         this.createIncome();
         this.getAllIncomes();
-        this.deleteIncomeById();
     }
 
     private setupPaginationListener() {
@@ -32,7 +35,14 @@ export class ManagerIncomes {
 
             // Recarrega os dados da nova página
             this.getAllIncomes();
-            this.deleteIncomeById();
+        })
+    }
+
+    private setupDeleteListener() {
+        if (!this.currentData) return;
+
+        deleteItem(this.divItems, async (index) => {
+            await this.deleteIncomeById(index);
         })
     }
 
@@ -47,17 +57,13 @@ export class ManagerIncomes {
                 const res = await this.income.createIncomes(income);
 
                 this.getAllIncomes(); // Após criar, já aparecerá na lista do DOM
-                
+
                 // Limpando os campos após criar item
-                const inputs = divNewIncome.querySelectorAll('input');
-                inputs.forEach(input => input.value = '');
-                
-                const selects = divNewIncome.querySelectorAll('select');
-                selects.forEach(select => select.value = 'select');
-                
+                divNewIncome.querySelectorAll('input').forEach(input => input.value = '');
+                divNewIncome.querySelectorAll('select').forEach(select => select.value = 'select');
+
                 clearFormErrors(divNewIncome);
                 modelItemCreatedOrDelete(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
-                this.deleteIncomeById()
 
             } catch (err) {
                 if (err instanceof AxiosError || axios.isAxiosError(err)) {
@@ -70,36 +76,39 @@ export class ManagerIncomes {
 
     async getAllIncomes() {
         const data = await this.income.getAllIncomes(this.skip, this.perPage);
-        
+
         if (!data || !data.incomes || data.incomes.length === 0) {
+            // Limpa o cache se não houver dados
+            this.currentData = null;
             notItem('Nenhuma receita criada.', this.divItems);
             return undefined;
         }
-        
+
+        // Atualiza cache com os dados recentes
+        this.currentData = {
+            ...data,
+            // Metadata adicional para debugar
+            fetchedAt: new Date().toISOString(),
+            page: this.currentPage,
+            skip: this.skip
+        }
+
+        // Atualiza o DOM e lista todos os incomes que tem no banco
         paginateItems(this.currentPage, data.pages, this.perPage)
-        
-        // Lista todos os incomes que tem no banco
         listItem(data.incomes, this.divItems);
+
+        this.setupDeleteListener();
 
         return data;
     }
 
     // Método para atualização de receita
 
-    //!!!!!! Problemas a corrigir !!!!!!!!
-    // ao deletar uma receita e tentar deletar outra 
-    // logo em seguida o botão de excluir perde evento.
+    async deleteIncomeById(index: number) {
+        const id = this.currentData.incomes[index].id
+        const res = await this.income.deleteIncomeById(id);
 
-    async deleteIncomeById() {
-        const incomes = await this.income.getAllIncomes()
-        
-        deleteItem(this.divItems, async (index) => {
-            const id = incomes?.incomes[index].id
-            const res = await this.income.deleteIncomeById(id);
-            
-            modelItemCreatedOrDelete(JSON.stringify(res.data.message).replace(/^"|"$/g, ''))
-            this.getAllIncomes();
-        });
-        
+        modelItemCreatedOrDelete(JSON.stringify(res.data.message).replace(/^"|"$/g, ''))
+        this.getAllIncomes();
     }
 }

@@ -90,8 +90,6 @@ function createItem(
     })
 }
 
-
-
 // Função utilitária para atualização dos items
 
 function deleteItem(divItems: HTMLDivElement, onDelete: (index: number) => void) {

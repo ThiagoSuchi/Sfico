@@ -29,6 +29,6 @@ export const BodySchema = yup.object({
         .date()
         .typeError('O campo data deve ser uma data válida.')
         .required('O campo data é obrigatório.')
-        .min(new Date('2024-01-01'), 'A data deve ser a partir de 2024.')
+        .min(new Date('2023-01-01'), 'A data deve ser a partir de 2023.')
         .max(new Date(), 'A data não pode ser futura.')
 })
