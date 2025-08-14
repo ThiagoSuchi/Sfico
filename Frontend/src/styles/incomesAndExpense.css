@@ -89,12 +89,19 @@ body {
 
 .filter {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    gap: 20px;
+    gap: 10px;
     background-color: var(--white-default);
     border: 2px solid var(--color-border);
     border-radius: 10px;
     padding: 20px;
+    color: var(--color-h1);
+}
+
+.filter-per {
+    display: flex;
+    gap: 20px;
 }
 
 label {

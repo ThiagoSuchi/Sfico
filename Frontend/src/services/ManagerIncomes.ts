@@ -3,7 +3,8 @@
 import axios, { AxiosError } from "axios";
 import Incomes from "../api/Incomes";
 import { clearFormErrors, formErrors } from "../utils/Errors/formErrorsDOM";
-import { listItem, createItem, itemCreated } from "../utils/render/managerItemsFunc";
+import { listItem, createItem, deleteItem } from "../utils/render/managerItemsFunc";
+import { modelItemCreatedOrDelete } from "../utils/render/modelItemCreate";
 import { notItem } from "../utils/render/notItemDOM";
 import { paginateItems } from "../utils/render/paginationDOM";
 
@@ -17,8 +18,9 @@ export class ManagerIncomes {
 
     constructor() {
         this.setupPaginationListener();// Escuta eventos de mudança da página
-        this.getAllIncomes()
-        this.createIncome()
+        this.createIncome();
+        this.getAllIncomes();
+        this.deleteIncomeById();
     }
 
     private setupPaginationListener() {
@@ -30,6 +32,7 @@ export class ManagerIncomes {
 
             // Recarrega os dados da nova página
             this.getAllIncomes();
+            this.deleteIncomeById();
         })
     }
 
@@ -41,8 +44,6 @@ export class ManagerIncomes {
 
         createItem(btnCreate, btnNewIncome, divNewIncome, overlay, async (income) => {
             try {
-                console.log(income);
-
                 const res = await this.income.createIncomes(income);
 
                 this.getAllIncomes(); // Após criar, já aparecerá na lista do DOM
@@ -55,7 +56,8 @@ export class ManagerIncomes {
                 selects.forEach(select => select.value = 'select');
                 
                 clearFormErrors(divNewIncome);
-                itemCreated(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
+                modelItemCreatedOrDelete(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
+                this.deleteIncomeById()
 
             } catch (err) {
                 if (err instanceof AxiosError || axios.isAxiosError(err)) {
@@ -68,19 +70,36 @@ export class ManagerIncomes {
 
     async getAllIncomes() {
         const data = await this.income.getAllIncomes(this.skip, this.perPage);
-
+        
         if (!data || !data.incomes || data.incomes.length === 0) {
             notItem('Nenhuma receita criada.', this.divItems);
             return undefined;
         }
-
+        
         paginateItems(this.currentPage, data.pages, this.perPage)
-
+        
         // Lista todos os incomes que tem no banco
         listItem(data.incomes, this.divItems);
 
         return data;
     }
 
+    // Método para atualização de receita
 
+    //!!!!!! Problemas a corrigir !!!!!!!!
+    // ao deletar uma receita e tentar deletar outra 
+    // logo em seguida o botão de excluir perde evento.
+
+    async deleteIncomeById() {
+        const incomes = await this.income.getAllIncomes()
+        
+        deleteItem(this.divItems, async (index) => {
+            const id = incomes?.incomes[index].id
+            const res = await this.income.deleteIncomeById(id);
+            
+            modelItemCreatedOrDelete(JSON.stringify(res.data.message).replace(/^"|"$/g, ''))
+            this.getAllIncomes();
+        });
+        
+    }
 }

@@ -26,11 +26,11 @@ function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
 }
 
 function createItem(
-    btnCreateItem: HTMLElement, 
-    btnNewItem: HTMLElement, 
-    divNewItem: HTMLElement, 
-    overlay: HTMLElement, 
-    onCreate: (data: IncomeExpense) => void 
+    btnCreateItem: HTMLElement,
+    btnNewItem: HTMLElement,
+    divNewItem: HTMLElement,
+    overlay: HTMLElement,
+    onCreate: (data: IncomeExpense) => void
 ) {
     const isIncome = divNewItem.classList.contains('new-income');
 
@@ -90,25 +90,54 @@ function createItem(
     })
 }
 
-function itemCreated(msgItem: string) {
-    let modal = document.querySelector('.modal') as HTMLElement;
 
-    if (!modal) {
-        modal = document.createElement('div');
-        modal.className = 'modal';
-        document.body.appendChild(modal);
-    }
-    
-    modal.innerHTML = `
-        <i class="bi bi-check2-circle"></i> ${msgItem}
-    `;
-    
-    // Adiciona a classe active para mostrar o modal
-    modal.classList.add('active');
 
-    setTimeout(() => {
-        modal.classList.remove('active');
-    }, 3500);
+// Função utilitária para atualização dos items
+
+function deleteItem(divItems: HTMLDivElement, onDelete: (index: number) => void) {
+    const items = divItems.querySelectorAll('.items');
+
+    items.forEach((item, index) => {
+        const btnDelete = item.querySelector('.btn-delete')! as HTMLButtonElement;
+
+        btnDelete.addEventListener('click', () => {
+            const existingConfirmation = item.querySelector('.delete-confirmation');
+            
+            if (existingConfirmation) {
+                existingConfirmation.remove();
+                return;
+            }
+
+            const confirmationBox = document.createElement('div');
+            confirmationBox.className = 'delete-confirmation show';
+            confirmationBox.innerHTML = `
+                <div class="delete-content">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <p>Você tem certeza que deseja excluir?</p>
+                    <div class="delete-actions">
+                        <button class="btn-confirm">Excluir</button>
+                        <button class="btn-cancel">Cancelar</button>
+                    </div>
+                </div>
+            `;
+
+            item.appendChild(confirmationBox);
+
+            const cancelBtn = confirmationBox.querySelector('.btn-cancel');
+            const confirmBtn = confirmationBox.querySelector('.btn-confirm');
+
+            cancelBtn?.addEventListener('click', () => {
+                confirmationBox.remove();
+            });
+
+            confirmBtn?.addEventListener('click', () => {
+                onDelete(index);
+                confirmationBox.remove();
+            });
+
+            
+        })
+    })
 }
 
-export { listItem, createItem, itemCreated };
+export { listItem, createItem, deleteItem };

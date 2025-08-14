@@ -153,3 +153,107 @@
     align-items: center;
     justify-content: center;
 }
+
+/* ==================== CAIXA DE CONFIRMAÇÃO DE EXCLUSÃO ==================== */
+
+.delete-confirmation {
+    display: none;
+    width: 100%;
+    margin-top: 12px;
+    animation: slideDown 0.1s ease-out;
+}
+
+.delete-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    background: var(--white-default);
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.delete-content i {
+    color: #ff6b6b;
+    font-size: 24px;
+}
+
+.delete-content p {
+    margin: 0;
+    color: var(--color-h1);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.delete-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-confirm,
+.btn-cancel {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-width: 80px;
+}
+
+.btn-confirm {
+    background: #ff6b6b;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background: #ff5252;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.btn-cancel {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #e9ecef;
+}
+
+.btn-cancel:hover {
+    background: #e9ecef;
+    color: #495057;
+}
+
+/* Animação suave */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.delete-confirmation.show {
+    display: block;
+}
+
+.delete-confirmation.hide {
+    animation: slideUp 0.15s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}

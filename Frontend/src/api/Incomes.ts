@@ -24,6 +24,17 @@ class Incomes {
                 return null;
             })
     }
+
+    // async updateIncomeById
+
+    async deleteIncomeById(id: string) {
+        return api.delete(`/incomes/${id}`)
+            .then(res => res)
+            .catch(err => {
+                console.log('Erro ao deletar receita', err);   
+                throw err             
+            })
+    }
 }
 
 export default new Incomes();
