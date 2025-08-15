@@ -24,15 +24,16 @@ function formErrors(resError: AxiosError, divNewItem: HTMLElement, overlay: HTML
 
         if (fieldName.includes('value')) {
             errorMessage = fieldErrors.valor || '';
+
         } else if (fieldName.includes('category')) {
-         
             errorMessage = fieldErrors.categoria || '';
+
         } else if (fieldName.includes('desc')) {
-            
             errorMessage = fieldErrors.descricao || '';
+
         } else if (fieldName.includes('date')) {
-            
             errorMessage = fieldErrors.data || '';
+            
         }
 
         if (errorMessage) {

@@ -80,7 +80,9 @@ class IncomeController {
 
         const dateFormated = formatDateISO(dataJSON.data);
 
-        await BodySchema.validate({ ...dataJSON, dateFormated });
+        await BodySchema.validate({ ...dataJSON, dateFormated }, {
+            abortEarly: false
+        });
 
         const income = await this.service.atualizar(id, { ...dataJSON, data: dateFormated });
         

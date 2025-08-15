@@ -114,6 +114,21 @@
     background-color: var(--color-green-light);
 }
 
+/* Botão de edição */
+.update {
+    display: none;
+    color: var(--white-default);
+    background: var(--color-button);
+    border: 1px solid transparent;
+    transition: .2s ease-out;
+}
+
+.update:hover {
+    color: var(--color-button);
+    border: 1px solid var(--color-button);
+    background-color: var(--color-green-light);
+}
+
 /*---Se for ativado*/
 .new-income.active,
 .new-item-overlay.active {
@@ -153,6 +168,7 @@
     align-items: center;
     justify-content: center;
 }
+
 
 /* ==================== CAIXA DE CONFIRMAÇÃO DE EXCLUSÃO ==================== */
 

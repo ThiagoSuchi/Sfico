@@ -7,7 +7,7 @@ import type { PaginatedIncome } from "../model/Paginated";
 import api from "./config";
 
 class Incomes {
-    async createIncomes({ valor, categoria, descricao, data }: IncomeExpense) {
+    createIncomes({ valor, categoria, descricao, data }: IncomeExpense) {
         return api.post('/incomes', { valor, categoria, descricao, data })
             .then(res => res)
             .catch(function (err) {
@@ -16,7 +16,7 @@ class Incomes {
             })
     }
     
-    async getAllIncomes(skip: number = 0, perPage: number = 7) { 
+    getAllIncomes(skip: number = 0, perPage: number = 7) { 
         return api.get<PaginatedIncome<any>>(`/incomes?skip=${skip}&per_page=${perPage}`)
             .then(res => res.data)
             .catch(err => {
@@ -25,9 +25,16 @@ class Incomes {
             })
     }
 
-    // async updateIncomeById
+    updateIncomeById({ id, ...data }: IncomeExpense ) {
+        return api.put(`/incomes/${id}`, data)
+            .then(res => res)
+            .catch(err => {
+                console.log('erro ao atualizar receita: ', err);
+                throw err
+            })
+    }
 
-    async deleteIncomeById(id: string) {
+    deleteIncomeById(id: string) {
         return api.delete(`/incomes/${id}`)
             .then(res => res)
             .catch(err => {

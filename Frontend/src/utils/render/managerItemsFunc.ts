@@ -1,5 +1,6 @@
 import type { IncomeExpense } from "../../model/IncomeExpenseModel";
 import { clearFormErrors } from "../Errors/formErrorsDOM";
+import { modelMessage } from "./modelItemCreate";
 
 function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
     divItems.innerHTML = '';
@@ -32,14 +33,12 @@ function createItem(
     overlay: HTMLElement,
     onCreate: (data: IncomeExpense) => void
 ) {
-    const isIncome = divNewItem.classList.contains('new-income');
-
     let valueItem: HTMLInputElement;
     let categoryItem: HTMLSelectElement;
     let descriptionItem: HTMLInputElement;
     let dateItem: HTMLInputElement;
 
-    if (isIncome) {
+    if (divNewItem) {
         valueItem = document.getElementById('new-inc-value') as HTMLInputElement;
         categoryItem = document.getElementById('new-inc-category') as HTMLSelectElement;
         descriptionItem = document.getElementById('new-inc-description') as HTMLInputElement;
@@ -51,10 +50,15 @@ function createItem(
         dateItem = document.getElementById('new-exp-date') as HTMLInputElement;
     }
 
-    btnNewItem.addEventListener('click', () => {
+    btnNewItem.onclick = () => {
         divNewItem.style.display = 'flex';
         overlay.style.display = 'flex';
-    })
+
+        valueItem.value = '';
+        categoryItem.value = 'select';
+        descriptionItem.value = '';
+        dateItem.value = '';
+    }
 
     const cancel = divNewItem.querySelector('.cancel')!;
 
@@ -90,7 +94,95 @@ function createItem(
     })
 }
 
-// Função utilitária para atualização dos items
+function updateItem(
+    currentData: any,
+    divItem: HTMLDivElement,
+    divNewIncome: HTMLDivElement,
+    overlay: HTMLDivElement,
+    onUpdate: (index: number, incomeData: IncomeExpense) => void
+) {
+    const items = divItem.querySelectorAll('.items');
+
+    let valueItem: HTMLInputElement;
+    let categoryItem: HTMLSelectElement;
+    let descriptionItem: HTMLInputElement;
+    let dateItem: HTMLInputElement;
+
+    if (divNewIncome) {
+        valueItem = document.getElementById('new-inc-value') as HTMLInputElement;
+        categoryItem = document.getElementById('new-inc-category') as HTMLSelectElement;
+        descriptionItem = document.getElementById('new-inc-description') as HTMLInputElement;
+        dateItem = document.getElementById('new-inc-date') as HTMLInputElement;
+    } else {
+        valueItem = document.getElementById('new-exp-value') as HTMLInputElement;
+        categoryItem = document.getElementById('new-exp-category') as HTMLSelectElement;
+        descriptionItem = document.getElementById('new-epx-desc') as HTMLInputElement;
+        dateItem = document.getElementById('new-exp-date') as HTMLInputElement;
+    }
+
+    items.forEach((item, index) => {
+        const editBtn = item.querySelector('.btn-edit')!;
+
+        editBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Esconde o botão create e mostra o update
+            const updateBtn = divNewIncome.querySelector('.update') as HTMLButtonElement;
+            updateBtn.style.display = 'block';
+            const createBtn = divNewIncome.querySelector('.create') as HTMLButtonElement;
+            createBtn.style.display = 'none';
+
+            divNewIncome.style.display = 'flex';
+            overlay.style.display = 'flex';
+
+            const inputValues = {
+                valor: valueItem.value = currentData[index].valor,
+                categoria: categoryItem.value = currentData[index].categoria,
+                descricao: descriptionItem.value = currentData[index].descricao || '',
+                data: dateItem.value = currentData[index].data.split('/').reverse().join('-'),
+            }
+
+            updateBtn.onclick = (e) => {
+                // Verificando se há alguma alteração
+                const hasChange = (
+                    inputValues.valor !== valueItem.value ||
+                    inputValues.categoria !== categoryItem.value ||
+                    inputValues.descricao !== (descriptionItem.value || '') ||
+                    inputValues.data !== dateItem.value
+                )
+
+                if (!hasChange && updateBtn) {
+                    modelMessage('Por favor altere algum campo para poder prosseguir com a atualização.');
+                    return
+                }
+
+                const incomeData: IncomeExpense = {
+                    valor: valueItem.value,
+                    categoria: categoryItem.value,
+                    descricao: descriptionItem.value || '',
+                    data: dateItem.value
+                }
+
+                // Fecha o modal
+                divNewIncome.style.display = 'none';
+                overlay.style.display = 'none';
+
+                updateBtn.style.display = 'none';
+                createBtn.style.display = 'block';
+
+                // Retorno o data que é o item receita/despesa
+                onUpdate(index, incomeData);
+            }
+
+            const cancelBtn = divNewIncome.querySelector('.cancel') as HTMLButtonElement;
+
+            cancelBtn.onclick = () => {
+                updateBtn.style.display = 'none';
+                createBtn.style.display = 'block';
+            }
+        })
+    })
+}
 
 function deleteItem(divItems: HTMLDivElement, onDelete: (index: number) => void) {
     const items = divItems.querySelectorAll('.items');
@@ -100,7 +192,7 @@ function deleteItem(divItems: HTMLDivElement, onDelete: (index: number) => void)
 
         btnDelete.addEventListener('click', () => {
             const existingConfirmation = item.querySelector('.delete-confirmation');
-            
+
             if (existingConfirmation) {
                 existingConfirmation.remove();
                 return;
@@ -133,9 +225,9 @@ function deleteItem(divItems: HTMLDivElement, onDelete: (index: number) => void)
                 confirmationBox.remove();
             });
 
-            
+
         })
     })
 }
 
-export { listItem, createItem, deleteItem };
+export { listItem, createItem, updateItem, deleteItem };
