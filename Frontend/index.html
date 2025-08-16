@@ -152,7 +152,8 @@
         <div class="category">
           <label for="inc-category">Categoria</label>
           <select name="category" id="inc-category">
-            <option value="todas" selected>Todas as categorias</option>
+            <option value="select" disabled selected>Selecione uma categoria</option>
+            <option value="todas">Todas as categorias</option>
             <option value="salario">Salário</option>
             <option value="renda-extra">Renda extra</option>
             <option value="investimentos">Investimentos</option>
@@ -194,10 +195,13 @@
     </div><!--title-section-->
 
     <div class="filter">
+      <h1>Filtrar</h1>
+      <div class="filter-per">
       <div class="category">
         <label for="exp-category">Categoria</label>
         <select name="category" id="exp-category">
-          <option value="todas" selected>Todas as categorias</option>
+          <option value="select" disabled selected>Selecione uma categoria</option>
+          <option value="todas">Todas as categorias</option>
           <option value="alimentacao">Alimentação</option>
           <option value="transporte">Transporte</option>
           <option value="moradia">Moradia</option>
@@ -217,6 +221,7 @@
         <label for="exp-monthYear">Mês/Ano</label>
         <input type="month" id="exp-monthYear" name="monthYear">
       </div><!--monthYear-->
+      </div><!--filter-per-->
     </div><!--filter-->
 
     <div class="items-container item-expense">

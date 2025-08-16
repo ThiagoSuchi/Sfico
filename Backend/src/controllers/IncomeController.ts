@@ -58,12 +58,12 @@ class IncomeController {
     }
 
     async listarPorFiltro(req: Request, res: Response) {
-        const { categoria, data } = req.query;
-
+        const { category, date } = req.query;
+        
         // Criando um objeto filter com campos válidos
         const filter: any = {};
-        if (categoria && categoria !== 'undefined') filter.category = String(categoria);
-        if (data && data !== 'undefined') filter.date = String(data);
+        if (category && category !== 'undefined') filter.category = String(category);
+        if (date && date !== 'undefined') filter.date = String(date);
 
         const incomes = await this.service.listarPorFiltro(filter);
 

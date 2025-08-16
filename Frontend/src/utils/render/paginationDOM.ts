@@ -44,7 +44,6 @@ function handleNext() {
         window.dispatchEvent(new CustomEvent('pageChanged', {
             detail: { page: globalCurrentPage, skip }
         }));
-        console.log('skip: ' + skip);
     }
 }
 
@@ -61,7 +60,6 @@ function handlePrev() {
         window.dispatchEvent(new CustomEvent('pageChanged', {
             detail: { page: globalCurrentPage, skip }
         }));
-        console.log('skip: ' + skip);
     }
 }
 

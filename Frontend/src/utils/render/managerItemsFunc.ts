@@ -2,30 +2,6 @@ import type { IncomeExpense } from "../../model/IncomeExpenseModel";
 import { clearFormErrors } from "../Errors/formErrorsDOM";
 import { modelMessage } from "./modelItemCreate";
 
-function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
-    divItems.innerHTML = '';
-
-    data.forEach((item) => {
-        divItems.innerHTML += `
-            <div class="items">
-                <div class="value">
-                    <h2>+R$ ${item.valor}</h2>
-                    <div class="tags">
-                        <p><span>${item.categoria}</span></p>
-                        <p>${item.descricao}</p>
-                    </div>
-                </div>
-        
-                <div class="edit">
-                    <p class="date">${item.data}</p>
-                    <button class="btn-edit"><i class="bi bi-pencil-square"></i> Editar</button>
-                    <button class="btn-delete"><i class="bi bi-trash3"></i> Excluir</button>
-                </div>
-            </div>
-        `
-    });
-}
-
 function createItem(
     btnCreateItem: HTMLElement,
     btnNewItem: HTMLElement,
@@ -92,6 +68,45 @@ function createItem(
         // Retorno o data que é o item receita/despesa
         onCreate(incomeData);
     })
+}
+
+function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
+    divItems.innerHTML = '';
+
+    data.forEach((item) => {
+        divItems.innerHTML += `
+            <div class="items">
+                <div class="value">
+                    <h2>+R$ ${item.valor}</h2>
+                    <div class="tags">
+                        <p><span>${item.categoria}</span></p>
+                        <p>${item.descricao}</p>
+                    </div>
+                </div>
+        
+                <div class="edit">
+                    <p class="date">${item.data}</p>
+                    <button class="btn-edit"><i class="bi bi-pencil-square"></i> Editar</button>
+                    <button class="btn-delete"><i class="bi bi-trash3"></i> Excluir</button>
+                </div>
+            </div>
+        `
+    });
+}
+
+function listFilterItem(onFilter: (category?: string, date?: string) => void) {
+    const categorySelect = document.getElementById('inc-category') as HTMLSelectElement;
+    const dateInput = document.getElementById('inc-monthYear') as HTMLInputElement
+
+    const applyFilter = () => {
+        const categoryValue = categorySelect.value || undefined;
+        const dateValue = dateInput.value || undefined;
+
+        onFilter(categoryValue, dateValue)
+    }
+
+    categorySelect.addEventListener('change', applyFilter);
+    dateInput.addEventListener('change', applyFilter);
 }
 
 function updateItem(
@@ -230,4 +245,4 @@ function deleteItem(divItems: HTMLDivElement, onDelete: (index: number) => void)
     })
 }
 
-export { listItem, createItem, updateItem, deleteItem };
+export { createItem, listItem, listFilterItem, updateItem, deleteItem };

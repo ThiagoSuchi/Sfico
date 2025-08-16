@@ -3,7 +3,7 @@
 import axios, { AxiosError } from "axios";
 import Incomes from "../api/Incomes";
 import { clearFormErrors, formErrors } from "../utils/Errors/formErrorsDOM";
-import { listItem, createItem, deleteItem, updateItem } from "../utils/render/managerItemsFunc";
+import { listItem, createItem, deleteItem, updateItem, listFilterItem } from "../utils/render/managerItemsFunc";
 import { modelCreatedOrUpdatedOrDeleted } from "../utils/render/modelItemCreate";
 import { notItem } from "../utils/render/notItemDOM";
 import { paginateItems } from "../utils/render/paginationDOM";
@@ -27,6 +27,7 @@ export class ManagerIncomes {
         this.setupPaginationListener();
         this.createIncome();
         this.getAllIncomes();
+        this.filterIncome()
     }
 
     private setupPaginationListener() {
@@ -46,9 +47,9 @@ export class ManagerIncomes {
 
         updateItem(
             this.currentData.incomes,
-            this.divItems, 
-            this.divNewIncome, 
-            this.overlay, 
+            this.divItems,
+            this.divNewIncome,
+            this.overlay,
             async (index, data) => {
                 await this.updateIncomeById(index, data);
             }
@@ -57,7 +58,7 @@ export class ManagerIncomes {
 
     private setupDeleteListener() {
         if (!this.currentData) return;
-        
+
         deleteItem(this.divItems, async (index) => {
             await this.deleteIncomeById(index);
         })
@@ -116,12 +117,31 @@ export class ManagerIncomes {
         this.setupUpdateListener();
     }
 
+    async filterIncome() {
+        listFilterItem(async (category, date) => {
+            const filter = { category, date }
+
+            const data = await this.income.filterIncome(filter);
+            console.log(data.incomes);
+
+            if (!data || !data.incomes || data.incomes.length === 0) {
+                this.currentData = null;
+                notItem('Nenhuma receita encontrada.', this.divItems);
+                return undefined;
+            }
+
+            paginateItems(this.currentPage, data.pages, this.perPage)
+            listItem(data.incomes, this.divItems);
+
+            this.setupDeleteListener();
+            this.setupUpdateListener();
+        })
+    }
+
     async updateIncomeById(index: number, data: IncomeExpense) {
         try {
             const id = this.currentData.incomes[index].id
             const dataUpdated = { id, ...data }
-            console.log(data);
-
 
             const res = await this.income.updateIncomeById(dataUpdated);
 
@@ -136,10 +156,10 @@ export class ManagerIncomes {
     }
 
     async deleteIncomeById(index: number) {
-            const id = this.currentData.incomes[index].id
-            const res = await this.income.deleteIncomeById(id);
+        const id = this.currentData.incomes[index].id
+        const res = await this.income.deleteIncomeById(id);
 
-            modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''))
-            this.getAllIncomes();
-        }
+        modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''))
+        this.getAllIncomes();
     }
+}

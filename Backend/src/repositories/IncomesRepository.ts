@@ -41,16 +41,24 @@ class IncomeRepository {
         firstDate?: Date,
         lastDate?: Date
     }): Promise<Incomes[]> {
+        
+        const whereClause: any = {};
+
+        if (filter.category && filter.category !== 'todas') {
+            whereClause.categoria = filter.category;
+        }
+
+        if (filter.firstDate || filter.lastDate) {
+            whereClause.data = {};
+            if (filter.firstDate) whereClause.data.gte = filter.firstDate;
+            if (filter.lastDate) whereClause.data.lte = filter.lastDate
+        }
+
         const incomes = await prisma.incomes.findMany({
-            where: {
-                categoria: filter.category,
-                data: {
-                    gte: filter.firstDate,
-                    lte: filter.lastDate
-                }
-            },
+            where: whereClause,
             orderBy: { data: 'desc' }
         });
+        
         return incomes;
     }
     
