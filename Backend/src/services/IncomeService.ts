@@ -84,6 +84,9 @@ class IncomeService {
             lastDayMonth = new Date(Date.UTC(+ano, +mes, 0, 23, 59, 59)); // Último dia do mês
         }
 
+        // Filtrando a categoria para não receber 'select'
+        category = category === 'select' ? undefined : category
+        
         const incomesFilter = await this.repository.listarPorFiltro({
             category,
             firstDate: firstDayMonth,
