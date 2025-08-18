@@ -72,7 +72,7 @@ class IncomeService {
         };
     }
 
-    async listarPorFiltro({ category, date }: FilterDTO): Promise<any[] | null> {
+    async listarPorFiltro({ category, date, skip, per_page }: FilterDTO): Promise<object | null> {
         console.log('GET/incomes/filtro - IncomeService.ts');
         
         let firstDayMonth: Date | undefined;
@@ -90,17 +90,26 @@ class IncomeService {
         const incomesFilter = await this.repository.listarPorFiltro({
             category,
             firstDate: firstDayMonth,
-            lastDate: lastDayMonth
+            lastDate: lastDayMonth,
+            skip: skip || 0,
+            per_page: per_page || 0
         });
 
-        if (incomesFilter.length === 0) {
+        if (incomesFilter.incomes!.length === 0) {
             return null
         }
 
-        return incomesFilter.map(item => ({
-            ...item,
-            data: formatedDateDMY(item.data)
-        }))
+        return {
+            total: incomesFilter.total,
+            pages: incomesFilter.pages,
+            skip: skip || 0,
+            per_page: per_page || 7,
+            incomes: incomesFilter.incomes?.map(item => ({
+                ...item,
+                data: formatedDateDMY(item.data)
+            }))
+        }
+            
     }
 
     async atualizar(id: string, data: Incomes): Promise<Incomes> {

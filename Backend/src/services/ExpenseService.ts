@@ -72,7 +72,7 @@ class ExpenseService {
         };
     }
 
-    async listarPorFiltro({ category, date }: FilterDTO): Promise<any[] | null> {
+    async listarPorFiltro({ category, date, skip, per_page }: FilterDTO): Promise<object | null> {
         console.log('GET/expenses/filtro - ExpenseService.ts');
         
         let firstDayMonth: Date | undefined;
@@ -84,20 +84,30 @@ class ExpenseService {
             lastDayMonth = new Date(Date.UTC(+ano, +mes, 0, 23, 59, 59)); // Último dia do mês
         }
 
-        const expensesFilter = await this.repository.listarPorFiltro({
+        const { total, pages, expenses } = await this.repository.listarPorFiltro({
             category,
             firstDate: firstDayMonth,
-            lastDate: lastDayMonth
+            lastDate: lastDayMonth,
+            skip: skip || 0,
+            per_page: per_page || 7
         });
 
-        if (expensesFilter.length === 0) {
+        if (!expenses || expenses.length === 0) {
             return null
         }
 
-        return expensesFilter.map(item => ({
+        const expensesResult = expenses.map(item => ({
             ...item,
             data: formatedDateDMY(item.data)
-        }))
+        }));
+
+        return {
+            total,
+            pages,
+            skip: skip || 0,
+            per_page: per_page || 7,
+            expenses: expensesResult
+        };
     }
 
     async atualizar(id: string, data: Expense): Promise<Expense> {

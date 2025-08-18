@@ -36,20 +36,38 @@ class ExpenseRepository {
     async listarPorFiltro(filter: {
         category?: string,
         firstDate?: Date,
-        lastDate?: Date
-    }): Promise<Expense[]> {
-        const expenses = await prisma.expense.findMany({
-            where: {
-                categoria: filter.category,
-                data: {
-                    gte: filter.firstDate, // greater than or equal → maior ou igual.
-                    lte: filter.lastDate //  less than or equal → menor ou igual.
+        lastDate?: Date,
+        skip?: number,
+        per_page?: number
+    }): Promise<ListDTO> {
+        const [expenses, total] = await prisma.$transaction([
+            prisma.expense.findMany({
+                where: {
+                    categoria: filter.category,
+                    data: {
+                        gte: filter.firstDate, // greater than or equal → maior ou igual.
+                        lte: filter.lastDate //  less than or equal → menor ou igual.
+                    }
+                },
+                skip: filter.skip || 0,
+                take: filter.per_page || 7,
+                orderBy: { data: 'desc' } // Ordenar por ordem decrescente.
+            }),
+            prisma.expense.count({
+                where: {
+                    categoria: filter.category,
+                    data: {
+                        gte: filter.firstDate,
+                        lte: filter.lastDate
+                    }
                 }
-            },
-            orderBy: { data: 'desc' } // Ordenar por ordem decrescente.
-        });
+            })
+        ]);
 
-        return expenses
+        // Irá calcular o número total de páginas, divididos em páginas de tamanho fixo.
+        const pages = Math.ceil(total / (filter.per_page || 7));
+
+        return { total, pages, expenses };
     }
     
     async atualizar(id: string, data: object): Promise<Expense> {

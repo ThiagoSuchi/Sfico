@@ -39,8 +39,10 @@ class IncomeRepository {
     async listarPorFiltro(filter: {
         category?: string,
         firstDate?: Date,
-        lastDate?: Date
-    }): Promise<Incomes[]> {
+        lastDate?: Date,
+        skip?: number,
+        per_page?: number
+    }): Promise<ListDTO> {
         
         const whereClause: any = {};
 
@@ -54,12 +56,21 @@ class IncomeRepository {
             if (filter.lastDate) whereClause.data.lte = filter.lastDate
         }
 
-        const incomes = await prisma.incomes.findMany({
-            where: whereClause,
-            orderBy: { data: 'desc' }
-        });
+        const [incomes, total] = await prisma.$transaction([
+            prisma.incomes.findMany({
+                where: whereClause,
+                orderBy: { data: 'desc' },
+                skip: filter.skip || 0,
+                take: filter.per_page || 7
+            }),
+            prisma.incomes.count({
+                where: whereClause
+            })
+        ]);
+
+        const pages = Math.ceil(total / (filter.per_page || 7));
         
-        return incomes;
+        return { total, pages, incomes };
     }
     
 

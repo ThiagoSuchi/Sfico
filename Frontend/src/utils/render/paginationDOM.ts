@@ -1,13 +1,34 @@
-const divPaginate = document.querySelector('.pagination') as HTMLDivElement;
-const ul = divPaginate.querySelector('ul') as HTMLUListElement;
-const btnNext = document.querySelector('.btn-next') as HTMLButtonElement;
-const btnPrev = document.querySelector('.btn-prev') as HTMLButtonElement;
+// Elementos globais - serão atualizados dinamicamente baseado no contexto
+let currentContext: 'income' | 'expense' = 'income';
+let divPaginate: HTMLDivElement;
+let ul: HTMLUListElement;
+let btnNext: HTMLButtonElement;
+let btnPrev: HTMLButtonElement;
 
 let globalCurrentPage = 1;
 let globalTotalPages = 0;
 let globalPerPage = 5;
 
-export function paginateItems(currentPage: number, totalPages: number, per_page: number): number {
+function updatePaginationElements(context: 'income' | 'expense') {
+    currentContext = context;
+    
+    if (context === 'income') {
+        divPaginate = document.querySelector('.pagination-income') as HTMLDivElement;
+        btnNext = document.querySelector('.btn-next-income') as HTMLButtonElement;
+        btnPrev = document.querySelector('.btn-prev-income') as HTMLButtonElement;
+    } else {
+        divPaginate = document.querySelector('.pagination-expense') as HTMLDivElement;
+        btnNext = document.querySelector('.btn-next-expense') as HTMLButtonElement;
+        btnPrev = document.querySelector('.btn-prev-expense') as HTMLButtonElement;
+    }
+    
+    ul = divPaginate.querySelector('ul') as HTMLUListElement;
+}
+
+export function paginateItems(currentPage: number, totalPages: number, per_page: number, context: 'income' | 'expense' = 'income'): number {
+    // Atualiza os elementos baseado no contexto
+    updatePaginationElements(context);
+    
     globalCurrentPage = currentPage;
     globalTotalPages = totalPages;
     globalPerPage = per_page;
@@ -40,9 +61,9 @@ function handleNext() {
         loadPageDom(globalTotalPages, globalCurrentPage);
         stylesLi(globalCurrentPage, 'next');
         
-        // Lança events listeners
+        // Lança events listeners com contexto
         window.dispatchEvent(new CustomEvent('pageChanged', {
-            detail: { page: globalCurrentPage, skip }
+            detail: { page: globalCurrentPage, skip, context: currentContext }
         }));
     }
 }
@@ -58,7 +79,7 @@ function handlePrev() {
         stylesLi(globalCurrentPage, 'prev');
         
         window.dispatchEvent(new CustomEvent('pageChanged', {
-            detail: { page: globalCurrentPage, skip }
+            detail: { page: globalCurrentPage, skip, context: currentContext }
         }));
     }
 }

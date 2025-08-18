@@ -59,20 +59,22 @@ class ExpenseController {
     }
 
     async listarPorFiltro(req: Request, res: Response) {
-        const { category, date } = req.query;
-
+        const { category, date, skip, per_page } = req.query;
+        
         // Criando um objeto filter com campos válidos
         const filter: any = {};
-        if (category && category !== 'undefined') filter.category = String(category);
+        if (category && category !== 'undefined' && category !== 'todas') filter.category = String(category);
         if (date && date !== 'undefined') filter.date = String(date);
+        filter.skip = skip ? Number(skip) : 0;
+        filter.per_page = per_page ? Number(per_page) : 7
 
         const expenses = await this.service.listarPorFiltro(filter);
 
-        if (!expenses || expenses.length === 0) {
-            throw new AppError("Despesas não encontradas.", 404)
+        if (!expenses) {
+            throw new AppError("Nenhuma despesa encontrada com os filtros aplicados.", 404)
         }
 
-        res.status(200).json({ message: 'Despesas encontradas: ', expenses });
+        res.status(200).json(expenses);
     }
 
     async atualizar(req: Request, res: Response) {

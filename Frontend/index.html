@@ -84,9 +84,9 @@
     </div>
 
     <div class="btn-new-item">
-      <button class="update">Atualizar</button>
-      <button class="create">Criar</button>
-      <button class="cancel">Cancelar</button>
+      <button class="update update-income">Atualizar</button>
+      <button class="create create-income">Criar</button>
+      <button class="cancel cancel-income">Cancelar</button>
     </div>
   </div><!--new-income-->
 
@@ -119,8 +119,8 @@
     </div>
 
     <div class="input-container">
-      <label for="new-epx-desc">Descrição</label>
-      <input id="new-epx-desc" name="desc" type="text" placeholder="Descrição opcional">
+      <label for="new-exp-desc">Descrição</label>
+      <input id="new-exp-desc" name="desc" type="text" placeholder="Descrição opcional">
     </div>
 
     <div class="input-container">
@@ -129,8 +129,9 @@
     </div>
 
     <div class="btn-new-item">
-      <button class="create">Criar</button>
-      <button class="cancel">Cancelar</button>
+      <button class="update update-expense">Atualizar</button>
+      <button class="create create-expense">Criar</button>
+      <button class="cancel cancel-expense">Cancelar</button>
     </div>
   </div><!--new-expense-->
 
@@ -175,13 +176,13 @@
       <!--Div .items criado em ManagerIncome.ts-->
     </div><!--items-->
 
-    <div class="pagination">
-      <button class="btn-prev"><i class="bi bi-arrow-left"></i> anterior</button>
+    <div class="pagination pagination-income">
+      <button class="btn-prev btn-prev-income"><i class="bi bi-arrow-left"></i> anterior</button>
       <ul>
         <!--Li criada em paginationDOM-->
       </ul>
       <!--Ul criado em paginationDOM.ts-->
-      <button class="btn-next">próximo <i class="bi bi-arrow-right"></i></button>
+      <button class="btn-next btn-next-income">próximo <i class="bi bi-arrow-right"></i></button>
     </div><!--pagination-->
   </section><!--general-incomes-->
 
@@ -191,7 +192,7 @@
         <h1>Despesas</h1>
         <p>Gerencie suas despesas e controle seus gastos </p>
       </div>
-      <button><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Despesa</button>
+      <button id="btn-newDespesa"><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Despesa</button>
     </div><!--title-section-->
 
     <div class="filter">
@@ -228,14 +229,12 @@
       <!--Div .items criado em ManagerExpenses.ts-->
     </div><!--items-->
 
-    <div class="pagination">
-      <button class="btn-prev"><i class="bi bi-arrow-left"></i> anterior</button>
+    <div class="pagination pagination-expense">
+      <button class="btn-prev btn-prev-expense"><i class="bi bi-arrow-left"></i> anterior</button>
       <ul>
-        <li class="link-paginate active" value="1">1</li>
-        <li class="link-paginate" value="2">2</li>
-        <li class="link-paginate" value="3">3</li>
+        <!--Li criada em paginationDOM-->
       </ul>
-      <button class="btn-next">próximo <i class="bi bi-arrow-right"></i></button>
+      <button class="btn-next btn-next-expense">próximo <i class="bi bi-arrow-right"></i></button>
     </div><!--pagination-->
   </section><!--general-expenses-->
 

@@ -31,10 +31,25 @@ class Incomes {
         })
     }
 
-    filterIncome({ category, date }: FilterDTO) {
+    filterIncome({ 
+        category, 
+        date,
+        skip = 0,
+        perPage = 7
+     }: FilterDTO & { skip?: number, perPage?: number }) {
+        const params = new URLSearchParams();
+
+       if (category && category !== 'select') {
+            params.append('category', category);
+        }
+        if (date) {
+            params.append('date', date);
+        }
+        params.append('skip', skip.toString());
+        params.append('per_page', perPage.toString());
+
         return api.get<PaginatedIncome<IncomeExpense>>(
-            '/incomes/filter',
-            { params: { category, date } }
+            `/incomes/filter?${params}`,
         )
         .then(res => res.data)
         .catch(err => {

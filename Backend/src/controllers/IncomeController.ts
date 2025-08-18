@@ -58,20 +58,22 @@ class IncomeController {
     }
 
     async listarPorFiltro(req: Request, res: Response) {
-        const { category, date } = req.query;
+        const { category, date, skip, per_page } = req.query;
         
         // Criando um objeto filter com campos válidos
         const filter: any = {};
-        if (category && category !== 'undefined') filter.category = String(category);
+        if (category && category !== 'undefined' && category !== 'todas') filter.category = String(category);
         if (date && date !== 'undefined') filter.date = String(date);
+        filter.skip = skip ? Number(skip) : 0;
+        filter.per_page = per_page ? Number(per_page) : 7
 
         const incomes = await this.service.listarPorFiltro(filter);
 
-        if (!incomes || incomes.length === 0) {
-            throw new AppError("Receitas não encontradas.", 404)
+        if (!incomes) {
+            throw new AppError("Nenhuma receita encontrada com os filtros aplicados.", 404)
         }
 
-        res.status(200).json({ message: 'Receitas encontradas: ', incomes });
+        res.status(200).json(incomes);
     }
 
     async atualizar(req: Request, res: Response) {

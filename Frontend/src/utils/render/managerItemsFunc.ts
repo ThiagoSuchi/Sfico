@@ -14,7 +14,10 @@ function createItem(
     let descriptionItem: HTMLInputElement;
     let dateItem: HTMLInputElement;
 
-    if (divNewItem) {
+    // Detecta se é income ou expense baseado na classe do div
+    const isIncome = divNewItem.classList.contains('new-income');
+    
+    if (isIncome) {
         valueItem = document.getElementById('new-inc-value') as HTMLInputElement;
         categoryItem = document.getElementById('new-inc-category') as HTMLSelectElement;
         descriptionItem = document.getElementById('new-inc-description') as HTMLInputElement;
@@ -22,7 +25,7 @@ function createItem(
     } else {
         valueItem = document.getElementById('new-exp-value') as HTMLInputElement;
         categoryItem = document.getElementById('new-exp-category') as HTMLSelectElement;
-        descriptionItem = document.getElementById('new-epx-desc') as HTMLInputElement;
+        descriptionItem = document.getElementById('new-exp-desc') as HTMLInputElement;
         dateItem = document.getElementById('new-exp-date') as HTMLInputElement;
     }
 
@@ -36,7 +39,7 @@ function createItem(
         dateItem.value = '';
     }
 
-    const cancel = divNewItem.querySelector('.cancel')!;
+    const cancel = divNewItem.querySelector(isIncome ? '.cancel-income' : '.cancel-expense')!;
 
     cancel.addEventListener('click', () => {
         divNewItem.style.display = 'none';
@@ -94,9 +97,11 @@ function listItem(data: IncomeExpense[], divItems: HTMLDivElement) {
     });
 }
 
-function listFilterItem(onFilter: (category?: string, date?: string) => void) {
-    const categorySelect = document.getElementById('inc-category') as HTMLSelectElement;
-    const dateInput = document.getElementById('inc-monthYear') as HTMLInputElement
+function listFilterItem(onFilter: (category?: string, date?: string) => void, type: 'income' | 'expense' = 'income') {
+    const isIncome = type === 'income';
+    
+    const categorySelect = document.getElementById(isIncome ? 'inc-category' : 'exp-category') as HTMLSelectElement;
+    const dateInput = document.getElementById(isIncome ? 'inc-monthYear' : 'exp-monthYear') as HTMLInputElement
 
     const applyFilter = () => {
         const categoryValue = categorySelect.value || undefined;
@@ -123,7 +128,10 @@ function updateItem(
     let descriptionItem: HTMLInputElement;
     let dateItem: HTMLInputElement;
 
-    if (divNewIncome) {
+    // Detecta se é income ou expense baseado na classe do div
+    const isIncome = divNewIncome.classList.contains('new-income');
+    
+    if (isIncome) {
         valueItem = document.getElementById('new-inc-value') as HTMLInputElement;
         categoryItem = document.getElementById('new-inc-category') as HTMLSelectElement;
         descriptionItem = document.getElementById('new-inc-description') as HTMLInputElement;
@@ -131,7 +139,7 @@ function updateItem(
     } else {
         valueItem = document.getElementById('new-exp-value') as HTMLInputElement;
         categoryItem = document.getElementById('new-exp-category') as HTMLSelectElement;
-        descriptionItem = document.getElementById('new-epx-desc') as HTMLInputElement;
+        descriptionItem = document.getElementById('new-exp-desc') as HTMLInputElement;
         dateItem = document.getElementById('new-exp-date') as HTMLInputElement;
     }
 
@@ -142,9 +150,9 @@ function updateItem(
             e.preventDefault();
 
             // Esconde o botão create e mostra o update
-            const updateBtn = divNewIncome.querySelector('.update') as HTMLButtonElement;
+            const updateBtn = divNewIncome.querySelector(isIncome ? '.update-income' : '.update-expense') as HTMLButtonElement;
             updateBtn.style.display = 'block';
-            const createBtn = divNewIncome.querySelector('.create') as HTMLButtonElement;
+            const createBtn = divNewIncome.querySelector(isIncome ? '.create-income' : '.create-expense') as HTMLButtonElement;
             createBtn.style.display = 'none';
 
             divNewIncome.style.display = 'flex';
@@ -189,7 +197,7 @@ function updateItem(
                 onUpdate(index, incomeData);
             }
 
-            const cancelBtn = divNewIncome.querySelector('.cancel') as HTMLButtonElement;
+            const cancelBtn = divNewIncome.querySelector(isIncome ? '.cancel-income' : '.cancel-expense') as HTMLButtonElement;
 
             cancelBtn.onclick = () => {
                 updateBtn.style.display = 'none';

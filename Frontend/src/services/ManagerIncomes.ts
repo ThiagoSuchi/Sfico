@@ -7,6 +7,7 @@ import { listItem, createItem, deleteItem, updateItem, listFilterItem } from "..
 import { modelCreatedOrUpdatedOrDeleted } from "../utils/render/modelItemCreate";
 import { notItem } from "../utils/render/notItemDOM";
 import { paginateItems } from "../utils/render/paginationDOM";
+import { FilterManagerGeneric } from "../utils/filters/FilterManagerGeneric";
 import type { IncomeExpense } from "../model/IncomeExpenseModel";
 
 export class ManagerIncomes {
@@ -18,27 +19,52 @@ export class ManagerIncomes {
     // Cache de dados atuais
     private currentData: any = null;
 
+    // Filter Manager
+    private filterManager: FilterManagerGeneric;
+
     private currentPage = 1;
     private skip = 0;
     private perPage = 7;
 
     constructor() {
-        // Escuta eventos de mudança da página
+        // Inicializando o FilterManager
+        this.filterManager = new FilterManagerGeneric(
+            this.divItems,
+            (data: any) => this.currentData = data,
+            () => this.setupDeleteListener(),
+            () => this.setupUpdateListener(),
+            () => this.getAllIncomes(),
+            this.income,
+            'incomes'
+        );
+
         this.setupPaginationListener();
         this.createIncome();
         this.getAllIncomes();
-        this.filterIncome()
+        this.filterIncome();
     }
 
     private setupPaginationListener() {
         window.addEventListener('pageChanged', (e: Event) => {
-            const { page, skip } = (e as CustomEvent).detail;
+            const { page, skip, context } = (e as CustomEvent).detail;
+
+            if (context !== 'income') return;
 
             this.currentPage = page;
             this.skip = skip;
 
-            // Recarrega os dados da nova página
-            this.getAllIncomes();
+            // Verifica se há filtro ativo, se estiver mostra somente os items filtrados,
+            // idependente da paginação.
+            if (this.filterManager.isFiltering && this.filterManager.currentFilter) {
+                this.filterManager.applyFilter(
+                    this.filterManager.currentFilter,
+                    this.currentPage,
+                    this.skip,
+                    this.perPage
+                );
+            } else {
+                this.getAllIncomes();
+            }
         })
     }
 
@@ -66,7 +92,7 @@ export class ManagerIncomes {
 
     async createIncome() {
         const btnNewIncome = document.getElementById('btn-newReceita') as HTMLButtonElement;
-        const btnCreate = document.querySelector('.create') as HTMLButtonElement;
+        const btnCreate = document.querySelector('.create-income') as HTMLButtonElement;
 
         createItem(btnCreate, btnNewIncome, this.divNewIncome, this.overlay, async (income) => {
             try {
@@ -93,7 +119,7 @@ export class ManagerIncomes {
     async getAllIncomes() {
         const data = await this.income.getAllIncomes(this.skip, this.perPage);
 
-        if (!data || !data.incomes || data.incomes.length === 0) {
+        if (!data || !data.incomes) {
             // Limpa o cache se não houver dados
             this.currentData = null;
             notItem('Nenhuma receita criada.', this.divItems);
@@ -109,8 +135,10 @@ export class ManagerIncomes {
             skip: this.skip
         }
 
+        const pages = data.pages || 1;
+
         // Atualiza o DOM e lista todos os incomes que tem no banco
-        paginateItems(this.currentPage, data.pages, this.perPage)
+        paginateItems(this.currentPage, pages, this.perPage, 'income')
         listItem(data.incomes, this.divItems);
 
         this.setupDeleteListener();
@@ -119,23 +147,32 @@ export class ManagerIncomes {
 
     async filterIncome() {
         listFilterItem(async (category, date) => {
-            const filter = { category, date }
+            try {
+                // Configurar estado do filtro
+                this.filterManager.setFilterState(category, date);
 
-            const data = await this.income.filterIncome(filter);
-            console.log(data.incomes);
+                // Reset para página 1 quando aplicar novo filtro
+                this.currentPage = 1;
+                this.skip = 0;
 
-            if (!data || !data.incomes || data.incomes.length === 0) {
-                this.currentData = null;
+                await this.filterManager.applyFilter(
+                    { category, date },
+                    this.currentPage,
+                    this.skip,
+                    this.perPage
+                );
+
+            } catch (err) {
                 notItem('Nenhuma receita encontrada.', this.divItems);
-                return undefined;
             }
-
-            paginateItems(this.currentPage, data.pages, this.perPage)
-            listItem(data.incomes, this.divItems);
-
-            this.setupDeleteListener();
-            this.setupUpdateListener();
         })
+    }
+
+    // Método público para limpar filtro
+    public clearFilter() {
+        this.currentPage = 1;
+        this.skip = 0;
+        this.filterManager.clearFilter();
     }
 
     async updateIncomeById(index: number, data: IncomeExpense) {
