@@ -1,6 +1,5 @@
 //src/api/Expense.ts
 
-import axios from "axios";
 import type { IncomeExpense } from "../model/IncomeExpenseModel";
 import type { PaginatedExpense } from "../model/Paginated";
 import api from "./config";

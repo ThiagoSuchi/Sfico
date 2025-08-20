@@ -107,6 +107,10 @@ export class ManagerIncomes {
                 clearFormErrors(this.divNewIncome);
                 modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
 
+                window.dispatchEvent(new CustomEvent('dataChanged', {
+                    detail: { context: 'income' }
+                }));
+
             } catch (err) {
                 if (err instanceof AxiosError || axios.isAxiosError(err)) {
                     const error = err as AxiosError;
@@ -143,6 +147,8 @@ export class ManagerIncomes {
 
         this.setupDeleteListener();
         this.setupUpdateListener();
+
+        return data.incomes
     }
 
     async filterIncome() {
@@ -168,13 +174,6 @@ export class ManagerIncomes {
         })
     }
 
-    // Método público para limpar filtro
-    public clearFilter() {
-        this.currentPage = 1;
-        this.skip = 0;
-        this.filterManager.clearFilter();
-    }
-
     async updateIncomeById(index: number, data: IncomeExpense) {
         try {
             const id = this.currentData.incomes[index].id
@@ -183,6 +182,11 @@ export class ManagerIncomes {
             const res = await this.income.updateIncomeById(dataUpdated);
 
             modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
+
+            window.dispatchEvent(new CustomEvent('dataChanged', {
+                detail: { context: 'income' }
+            }));
+
             this.getAllIncomes();
         } catch (err) {
             if (err instanceof AxiosError || axios.isAxiosError(err)) {
@@ -196,7 +200,12 @@ export class ManagerIncomes {
         const id = this.currentData.incomes[index].id
         const res = await this.income.deleteIncomeById(id);
 
-        modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''))
+        modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
+
+        window.dispatchEvent(new CustomEvent('dataChanged', {
+            detail: { context: 'income' }
+        }));
+
         this.getAllIncomes();
     }
 }

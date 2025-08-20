@@ -107,6 +107,11 @@ export class ManagerExpenses {
                 clearFormErrors(this.divNewExpense);
                 modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
 
+                // Sempre irá dispara um evento global para atualização dos charts
+                window.dispatchEvent(new CustomEvent('dataChanged', {
+                    detail: { context: 'expense' }
+                }));
+
             } catch (err) {
                 if (err instanceof AxiosError || axios.isAxiosError(err)) {
                     const error = err as AxiosError;
@@ -143,6 +148,8 @@ export class ManagerExpenses {
 
         this.setupDeleteListener();
         this.setupUpdateListener();
+
+        return data.expenses
     }
 
     async filterExpense() {
@@ -165,14 +172,7 @@ export class ManagerExpenses {
             } catch (err) {
                 notItem('Nenhuma despesa encontrada.', this.divItems);
             }
-        }, 'expense'); // Especifica que é para expense
-    }
-
-    // Método público para limpar filtro
-    public clearFilter() {
-        this.currentPage = 1;
-        this.skip = 0;
-        this.filterManager.clearFilter();
+        }, 'expense');
     }
 
     async updateExpenseById(index: number, data: IncomeExpense) {
@@ -183,6 +183,11 @@ export class ManagerExpenses {
             const res = await this.expense.updateExpenseById(dataUpdated);
 
             modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''));
+
+            window.dispatchEvent(new CustomEvent('dataChanged', {
+                detail: { context: 'expense' }
+            }));
+
             this.getAllExpenses();
         } catch (err) {
             if (err instanceof AxiosError || axios.isAxiosError(err)) {
@@ -197,6 +202,12 @@ export class ManagerExpenses {
         const res = await this.expense.deleteExpenseById(id);
 
         modelCreatedOrUpdatedOrDeleted(JSON.stringify(res.data.message).replace(/^"|"$/g, ''))
+
+        // Sempre irá dispara um evento global para atualização dos charts
+        window.dispatchEvent(new CustomEvent('dataChanged', {
+            detail: { context: 'expense' }
+        }));
+
         this.getAllExpenses();
     }
 }

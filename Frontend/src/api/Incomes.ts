@@ -1,7 +1,6 @@
 //src/api/Incomes.ts
 
 // import type { FilterDTO } from "../model/FilterModel";
-import axios from "axios";
 import type { IncomeExpense } from "../model/IncomeExpenseModel";
 import type { PaginatedIncome } from "../model/Paginated";
 import api from "./config";

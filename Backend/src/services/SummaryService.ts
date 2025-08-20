@@ -30,16 +30,20 @@ class SummaryService {
         const firstDayMonth = new Date(Date.UTC(ano, mes - 1, 1, 0, 0, 0))
         const lastDayMonth = new Date(Date.UTC(ano, mes, 0, 23, 59, 59))
 
-        const totalExpense = await this.repository.totalExpenses(firstDayMonth, lastDayMonth); // retorna a soma do valores das despesas.
+        const { totalIncome, totalExpense } = await this.repository.totalIncomesAndExpenses(firstDayMonth, lastDayMonth); // retorna a soma dos valores.
 
-        if (!totalExpense) {
+        if (!totalIncome && !totalExpense) {
             return null
         }
+
+        const balance = totalIncome - totalExpense;
 
         return {
             ano,
             mes,
+            totalReceitas: totalIncome,
             totalDespesas: totalExpense,
+            saldo: balance
         };
     }
 }

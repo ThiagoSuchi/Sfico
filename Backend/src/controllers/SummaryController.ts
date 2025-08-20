@@ -24,19 +24,22 @@ class SummaryController {
 
     // Total de despesas e receitas por mês e ano, e o saldo correspondente
     async getMonthlySummary(req: Request, res: Response) {
-        const { ano, mes } = req.body;
+        const { ano, mes } = req.query;
 
-        if (isNaN(ano) || isNaN(mes) || mes < 1 || mes > 12) {
+        const year = Number(ano);
+        const month = Number(mes)
+
+        if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
             throw new AppError("Erro ao processar ano ou mês, por favor insira informações válidas: \n ano: 2025 \n mes: 10");
         }
 
-        const result = await this.service.summaryByMonthAndYear(mes, ano);
+        const result = await this.service.summaryByMonthAndYear(month, year);
 
         if (!result) {
             throw new AppError("Não há registros no mês/ano informado.", 404);
         }
 
-        res.status(200).json({ message: "Este é o saldo mensal gerado:", result});
+        res.status(200).json({ message: "Este é o resumo mensal gerado:", result});
     }
 }
 
