@@ -1,4 +1,6 @@
 {
+  "version": 2,
+  "name": "sfico-frontend",
   "rootDirectory": "Frontend",
   "framework": "vite"
 }
