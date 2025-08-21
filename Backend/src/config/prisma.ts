@@ -1,5 +1,5 @@
 //src/config/prisma.ts
-import { PrismaClient } from "prisma/prisma-client/default";
+import { PrismaClient } from "@prisma/client";
 
 declare global {
     var prisma: PrismaClient | undefined;
