@@ -6,7 +6,8 @@
     "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules ./src/server.ts",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev --name init",
-    "build": "rimraf dist && npx tsc"
+    "build": "rimraf dist && npx tsc",
+    "start": "npx prisma generate && npx prisma migrate deploy && node dist/server.js"
   },
   "keywords": [],
   "author": "",
