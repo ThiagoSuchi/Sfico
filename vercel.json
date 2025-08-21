@@ -1,14 +1,4 @@
 {
-  "projects": {
-    "frontend": {
-      "rootDirectory": "Frontend",
-      "framework": "vite"
-    },
-    "backend": {
-      "rootDirectory": "Backend",
-      "buildCommand": "npm install && npm run build",
-      "outputDirectory": "dist",
-      "installCommand": "npm install"
-    }
-  }
+  "rootDirectory": "Frontend",
+  "framework": "vite"
 }
