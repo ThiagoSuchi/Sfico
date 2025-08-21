@@ -1,4 +1,4 @@
-import { Expense, Incomes } from "@prisma/client"
+import { Expense, Incomes } from "prisma/prisma-client"
 
 interface ListDTO {
     total: number,

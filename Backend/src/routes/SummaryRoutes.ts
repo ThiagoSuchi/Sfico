@@ -2,8 +2,8 @@
 
 import { Router } from "express";
 
-import SummaryController from "@controllers/SummaryController";
-import asyncError from "@middlewares/asyncError";
+import SummaryController from "../controllers/SummaryController";
+import asyncError from "../middlewares/asyncError";
 
 const summaryController = new SummaryController()
 

@@ -1,10 +1,10 @@
 //src/controller/IncomeController.ts
 import { Request, Response } from "express";
 
-import IncomeService from "@services/IncomeService";
-import { BodySchema, BodySchemaID } from "@utils/validations/BodySchema";
-import { formatDateISO, formatedDateDMY } from "@utils/helpers/formatDate";
-import AppError from "@utils/errors/AppErrors";
+import IncomeService from "../services/IncomeService";
+import { BodySchema, BodySchemaID } from "../utils/validations/BodySchema";
+import { formatDateISO, formatedDateDMY } from "../utils/helpers/formatDate";
+import AppError from "../utils/errors/AppErrors";
 
 class IncomeController {
     private service: IncomeService

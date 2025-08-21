@@ -1,9 +1,9 @@
 import { Request } from "express";
 
-import ExpenseRepository from "@repositories/ExpenseRepository";
-import { Expense } from "@prisma/client";
-import { formatedDateDMY } from "@utils/helpers/formatDate";
-import { FilterDTO } from "@interfaces/ListIncomesExpenseSummaryDTO";
+import ExpenseRepository from "../repositories/ExpenseRepository";
+import { Expense } from "prisma/prisma-client/default";
+import { formatedDateDMY } from "../utils/helpers/formatDate";
+import { FilterDTO } from "../interfaces/ListIncomesExpenseSummaryDTO";
 
 class ExpenseService {
     private repository: ExpenseRepository;

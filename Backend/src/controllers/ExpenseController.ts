@@ -2,10 +2,10 @@
 import { Request, Response } from "express";
 import * as yup from "yup";
 
-import ExpensiveService from "@services/ExpenseService";
-import { BodySchema, BodySchemaID } from "@utils/validations/BodySchema";
-import { formatDateISO, formatedDateDMY } from "@utils/helpers/formatDate";
-import AppError from "@utils/errors/AppErrors";
+import ExpensiveService from "../services/ExpenseService";
+import { BodySchema, BodySchemaID } from "../utils/validations/BodySchema";
+import { formatDateISO, formatedDateDMY } from "../utils/helpers/formatDate";
+import AppError from "../utils/errors/AppErrors";
 
 class ExpenseController {
     private service: ExpensiveService

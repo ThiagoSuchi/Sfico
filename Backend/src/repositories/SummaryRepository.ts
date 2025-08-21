@@ -1,7 +1,7 @@
 //src/repositories/SummaryRepository.ts
 
-import prisma from "@config/prisma";
-import { parseValue } from "@utils/helpers/formatValue";
+import prisma from "config/prisma";
+import { parseValue } from "../utils/helpers/formatValue";
 
 class SummaryRepository {
 

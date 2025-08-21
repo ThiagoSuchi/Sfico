@@ -2,8 +2,8 @@
 
 import { Router } from "express";
 
-import IncomeController from "@controllers/IncomeController";
-import asyncError from "@middlewares/asyncError";
+import IncomeController from "../controllers/IncomeController";
+import asyncError from "../middlewares/asyncError";
 
 const incomeController = new IncomeController();
 const router = Router();

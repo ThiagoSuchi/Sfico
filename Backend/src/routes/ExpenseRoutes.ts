@@ -2,8 +2,8 @@
 
 import { Router } from "express";
 
-import ExpenseController from "@controllers/ExpenseController";
-import asyncError from "@middlewares/asyncError";
+import ExpenseController from "../controllers/ExpenseController";
+import asyncError from "../middlewares/asyncError";
 
 const expenseController = new ExpenseController();
 const router = Router();

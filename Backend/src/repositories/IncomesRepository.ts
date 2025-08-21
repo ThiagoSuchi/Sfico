@@ -1,9 +1,9 @@
 //src/repositories/IncomeRepository.ts
-import prisma from "@config/prisma"// Importando intância ja criada
+import prisma from "config/prisma"// Importando intância ja criada
 
-import { Incomes } from "@prisma/client";
-import { ListDTO, PaginateDTO } from "@interfaces/ListIncomesExpenseSummaryDTO";
-import AppError from "@utils/errors/AppErrors";
+import { Incomes } from "prisma/prisma-client/default";
+import { ListDTO, PaginateDTO } from "../interfaces/ListIncomesExpenseSummaryDTO";
+import AppError from "../utils/errors/AppErrors";
 
 class IncomeRepository {
 

@@ -1,8 +1,8 @@
 //src/controllers/SummaryController.ts
 
 import SummaryRepository from "@repositories/SummaryRepository";
-import SummaryService from "@services/SummaryService";
-import AppError from "@utils/errors/AppErrors";
+import SummaryService from "../services/SummaryService";
+import AppError from "../utils/errors/AppErrors";
 import { Request, Response } from "express";
 
 class SummaryController {

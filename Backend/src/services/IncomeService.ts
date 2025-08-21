@@ -1,9 +1,9 @@
 import { Request } from "express";
 
-import IncomeRepository from "@repositories/IncomesRepository";
-import { Incomes } from "@prisma/client";
-import { formatedDateDMY } from "@utils/helpers/formatDate";
-import { FilterDTO } from "@interfaces/ListIncomesExpenseSummaryDTO";
+import IncomeRepository from "../repositories/IncomesRepository";
+import { Incomes } from "prisma/prisma-client/default";
+import { formatedDateDMY } from "../utils/helpers/formatDate";
+import { FilterDTO } from "../interfaces/ListIncomesExpenseSummaryDTO";
 
 class IncomeService {
     private repository: IncomeRepository;

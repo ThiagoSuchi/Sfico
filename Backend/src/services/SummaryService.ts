@@ -1,6 +1,6 @@
 //src/services/SummaryService.ts
 
-import SummaryRepository from "@repositories/SummaryRepository";
+import SummaryRepository from "../repositories/SummaryRepository";
 
 
 class SummaryService {
