@@ -1,7 +1,7 @@
 //src/repositories/ExpenseRepository.ts
 import prisma from "../config/prisma"// Importando intância ja criada
 
-import { Expense } from "prisma/prisma-client/default"
+import { Expense } from "@prisma/client"
 import { ListDTO, PaginateDTO } from "../interfaces/ListIncomesExpenseSummaryDTO";
 import AppError from "../utils/errors/AppErrors";
 
