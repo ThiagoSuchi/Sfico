@@ -42,10 +42,10 @@ export class ManagerChartGlobal {
     }
 
     private async refreshAndRenderCharts() {
-        const { incResult, expResult } = await fetchAllItems();
+        const { incomeResult, expenseResult } = await fetchAllItems();
 
         if (this.lineChartInstance) {
-            this.lineChartInstance.data.datasets[0].data = [incResult, expResult];
+            this.lineChartInstance.data.datasets[0].data = [incomeResult, expenseResult];
             this.lineChartInstance.update()
         } else {
             this.lineChartInstance = new Chart(this.ctxLine, {
@@ -53,7 +53,7 @@ export class ManagerChartGlobal {
                 data: {
                     labels: ['Receitas', 'Despesas'],
                     datasets: [{
-                        data: [incResult, expResult],
+                        data: [incomeResult, expenseResult],
                         borderWidth: 2,
                         borderColor: "transparent",
                         backgroundColor: ["rgb(37, 154, 103)", "rgba(216, 60, 60, 1)"]
@@ -87,7 +87,7 @@ export class ManagerChartGlobal {
         }
 
         if (this.pieChartInstance) {
-            this.pieChartInstance.data.datasets[0].data = [incResult, expResult];
+            this.pieChartInstance.data.datasets[0].data = [incomeResult, expenseResult];
             this.pieChartInstance.update();
         } else {
             this.pieChartInstance = new Chart(this.ctxPie, {
