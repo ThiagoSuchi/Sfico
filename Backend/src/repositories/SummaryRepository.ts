@@ -1,6 +1,7 @@
 //src/repositories/SummaryRepository.ts
 
 import prisma from "@config/prisma";
+import { parseValue } from "@utils/helpers/formatValue";
 
 class SummaryRepository {
 
@@ -8,8 +9,8 @@ class SummaryRepository {
         const incomesData = await prisma.incomes.findMany({ select: { valor: true } });
         const expensesData = await prisma.expense.findMany({ select: { valor: true } });
 
-        const totalIncomes = incomesData.reduce((acc, i) => acc + Number(i.valor || 0), 0);
-        const totalExpense = expensesData.reduce((acc, e) => acc + Number(e.valor || 0), 0);
+        const totalIncomes = incomesData.reduce((acc, i) => acc + parseValue(i.valor), 0);
+        const totalExpense = expensesData.reduce((acc, e) => acc + parseValue(e.valor), 0);
 
         return {
             totalIncomes,
@@ -38,8 +39,8 @@ class SummaryRepository {
             select: { valor: true }
         });
 
-        const totalIncome = incomes.reduce((acc, e) => acc + Number(e.valor || 0), 0);
-        const totalExpense = expenses.reduce((acc, e) => acc + Number(e.valor || 0), 0);
+        const totalIncome = incomes.reduce((acc, e) => acc + parseValue(e.valor), 0);
+        const totalExpense = expenses.reduce((acc, e) => acc + parseValue(e.valor), 0);
 
         return {
             totalIncome,
