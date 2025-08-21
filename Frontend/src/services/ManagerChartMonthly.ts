@@ -31,7 +31,6 @@ export class ManagerChartMonthly {
         totalMonthly();
         this.refreshAndRenderCharts();
 
-        // Atualiza automaticamente ao receber os eventos globais
         window.addEventListener('dataChanged', async (e: Event) => {
             if (this.updateTimer) window.clearTimeout(this.updateTimer);
 
@@ -42,11 +41,14 @@ export class ManagerChartMonthly {
     }
 
     private async refreshAndRenderCharts() {
-        const { incResultFilter, expResultFilter } = await fetchAllItems();
+        const { 
+            incomeResultFilter, 
+            expenseResultFilter, 
+        } = await fetchAllItems();
 
         // Line chart
         if (this.lineChartInstance) {
-            this.lineChartInstance.data.datasets[0].data = [incResultFilter, expResultFilter];
+            this.lineChartInstance.data.datasets[0].data = [incomeResultFilter, expenseResultFilter];
             this.lineChartInstance.update();
             } else {
             this.lineChartInstance = new Chart(this.ctxLine, {
@@ -54,7 +56,7 @@ export class ManagerChartMonthly {
                 data: {
                     labels: ['Receitas', 'Despesas'],
                     datasets: [{
-                        data: [incResultFilter, expResultFilter],
+                        data: [incomeResultFilter, expenseResultFilter],
                         borderWidth: 2,
                         borderColor: "transparent",
                         backgroundColor: ["rgb(37, 154, 103)", "rgba(216, 60, 60, 1)"]
@@ -89,7 +91,7 @@ export class ManagerChartMonthly {
 
         // Pie chart
         if (this.pieChartInstance) {
-            this.pieChartInstance.data.datasets[0].data = [incResultFilter, expResultFilter];
+            this.pieChartInstance.data.datasets[0].data = [incomeResultFilter, expenseResultFilter];
             this.pieChartInstance.update()
             } else {
             this.pieChartInstance = new Chart(this.ctxPie, {
@@ -97,7 +99,7 @@ export class ManagerChartMonthly {
                 data: {
                     labels: ['Receitas', 'Despesas'],
                     datasets: [{
-                        data: [incResultFilter, expResultFilter],
+                        data: [incomeResultFilter, expenseResultFilter],
                         backgroundColor: ['rgb(37, 154, 103)', 'rgba(216, 60, 60, 1)'],
                         borderWidth: 2,
                         borderColor: '#E5E7EB'
