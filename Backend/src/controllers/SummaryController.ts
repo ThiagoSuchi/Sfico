@@ -13,13 +13,13 @@ class SummaryController {
     }
 
     async allEntries(req: Request, res: Response) {
-        const finance = await this.service.allEntries();
+        const result = await this.service.allEntries();
 
-        if (!finance || finance.valorTotalReceitas === null || finance.valorTotalDespesas === null) {
+        if (!result || result.valorTotalReceitas === null || result.valorTotalDespesas === null) {
             throw new AppError("Nenhum registro foi encontrado", 404);
         }
 
-        res.status(200).json({ message: "Listagem completa de receitas e despesas: ", finance })
+        res.status(200).json({ message: "Listagem completa de receitas e despesas: ", result })
     }
 
     // Total de despesas e receitas por mês e ano, e o saldo correspondente
