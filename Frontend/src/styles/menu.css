@@ -75,7 +75,7 @@
 }
 
 .logo {
-    width: 9.375rem; 
+    width: 9.375rem;
     height: auto;
     margin: 1rem 0;
     object-fit: contain;
@@ -159,9 +159,9 @@
         top: 0;
         left: 0;
         z-index: 1000;
-        width: 16rem; 
-        min-width: 16rem;
-        max-width: 16rem;
+        width: calc(16.75rem - 0.75rem);
+        min-width: calc(16.75rem - 0.75rem);
+        max-width: calc(16.75rem - 0.75rem);
         transform: translateX(-100%);
         box-shadow: 0.25rem 0 1rem rgba(0, 0, 0, 0.2);
     }
@@ -194,7 +194,7 @@
     }
 
     .menu-toggle.active {
-        left: calc(14rem - 0.5rem);
+        left: calc(14.5rem - 0.5rem);
     }
 
     .menu-toggle .icon {
@@ -202,9 +202,9 @@
     }
 
     .menu {
-        width: 14rem;
-        min-width: 14rem;
-        max-width: 14rem;
+        width: calc(16.75rem - 2.75rem);
+        min-width: calc(16.75rem - 2.75rem);
+        max-width: calc(16.75rem - 2.75rem);
         gap: 2rem;
     }
 
@@ -238,7 +238,7 @@
     }
 
     .logo {
-        width: 10rem; /* 160px */
+        width: 10rem;
     }
 
     .links {

@@ -6,52 +6,47 @@ body {
     display: flex;
     flex-direction: row;
     background-color: var(--color-background);
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow: auto;
+    /* allow whole page to scroll */
 }
 
 /* Controle de visibilidade das seções */
+/* Controle de visibilidade das seções - forçar comportamento com especificidade */
 .general-section {
-    display: none;
+    display: none !important;
     flex-direction: column;
     align-items: flex-start;
     flex: 1;
     width: 100%;
     gap: 25px;
     padding: 50px 200px;
-    padding-left: calc(200px + 16.75rem); /* Soma padding normal + espaço do menu */
-    height: 100vh; /* Altura fixa */
-    overflow: hidden; /* Remove scroll da seção */
+    padding-left: calc(200px + 16.75rem);
+    /* Soma padding normal + espaço do menu */
+    min-height: 100vh;
+    /* Permite crescer quando necessário */
+    overflow: auto;
+    /* Permite scroll quando conteúdo excede a área */
     box-sizing: border-box;
 }
 
 .general-section.active {
-    display: flex;
+    display: flex !important;
 }
 
-/* IDs específicos ocultos por padrão */
+/* IDs específicos - garantir que só apareçam com .active */
 #general-incomes,
 #general-expenses {
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-    width: 100%;
-    gap: 25px;
-    padding: 50px 200px;
-    padding-left: calc(200px + 16.75rem); /* Soma padding normal + espaço do menu */
-    height: 100vh; /* Altura fixa */
-    overflow: hidden; /* Remove scroll da seção */
-    box-sizing: border-box;
+    display: none !important;
 }
 
-/* Quando ativo, mostra com flex */
 #general-incomes.active,
 #general-expenses.active {
-    display: flex;
+    display: flex !important;
 }
+
 
 .title-section {
     display: flex;
@@ -63,6 +58,8 @@ body {
 .title-section h1 {
     color: var(--color-h1);
     font-size: 25pt;
+    margin: 20px 0 0px 0;
+    /* Espaçamento igual ao h1 do resumo financeiro */
 }
 
 .title-section p {
@@ -102,19 +99,23 @@ body {
 .filter-per {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
-label {
-    color: var(--color-h1);
-    font-weight: 600;
-}
-
-.category {
+.edit {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 50%;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
 }
+
+.edit .btn-edit,
+.edit .btn-delete {
+    white-space: nowrap;
+    /* mantém o texto do botão em uma linha */
+}
+
 
 .category select {
     cursor: pointer;
@@ -126,6 +127,8 @@ label {
     color: var(--color-h1);
     font-weight: 500;
     transition: border-color 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .category select:focus {
@@ -149,6 +152,8 @@ label {
     color: var(--color-h1);
     font-weight: 500;
     transition: border-color 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .monthYear input:focus {
@@ -158,11 +163,15 @@ label {
 
 .items-container {
     width: 100%;
-    flex: 1; /* Ocupa o espaço restante */
-    overflow-y: auto; /* Scroll vertical apenas aqui */
-    padding-right: 10px; /* Espaço para a scrollbar */
+    flex: 1;
+    /* Ocupa o espaço restante */
+    overflow-y: auto;
+    /* Scroll vertical apenas aqui */
+    padding-right: 10px;
+    /* Espaço para a scrollbar */
     margin-bottom: 2rem;
-    min-height: 0; /* Permite que o flex-item encolha */
+    min-height: 0;
+    /* Permite que o flex-item encolha */
 }
 
 /* Estilização da scrollbar */
@@ -187,14 +196,19 @@ label {
 .items {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* alinha no topo para acomodar data no canto */
+    position: relative;
+    /* necessário para posicionar a data no canto */
     background-color: var(--white-default);
     border: 2px solid var(--color-border);
     border-radius: 8px;
-    padding: 20px;
+    padding: 20px 16px 16px 16px;
+    /* espaço extra no topo para a data */
     margin-bottom: 1rem;
-    flex-wrap: wrap;
-    gap: 15px;
+    gap: 16px;
 }
 
 /* Adiciona espaço no final da lista */
@@ -213,14 +227,27 @@ label {
 
 .value h2 {
     color: var(--color-button);
-    margin-bottom: 2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.value {
+    min-width: 0;
+    /* allow shrinking inside flex */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 auto;
+    /* ocupa o espaço restante da linha */
 }
 
 .tags {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     color: var(--color-paragraph);
     font-size: 11pt;
+    align-items: center;
+    flex-wrap: wrap;
+    min-width: 0;
 }
 
 .tags span {
@@ -230,10 +257,28 @@ label {
     background-color: var(--color-select);
 }
 
+.tags p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tags p span {
+    display: inline-block;
+    max-width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .edit {
     display: flex;
     gap: 10px;
     align-items: center;
+    flex: 0 0 auto;
+    /* prevent controls from shrinking */
+    margin-left: 8px;
 }
 
 .edit button {
@@ -249,7 +294,7 @@ label {
     padding: 10px;
     background-color: transparent;
     cursor: pointer;
-    color: var( --color-h1);
+    color: var(--color-h1);
     transition: .1s ease-in;
 }
 
@@ -265,11 +310,15 @@ label {
     color: var(--red-ligth);
 }
 
-.edit .date {
+.items .date {
+    position: absolute;
+    top: 8px;
+    right: 12px;
     color: var(--color-paragraph);
-    margin-bottom: 4rem;
     font-size: 10pt;
-    margin-right: 1rem;
+    margin: 0;
+    white-space: nowrap;
+    opacity: 0.9;
 }
 
 .pagination {
@@ -278,10 +327,15 @@ label {
     justify-content: flex-end;
     width: 100%;
     color: var(--color-paragraph);
+    padding-bottom: 1rem;
+}
+
+.general-section>.pagination {
+    margin-top: -2rem;
 }
 
 .pagination ul {
-    margin: 0 20px;
+    margin: 0 1rem;
 }
 
 .pagination ul li {
@@ -303,7 +357,8 @@ label {
     border: 1px solid var(--color-button);
 }
 
-.btn-prev, .btn-next {
+.btn-prev,
+.btn-next {
     display: inline-flex;
     align-items: center;
     font-size: 14pt;
@@ -315,7 +370,8 @@ label {
     transition: .1s ease-in;
 }
 
-.btn-prev:hover, .btn-next:hover {
+.btn-prev:hover,
+.btn-next:hover {
     color: var(--color-button);
 }
 
@@ -341,55 +397,67 @@ label {
         display: flex;
         flex-direction: column;
     }
-    
+
     #general-incomes,
     #general-expenses,
     .general-section {
-        padding: 5rem 1rem 1rem 1rem; /* Remove o padding-left do menu */
-        height: 100vh;
-        overflow: hidden;
+        padding: 3em 0.5rem 0.5rem 0.5rem;
+        /* reduzir padding superior para maximizar espaço vertical */
+        min-height: 100vh;
+        /* permite crescer quando necessário */
+        overflow: auto;
+        /* permite scroll quando conteúdo excede */
         width: 100%;
     }
-    
+
     .items-container {
         flex: 1;
         overflow-y: auto;
-        margin-top: 1rem;
+        margin-top: 2rem;
     }
-    
+
     .title-section {
         flex-direction: column;
         gap: 15px;
         align-items: stretch;
     }
-    
+
     .title-section button {
         width: 100%;
     }
-    
+
     .filter {
         flex-direction: column;
         gap: 15px;
     }
-    
+
+    .filter-per {
+        flex-direction: column;
+        gap: 12px;
+    }
+
     .category,
     .monthYear {
         width: 100%;
     }
-    
+
     .items {
         flex-direction: column;
         gap: 20px;
     }
-    
+
     .edit {
         justify-content: center;
         margin-top: 10px;
     }
-    
+
     .edit .date {
         margin-bottom: 1rem;
         text-align: center;
+    }
+
+    .pagination {
+        justify-content: center;
     }
 }
 
@@ -399,41 +467,51 @@ label {
         display: flex;
         flex-direction: column;
     }
-    
+
     #general-incomes,
     #general-expenses,
     .general-section {
-        padding: 5rem 1.25rem 1.25rem 1.25rem; /* Remove o padding-left do menu */
+        padding: 5rem 1.25rem 1.25rem 1.25rem;
+        /* Remove o padding-left do menu */
         height: 100vh;
         overflow: hidden;
         width: 100%;
     }
-    
+
     .items-container {
         flex: 1;
         overflow-y: auto;
         margin-top: 1rem;
     }
-    
+
     .title-section {
         flex-direction: column;
         gap: 15px;
         align-items: stretch;
     }
-    
+
     .title-section button {
         width: 100%;
         max-width: 300px;
         align-self: center;
     }
-    
+
     .items {
         flex-direction: column;
         gap: 15px;
     }
-    
+
     .edit .date {
         margin-bottom: 2rem;
+    }
+
+    /* Em telas maiores que 480px (tablet e desktop), centralizar verticalmente os botões dentro do item */
+    .general-section .items .edit {
+        align-self: center;
+    }
+
+    .pagination {
+        justify-content: center;
     }
 }
 
@@ -443,18 +521,27 @@ label {
         display: flex;
         flex-direction: row;
     }
-    
+
     #general-incomes,
     #general-expenses,
     .general-section {
         padding: 50px 50px;
-        padding-left: calc(50px + 16.75rem); /* Soma padding normal + espaço do menu */
+        padding-left: calc(50px + 16.75rem);
+        /* Soma padding normal + espaço do menu */
         height: 100vh;
         overflow: hidden;
     }
-    
+
     .title-section button {
         width: 180px;
+    }
+
+    /* centralizar verticalmente os botões de ação dentro do item */
+    .general-section .items .edit {
+        align-self: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 
@@ -464,12 +551,13 @@ label {
         display: flex;
         flex-direction: row;
     }
-    
+
     #general-incomes,
     #general-expenses,
     .general-section {
         padding: 50px 100px;
-        padding-left: calc(100px + 16.75rem); /* Soma padding normal + espaço do menu */
+        padding-left: calc(100px + 16.75rem);
+        /* Soma padding normal + espaço do menu */
         height: 100vh;
         overflow: hidden;
     }
@@ -481,14 +569,111 @@ label {
         display: flex;
         flex-direction: row;
     }
-    
+
     #general-incomes,
     #general-expenses,
     .general-section {
         padding: 50px 200px;
-        padding-left: calc(200px + 20rem); /* Soma padding normal + espaço do menu maior */
+        padding-left: calc(200px + 20rem);
+        /* Soma padding normal + espaço do menu maior */
         height: 100vh;
         overflow: hidden;
+    }
+}
+
+/* Desktop geral (>=1025px) - padronizar filtro: categoria ao lado de mês/ano, mesmas larguras */
+@media (min-width: 1025px) {
+    .filter-per {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: center;
+        flex-wrap: nowrap;
+        /* evitar quebra */
+    }
+
+    /* Garantir que ambos ocupem o mesmo espaço visual */
+    .filter-per .category,
+    .filter-per .monthYear {
+        flex: 0 0 calc(50% - 10px);
+        /* ocupar metade do espaço considerando o gap */
+        box-sizing: border-box;
+    }
+
+    /* Inputs e selects ocupam 100% do contêiner pai */
+    .filter-per .category select,
+    .filter-per .monthYear input {
+        width: 100%;
+    }
+}
+
+/* Padronizar espaçamento label -> controle para tablet/desktop (>=769px) */
+@media (min-width: 769px) {
+
+    .filter-per .category,
+    .filter-per .monthYear {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 6px;
+        /* espaço entre label e controle */
+    }
+
+    .filter-per .category label,
+    .filter-per .monthYear label {
+        margin: 0;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .filter-per .category select,
+    .filter-per .monthYear input {
+        height: 40px;
+        /* mesma altura */
+        padding: 8px 12px;
+        /* mesmo padding */
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        box-sizing: border-box;
+    }
+
+    /* Caso o label e o controle precisem alinhar com o título do filtro, garantir largura total */
+    .filter-per .category select,
+    .filter-per .monthYear input {
+        width: 100%;
+    }
+}
+
+/* Aplicar também para telas >= 769px (tablet e desktop) para garantir lado-a-lado em telas maiores */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .filter-per {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: center;
+        flex-wrap: nowrap;
+        /* evitar quebra */
+    }
+
+    .filter-per .category,
+    .filter-per .monthYear {
+        flex: 0 0 calc(50% - 10px);
+        box-sizing: border-box;
+    }
+
+    .filter-per .category select,
+    .filter-per .monthYear input {
+        width: 100%;
+    }
+}
+
+/* Desktop geral (>=1025px) - garantir centralização vertical dos botões de ação */
+@media (min-width: 1025px) {
+    .general-section .items .edit {
+        align-self: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 
@@ -498,7 +683,7 @@ label {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .edit button {
         font-size: 11pt;
         padding: 8px;

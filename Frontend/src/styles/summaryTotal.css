@@ -10,10 +10,8 @@
     flex: 1;
     width: 100%;
     gap: 25px;
-    padding: 50px 200px;
-    padding-left: calc(200px + 20rem); /* Soma padding normal + espaço do menu (versão large por padrão) */
-    height: 100vh; /* Altura fixa */
-    overflow: hidden; /* Remove scroll da seção principal */
+    padding: 50px 1.25rem;
+    padding-left: 1.25rem;
     box-sizing: border-box;
 }
 
@@ -52,12 +50,15 @@
     flex-direction: column;
     flex: 1;
     width: 100%;
-    overflow-y: auto; /* Adiciona scroll vertical apenas ao conteúdo */
+    overflow-y: auto;
+    /* Adiciona scroll vertical apenas ao conteúdo */
     overflow-x: hidden;
-    padding-right: 10px; /* Espaço para a scrollbar */
+    padding-right: 10px;
+    /* Espaço para a scrollbar */
     gap: 25px;
     box-sizing: border-box;
-    min-height: 0; /* Permite que o flex-item encolha */
+    min-height: 0;
+    /* Permite que o flex-item encolha */
 }
 
 /* Estilização da scrollbar - igual aos items */
@@ -179,44 +180,6 @@
     max-width: 300px;
 }
 
-/*-------Descrição de Resumo Mensal*/
-.desc-summary {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    gap: 15px;
-    background-color: var(--white-default);
-    border: 2px solid var(--color-border);
-    border-radius: 10px;
-    padding: 20px;
-    min-height: 150px;
-    /* Removido max-height para evitar corte do conteúdo */
-    min-width: 0;
-    box-sizing: border-box;
-    overflow: visible; /* Permite que o conteúdo seja visível */
-}
-
-.desc-summary h1 {
-    color: var(--color-h1);
-    font-size: 16pt;
-    font-weight: 800;
-}
-
-.desc-summary .congrat {
-    color: var(--color-button);
-    font-weight: 700;
-}
-
-.desc-summary p {
-    color: var(--color-h1);
-}
-
-.desc-summary span {
-    color: var(--color-h1);
-    font-weight: 900;
-}
-
 /*------Responsivo------*/
 
 @media (max-width: 480px) {
@@ -224,35 +187,57 @@
         padding: 5rem 1rem 1rem 1rem;
         gap: 20px;
     }
-    
+
     #general-summary .summary-section .total-containers {
         grid-template-columns: 1fr;
         gap: 15px;
     }
-    
+
     #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr;
         gap: 15px;
     }
-    
+
     #general-summary .summary-section .total {
         padding: 15px;
         min-height: 100px;
         max-height: 100px;
     }
-    
+
     #general-summary .summary-section .total img {
         width: 50px;
         height: 50px;
     }
-    
+
     #general-summary .summary-section .total h1 {
         font-size: 16pt;
     }
-    
+
     #general-summary .summary-section .chart-wrapper {
         padding: 15px;
         min-height: 250px;
+    }
+}
+
+/* Ajustar padding-left para telas maiores onde o menu lateral ocupa espaço fixo */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #general-summary {
+        padding: 50px 50px;
+        padding-left: calc(50px + 16.75rem);
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+    #general-summary {
+        padding: 50px 100px;
+        padding-left: calc(100px + 16.75rem);
+    }
+}
+
+@media (min-width: 1201px) {
+    #general-summary {
+        padding: 50px 200px;
+        padding-left: calc(200px + 20rem);
     }
 }
 
@@ -261,32 +246,32 @@
         padding: 5rem 1.25rem 1.25rem 1.25rem;
         gap: 20px;
     }
-    
+
     #general-summary .summary-section .total-containers {
         grid-template-columns: 1fr;
         gap: 15px;
     }
-    
+
     #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr;
         gap: 15px;
     }
-    
+
     #general-summary .summary-section .total {
         padding: 15px;
         min-height: 100px;
         max-height: 100px;
     }
-    
+
     #general-summary .summary-section .total img {
         width: 50px;
         height: 50px;
     }
-    
+
     #general-summary .summary-section .total h1 {
         font-size: 16pt;
     }
-    
+
     #general-summary .summary-section .chart-wrapper {
         padding: 15px;
         min-height: 250px;
@@ -297,7 +282,8 @@
 
     #general-summary {
         padding: 50px 50px;
-        padding-left: calc(50px + 16.75rem); /* Soma padding normal + espaço do menu */
+        padding-left: calc(50px + 16.75rem);
+        /* Soma padding normal + espaço do menu */
     }
 
     #general-summary .title-section {
@@ -310,12 +296,12 @@
     #general-summary .btn-summary {
         display: flex;
     }
-    
+
     #general-summary .summary-section .total-containers {
         grid-template-columns: repeat(1, 1fr);
         gap: 15px;
     }
-    
+
     #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -325,14 +311,15 @@
 @media (min-width: 1025px) and (max-width: 1200px) {
     #general-summary {
         padding: 50px 100px;
-        padding-left: calc(100px + 16.75rem); /* Soma padding normal + espaço do menu */
+        padding-left: calc(100px + 16.75rem);
+        /* Soma padding normal + espaço do menu */
     }
-    
+
     #general-summary .summary-section .total-containers {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
-    
+
     #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr 1fr;
         gap: 20px;
@@ -342,14 +329,15 @@
 @media (min-width: 1201px) {
     #general-summary {
         padding: 50px 200px;
-        padding-left: calc(200px + 20rem); /* Soma padding normal + espaço do menu (versão large) */
+        padding-left: calc(200px + 20rem);
+        /* Soma padding normal + espaço do menu (versão large) */
     }
-    
+
     #general-summary .summary-section .total-containers {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
-    
+
     #general-summary .summary-section .charts-container {
         grid-template-columns: 1fr 1fr;
         gap: 20px;
