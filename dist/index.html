@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--CSS-->
+  
+  
+  
+  
+  <!--CSS-->
+
+  <!--Bootstrap-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!--Bootstrap-->
+
+  <!--Google Fontes-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+    rel="stylesheet">
+  <!--Google Fontes-->
+
+  <title>Vite + TS</title>
+  <script type="module" crossorigin src="/assets/index-977de17a.js"></script>
+  <link rel="stylesheet" href="/assets/index-cfb2034b.css">
+</head>
+
+<body>
+  <!-- Botão hambúrguer para mobile -->
+  <button class="menu-toggle" id="menu-toggle">
+    <i class="bi bi-list icon" id="menu-icon"></i>
+  </button>
+
+  <!-- Overlay para fechar menu em mobile -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+
+  <div class="menu">
+    <div class="div-logo">
+      <img class="logo" src="/assets/Logo-b169c569.png" alt="LOGO-SFICO">
+    </div><!--div-logo-->
+
+    <div class="links">
+      <h3 id="incomes"><i class="bi bi-graph-up-arrow"></i> Receitas</h3>
+      <h3 id="expenses"><i class="bi bi-credit-card"></i> Despesas</h3>
+      <h3 id="summary"><i class="bi bi-bar-chart-line"></i> Resumo Financeiro</h3>
+    </div><!--links-->
+
+    <div class="title-footer">
+      <p>Sfico - Sua Finança Controlada</p>
+    </div>
+  </div><!--menu-->
+
+  <div class="new new-income">
+    <h1>Nova Receita</h1>
+
+    <div class="input-container">
+      <label for="new-inc-value">Valor</label>
+      <input id="new-inc-value" name="value" type="text" placeholder="0.00">
+    </div>
+
+    <div class="select input-container">
+      <label for="new-inc-category">Categoria</label>
+      <select class="select-category" name="category" id="new-inc-category">
+        <option value="select" disabled selected>Selecione uma categoria</option>
+        <option value="salario">Salário</option>
+        <option value="renda-extra">Renda extra</option>
+        <option value="investimentos">Investimentos</option>
+        <option value="vendas">Vendas</option>
+        <option value="reembolso">Reembolso</option>
+        <option value="aposentadoria">Aposentadoria</option>
+        <option value="premios-sorteios">Prêmios ou sorteios</option>
+      </select>
+    </div>
+
+    <div class="input-container">
+      <label for="new-inc-description">Descrição</label>
+      <input id="new-inc-description" name="desc" type="text" placeholder="Digite a descrição aqui">
+    </div>
+
+    <div class="input-container">
+      <label for="new-inc-date">Data</label>
+      <input class="new-date" type="date" name="date" id="new-inc-date" min="2023-01-01" required>
+    </div>
+
+    <div class="btn-new-item">
+      <button class="update update-income">Atualizar</button>
+      <button class="create create-income">Criar</button>
+      <button class="cancel cancel-income">Cancelar</button>
+    </div>
+  </div><!--new-income-->
+
+  <div class="new new-expense">
+    <h1>Nova Despesa</h1>
+
+    <div class="input-container">
+      <label for="new-exp-value">Valor</label>
+      <input id="new-exp-value" name="value" type="text" placeholder="0.00">
+      <!-- <i class="bi bi-x-circle input-icon"></i> -->
+    </div>
+
+    <div class="select input-container">
+      <label for="new-exp-category">Categoria</label>
+      <select name="category" id="new-exp-category">
+        <option value="select" disabled selected>Selecione uma categoria</option>
+        <option value="alimentacao">Alimentação</option>
+        <option value="transporte">Transporte</option>
+        <option value="moradia">Moradia</option>
+        <option value="lazer">Lazer</option>
+        <option value="saude">Saúde</option>
+        <option value="educacao">Educação</option>
+        <option value="contas">Contas e serviços (água, luz, internet, etc.)</option>
+        <option value="compras">Compras gerais</option>
+        <option value="assinaturas">Assinaturas (Netflix, Spotify, etc.)</option>
+        <option value="impostos">Impostos e taxas</option>
+        <option value="presentes">Presentes e doações</option>
+        <option value="viagens">Viagens</option>
+      </select>
+    </div>
+
+    <div class="input-container">
+      <label for="new-exp-desc">Descrição</label>
+      <input id="new-exp-desc" name="desc" type="text" placeholder="Descrição opcional">
+    </div>
+
+    <div class="input-container">
+      <label for="new-exp-date">Data</label>
+      <input type="date" name="date" id="new-exp-date" min="2024-01-01" required>
+    </div>
+
+    <div class="btn-new-item">
+      <button class="update update-expense">Atualizar</button>
+      <button class="create create-expense">Criar</button>
+      <button class="cancel cancel-expense">Cancelar</button>
+    </div>
+  </div><!--new-expense-->
+
+  <!-- Overlay para quando as telas de novas Receitas/Despesas forem ativadas -->
+  <div class="new-item-overlay" id="new-item-overlay"></div>
+
+  <section class="general-section" id="general-incomes">
+    <div class="title-section">
+      <div>
+        <h1>Receitas</h1>
+        <p>Gerencie suas receitas e acompanhe seus ganhos</p>
+      </div>
+      <button id="btn-newReceita"><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Receita</button>
+    </div><!--title-section-->
+
+    <div class="filter">
+      <h1>Filtrar</h1>
+      <div class="filter-per">
+        <div class="category">
+          <label for="inc-category">Categoria</label>
+          <select name="category" id="inc-category">
+            <option value="select" disabled selected>Selecione uma categoria</option>
+            <option value="todas">Todas as categorias</option>
+            <option value="salario">Salário</option>
+            <option value="renda-extra">Renda extra</option>
+            <option value="investimentos">Investimentos</option>
+            <option value="vendas">Vendas</option>
+            <option value="reembolso">Reembolso</option>
+            <option value="aposentadoria">Aposentadoria</option>
+            <option value="premios-sorteios">Prêmios ou sorteios</option>
+          </select>
+        </div><!--category-->
+  
+        <div class="monthYear">
+          <label for="inc-monthYear">Mês/Ano</label>
+          <input type="month" id="inc-monthYear" name="monthYear">
+        </div><!--monthYear-->
+      </div>
+    </div><!--filter-->
+
+    <div class="items-container item-income">
+      <!--Div .items criado em ManagerIncome.ts-->
+    </div><!--items-->
+
+    <div class="pagination pagination-income">
+      <button class="btn-prev btn-prev-income"><i class="bi bi-arrow-left"></i> anterior</button>
+      <ul>
+        <!--Li criada em paginationDOM-->
+      </ul>
+      <!--Ul criado em paginationDOM.ts-->
+      <button class="btn-next btn-next-income">próximo <i class="bi bi-arrow-right"></i></button>
+    </div><!--pagination-->
+  </section><!--general-incomes-->
+
+  <section class="general-section" id="general-expenses">
+    <div class="title-section">
+      <div>
+        <h1>Despesas</h1>
+        <p>Gerencie suas despesas e controle seus gastos </p>
+      </div>
+      <button id="btn-newDespesa"><i class="bi bi-plus-circle" style="margin-right: 10px;"></i> Nova Despesa</button>
+    </div><!--title-section-->
+
+    <div class="filter">
+      <h1>Filtrar</h1>
+      <div class="filter-per">
+      <div class="category">
+        <label for="exp-category">Categoria</label>
+        <select name="category" id="exp-category">
+          <option value="select" disabled selected>Selecione uma categoria</option>
+          <option value="todas">Todas as categorias</option>
+          <option value="alimentacao">Alimentação</option>
+          <option value="transporte">Transporte</option>
+          <option value="moradia">Moradia</option>
+          <option value="lazer">Lazer</option>
+          <option value="saude">Saúde</option>
+          <option value="educacao">Educação</option>
+          <option value="contas">Contas e serviços (água, luz, internet, etc.)</option>
+          <option value="compras">Compras gerais</option>
+          <option value="assinaturas">Assinaturas (Netflix, Spotify, etc.)</option>
+          <option value="impostos">Impostos e taxas</option>
+          <option value="presentes">Presentes e doações</option>
+          <option value="viagens">Viagens</option>
+        </select>
+      </div><!--category-->
+
+      <div class="monthYear">
+        <label for="exp-monthYear">Mês/Ano</label>
+        <input type="month" id="exp-monthYear" name="monthYear">
+      </div><!--monthYear-->
+      </div><!--filter-per-->
+    </div><!--filter-->
+
+    <div class="items-container item-expense">
+      <!--Div .items criado em ManagerExpenses.ts-->
+    </div><!--items-->
+
+    <div class="pagination pagination-expense">
+      <button class="btn-prev btn-prev-expense"><i class="bi bi-arrow-left"></i> anterior</button>
+      <ul>
+        <!--Li criada em paginationDOM-->
+      </ul>
+      <button class="btn-next btn-next-expense">próximo <i class="bi bi-arrow-right"></i></button>
+    </div><!--pagination-->
+  </section><!--general-expenses-->
+
+  <section class="general-section" id="general-summary">
+    <div class="title-section">
+      <div>
+        <h1>Resumo Financeiro</h1>
+        <p>Visualize suas finanças e acompanhe sua evolução</p>
+      </div>
+      <div class="btn-summary">
+        <button id="monthly" class="btn-monthly"><i class="bi bi-calendar-check" style="margin-right: 10px;"></i>
+          Mensal</button>
+        <button id="global" class="btn-global"><i class="bi bi-globe" style="margin-right: 10px;"></i> Global</button>
+      </div><!--btn-summary-->
+    </div><!--title-section-->
+
+    <section class="summary-section global-section">
+      <div class="total-containers">
+        <div class="total total-incomes">
+          <img src="data:image/png;base64,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" alt="Icone-Incomes-Summary">
+          <div class="total-incomes-global">
+            <p>Total de Receitas</p>
+          </div>
+        </div><!--total-incomes-->
+
+        <div class="total total-expenses">
+          <img src="data:image/png;base64,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" alt="Icone-Expenses-Summary">
+          <div class="total-expense-global">
+            <p>Total de Despesas</p>
+          </div>
+        </div><!--total-expenses-->
+
+        <div class="total total-balance">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANsAAADbCAYAAADkg+RAAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAxMSURBVHgB7d1PbFzVFcfxc9/QpIFxFdsIYZCKUUk2DcKJREU3cVi0VM0iySrJpgQpK7oo2ZQNUYJgU6lq3AWsaCEryIaYRVBpK5FJF0SgGiPcTULEBIkYURJbsUOwg+dyz7PHeMaT8dw3713G874fKbZjT0ZZ+Kdz73n3j5GAvrSzQ5FUhozc8YgRO+i+NaTft1YGBciQMVIWK9Ni7LSVaDwSKd+SSukeUxyXQIxkaMrazSI3n7Qie12ihtznzQJ0EBcAF0A5ayQadX8t9ZpNZclIJmH7v53ZVZDCMWvtLgHWEVcBRyuycPJu85NRSVmqYfvKzh6KbHTMLg4RgXXLiCkbY467SndSUpJK2OJKZguvEjJ0mzRD11bYpuzNQRewVxkuoutZeS2KoufbmdNFktDVhdlnrK18SNCQC0YOVdzvuyswT0pC3pVNO4yVyo3jbib5BwHyyNiRflM8Ip68whYPG6097YaOQwLkmAvOuDHRPp9hZcthWwrauzRBgEVLzZPHWw1cS2EjaEBjPoFbM2wEDWiu1cCt2Y1cmqMNCoCGNB+uM396yk41XY7YNGyuvT9CMwRYmxUZqsiPjjV7zW2Hkbr0yljzqgBonbVH+gvFkUY/ahi2xXmae2DNKn3A13Rkou2N5m8Nh5EVqRwjaEAim61daDgiXBU2HT66AeghAZCIFbNLF+fXf3/VMPJa5etP6T4C7dHHAX3RnQ+u/F5NZdOqRtCA9mmO6hct11Q2qhqQnvrqtlzZvrLX9xI0ID2ap5Vzt+j7L+5IvE8HQGMFa5YfdMfDSH2uVrGVTwVA6iIz39treqfjyrYgC7sEQCYqsjEeNUaLH6I9AiATxlb26uc4bJwjAmTHPeSOF/ObKTs7VLHmQwGQmQVjt0cViYYFQKbcEPIRHUYOCoBMGYmGIrN0kwyA7BhrByOJb5oBkCXdyR1Zw741IARztXLDCoDMJT7rH4AfwgYEQtiAQAgbEAhhAwIhbEAghA0IhLABgRA2IBDCBgRC2IBACBsQCGEDAiFsQCCEDQjkDkHHm5y5Jk+//VLT1+z86cNy5Jd7BZ2LsK0TkzNTTX8+O39T0NkYRgKBEDYgEMIGBELYgEAIGxAIYQMCIWxAIIQNCISwAYEQNiAQwgYEQtiAQAgbEAhXRv2AdOvMhWufxyv2dVX/zNzNhqv39XulyxNN32ug2Cs7Bh6SLB0dPihIjrAFpGE699nHMnblkpy7/LHMzH8j68n5w38RJMd+tgDGJj+RUnlC3r74/roLGNJD2DKkw8QXzr3uwnZJAMKWkVMTJXll7B0qGZYRtpTpvOzZf/+daoZVCFuK4oN5zrwkk7NTAtTjOVtKCBrWQthSQNDQCsKWAoKGVhC2Np04f5qgoSU0SNqgD6tPTfxH2tWzcZNs6btfdgz8TAZ6+qS4YZP0uD9Vs67D+UfX4WxG/+3hHb8RdC7C1oYXSq9LOzRYB7btlN9uebQmXPV0TrjmexX74sChcxG2hM5ceD/x8FEr2eHtT8h+FzTkB2FLSFeHJKHV7OXdT8eVCPlCgyQBnaslqWoELd8IWwJnLnwgvnToSNDyjbAlcG6NjZyNPPPYXoKWc4TNkw4hZzzvQtPh427XcUS+ETZPF69eEV+HdzwhAGHz9F9X2XxQ1VBF2DxNzq79gHklHjSjirB5+mLGr+W/te9+ARRh8+TbHNnST9iwiLB5aGWNYr2eDT8WQBG2jBWbLDBGvhC2jLHXDVWEzUNxo3+V8u1eonsRNg89CYaEF65+LoAibJ70IbWPDzk/EksIm6ctffd5vV4r25jnqhN0J8LmybeyqVKCXQLoPoTN0/AD28TXqYlziZ7RobsQNk+6IiRJo0RPx/JdfYLuQtg8adC29PvN25RuzRk5PyrIL8KWQNL9aXqcwrP/osLlFWFLQO+uTtIoUdos+d2bf2YOl0OELaH9P09+5qMu4dp36sX4kFceC+QHF9i3QQOTRoUaKPbKVtd40ebLQE/vqp/rBYsj599q+h66SXX31kcbvPdiBda55r3u656NLIz+oRC2NmhVevrMy7Ke6JYfDbXeLTA8uC0eEiMMwtYmPRk56enInUDDt/OBh+OqSPCyRdhSoB3GblglosNZ7bTu3voLQfoIWwq0la8XIiY55q4T6fzv6M6DiTuuaIywpaTbAqcO7/g1d76liLCl7MT50XgtZLfQ++P06HS0j7Bl4A0Xtr+5pkm3rBTR5Wkv7/59ojWh+B5hy4geh3DivdFEl3B0Ip3HaeCQHGHL2JmLH8RrIrthpQhDyvYQtkC0cfLG/0oudJfW9brII4/tkf3bhgX+CNsPQIM39sUnMnblklxxw82L6+hQIJ23vXngOeZvCRC2DqHNlNm5b+Kv64+/m527GW8+bUbnVI3a9Pq+X7j302CXLn8sadBbeY4OHxT44QL7DqGVolot6hcjtzLs1AXHzW7M0V0KGjxt2OjysnaGsjoPZXmXP7bY5IiGWauS3u3daIeAjyT3iucdYcshrYK6HKudzqJWSHac+yFsOaatfK1ySWjQ3qa6eSFsOafzrqQVLq2GS14QNsQVLsl1xPoIg6Fk6wgbYklODIsfK3BwUcsIG2I6nExS3S5c654tRVkjbFiWpLpxJVbrCBuWaXXzXYalq1vQGsKGGts9h5KzNEhaRthQw/fckZn5bwStIWyocV+RQ36yQthQo8iJyZkhbKjh2/DQQ17RGsKGGldm/R5SF9lE2jLChhq+u8Y5yLV1hA01fA+Z1dt30BrChmV6ApjvwmK9HwCtIWxY5rv7evF+cSpbqwgbYnomiZ4t4oOg+SFsiL1w7nXx1e45JnlD2CCvjP0jPjzWV5ItOXlG2HJOmyKvjP1TfOkOgQGWdnkhbDmmQdNbU5NgCOmPQ1pz6tRESU6cf0uS0AfZev4k/BC2nFkcNr6TaI5WlWRHNwhb15uZWzrr34WsdHmirZApbfdT1ZLhYo02jLx3WkqfhbnscHJmqunPdfV9/fYYXcGf9ubO0weeozGSEJWtDfqLvFYIQtH/S9a7pnX4SNCSoxuJluzftpO5WpsIG9ak87QjXO/bNoaRaEofXv/pV08J2kfYcFs6dKSipYewYZUe19U8vP2JOGxID2FDDR02Hh0+QNcxA4QNMQ2ZdhtZyZ8dwpZj1TWOww887DqO9wmyRdhyQOdgeuTc1r775d6e3viQnh33PuTCxvkhIbFcax3QIwv2nXqx6Wu0Qh0dPijoXDzUBgIhbEAghA0IhLABgRA2IBDCBgRC2IBACBsQCGEDAiFsQCCEDQiEsAGBEDYgEMIGBMIWm3VA77le62J53ZvGUQadjbABgTCMBAIhbEAghA0IhLABgRA2IBDCBgRC2IBACBsQCGEDAiFsQCCEDQiEsAGBEDYgEMIGBELYgEAiMVIWAFkrU9mAIOx0ZMSMC4BMWZHpyH0oC4BMGRONu7B9+5EAyFo5KkjEMBLI2IJUSka/uFq5MeU+bRYAWZjuj+7qjbuRNEmA7LiKdlY/x2GzRkYFQCYqxsb5ihY/zJ0UAJm4JbdK+jkOW6/pnXZDybMCIFVuCDk6YHrL+vXyCpIFs/C8AEhVxchr1a/Nyh+4ruSn7tOgAEhD2XUhH6z+pWZtJNUNSI819vjKv5v6F1DdgFTUVDW1atV/xVSeEgBtqa9qyjR64bXK1+9asbsEgD8rr/UX7lpVtBruZ5szc/rCaQHgyU7PR/MNex8Nw6bPBRaspVkCeLJGnqk+V6t3253a9xSKI2LMiABojcvL3aZ429VYptm/nbJTm63d4OZvMiQAmhl33cftzV7Q9AwSXcY1Z+b3Cbu5gWbK84s5acpICybt1OAGV+GE529APQ3a47ebp63UUtgUgQNWaTloquWj7PQN9Y1dOtloCrgc+ARNeZ0bqW/cp5NAupTIM/f7f90zaPE/k4S+tNcPFWzhhHB2CXLDTouJjvebO/8qCSQOm4rncbLhmFg5JEAXs2LP3jK3nvKtZiu1FbaqpSp3TGieoPuUIxMd6jWbStKmVMJWRejQRcq6cr/ZihBfqYatasre2LPghpbuzfcKsI7ocLFgCsfTqGT1Mglblc7pClLYFdnCHhNv2TE0U9Bh7LR1bXxj7Oh1+fbkg6Y3s90umYat3pd2dqggdlikMGitDLkAavj0z6AA2Srrh8VgmXIklfFbIh/dY4rBnht/B2vEcxSCZWEwAAAAAElFTkSuQmCC" alt="Icone-Balance -Summary">
+          <div class="balance-global">
+            <p>Saldo</p>
+          </div>
+        </div><!--total-balance-->
+      </div><!--total-containers-->
+
+      <div class="charts-container">
+        <div class="chart-wrapper">
+          <h2>Receitas vs Despesas</h2>
+          <canvas id="global-line-chart"></canvas>
+        </div><!--chart-wrapper-->
+
+        <div class="chart-wrapper">
+          <h2>Distribuição Financeira</h2>
+          <canvas id="global-pie-chart"></canvas>
+        </div><!--chart-wrapper-->
+      </div><!--charts-container-->
+    </section><!--global-section-->
+
+    <section class="summary-section monthly-section">
+      <div class="filter">
+        <div class="monthYear">
+          <label for="summ-monthYear">Selecione o mês e ano</label>
+          <input type="month" id="summ-monthYear" name="monthYear">
+        </div><!--monthYear-->
+      </div><!--monthly-section-->
+
+      <div class="total-containers">
+        <div class="total total-incomes">
+          <img src="data:image/png;base64,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" alt="Icone-Incomes-Summary">
+          <div class="total-incomes-month">
+            <p>Total de Receitas</p>
+          </div>
+        </div><!--total-incomes-->
+
+        <div class="total total-expenses">
+          <img src="data:image/png;base64,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" alt="Icone-Expenses-Summary">
+          <div class="total-expense-month">
+            <p>Total de Despesas</p>
+          </div>
+        </div><!--total-expenses-->
+
+        <div class="total total-balance">
+          <img src="data:image/png;base64,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" alt="Icone-Balance -Summary">
+          <div class="balance-month">
+            <p>Saldo</p>
+          </div>
+        </div><!--total-balance-->
+      </div><!--total-containers-->
+
+      <div class="charts-container">
+        <div class="chart-wrapper">
+          <h2>Receitas vs Despesas</h2>
+          <canvas id="monthly-line-chart"></canvas>
+        </div><!--chart-wrapper-->
+
+        <div class="chart-wrapper">
+          <h2>Distribuição Financeira</h2>
+          <canvas id="monthly-pie-chart"></canvas>
+        </div><!--chart-wrapper-->
+      </div><!--charts-container-->
+    </section><!--monthly-section-->
+  </section><!--general-summary-->
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>
