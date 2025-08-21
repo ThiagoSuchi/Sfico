@@ -2,8 +2,8 @@
 import express from "express";
 import cors from "cors";
 
-import routes from "@routes/index";
-import errorHandler from "@utils/helpers/errorHandler";
+import routes from "./routes/index";
+import errorHandler from "./utils/helpers/errorHandler";
 
 const app = express();
 
