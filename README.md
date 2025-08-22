@@ -2,7 +2,7 @@
 
 Aplicação de controle financeiro pessoal (Receitas/Despesas/Resumo) construída para fins de estudo e aprendizado. O monorepo contém:
 
-- Backend (API REST com Node.js/Express/Prisma/PostgreSQL)
+- Backend (API REST com Node.js/Docker/Express/Prisma/PostgreSQL)
 - Frontend (Vite + TypeScript, Chart.js)
 
 Com o Sfico você registra receitas e despesas, filtra por mês/categoria, pagina, resultados e visualiza totais e gráficos nas visões Global e Mensal.
