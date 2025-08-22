@@ -16,6 +16,9 @@ Pré-requisitos: Docker e Docker Compose instalados.
 ```bash
 # Na raiz do repositório
 docker-compose up -d
+# scripts para startar ou parar
+npm run docker:start
+npm run docker:stop
 ```
 
 Acesse:
