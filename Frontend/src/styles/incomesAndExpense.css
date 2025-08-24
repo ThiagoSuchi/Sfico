@@ -197,16 +197,14 @@ body {
     width: 100%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    /* alinha no topo para acomodar data no canto */
     position: relative;
-    /* necessário para posicionar a data no canto */
     background-color: var(--white-default);
     border: 2px solid var(--color-border);
     border-radius: 8px;
     padding: 20px 16px 16px 16px;
-    /* espaço extra no topo para a data */
     margin-bottom: 1rem;
     gap: 16px;
 }
