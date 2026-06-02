@@ -1,11 +1,11 @@
 {
   "name": "sfico-sua-financa-controlada",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules ./src/server.ts",
     "build": "rimraf dist && npx tsc && npx tsc-alias",
-    "start": "node dist/server.js",
+    "start": "npx prisma migrate deploy && node dist/server.js",
     "prisma:generate": "npx prisma generate",
     "prisma:migrate": "npx prisma migrate dev --name init"
   },
