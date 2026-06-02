@@ -15,7 +15,10 @@ COPY . .
 # Gera o client do Prisma
 RUN npx prisma generate
 
+#Compila o TypeScript para JavaScript
+RUN npm run build
+
 # Expõe a porta usada pela aplicação
 EXPOSE 3080
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "start" ]
