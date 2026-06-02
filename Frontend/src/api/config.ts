@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'sfico-production.up.railway.app',
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3080',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json'
